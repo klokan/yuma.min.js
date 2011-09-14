@@ -1,0 +1,7 @@
+<module rename-to="yuma.min">	
+	<inherits name="com.google.gwt.user.User"/>
+	<inherits name="org.timepedia.exporter.Exporter"/>
+	<set-property name="export" value="yes"/>
+	<add-linker name="xs"/>	
+	<entry-point class="at.ait.dme.yumaJS.client.YUMA"/>
+</module>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta http-equiv="X-UA-Compatible" content="IE=8" >
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Image Annotation - Sample Page</title>
+    <link rel="stylesheet" type="text/css" href="css/yuma.min.css" />
+    <script type="text/javascript" src="yuma.min/yuma.min.nocache.js"></script>
+    <script type="text/javascript">
+	window.onYUMAready = function() {
+		var canvas = new YUMA.ImageAnnotationLayer('annotateMe');
+		canvas.addAnnotationCreatedListener(function(annotation) {
+			alert(annotation.text);
+		});
+	}
+	</script>
+  </head>
+  
+  <body>
+    <div>
+      <p>
+        <img id="annotateMe" src="samples/640px-Hotel_Bristol_dinner.jpg" />
+      </p>
+    </div>
+  </body>
+</html>

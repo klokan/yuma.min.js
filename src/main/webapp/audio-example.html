@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta http-equiv="X-UA-Compatible" content="IE=8" >
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>HTML5 Audio Annotation - Sample Page</title>
+    <link rel="stylesheet" type="text/css" href="css/theme-dark/yuma.min.css" />
+    <style>
+    #annotateMe {
+    	padding:20px;
+    	width:400px;
+    }
+    </style>
+    <script type="text/javascript" src="yuma.min/yuma.min.nocache.js"></script>
+    <script type="text/javascript">
+	window.onYUMAready = function() {
+		new YUMA.AudioPlayer('samples/KevinMacLeod-AcidTrumpet.ogg', 'annotateMe');
+	}
+	</script>
+  </head>
+  
+  <body>
+    <div id="annotateMe"></div>
+  </body>
+</html>

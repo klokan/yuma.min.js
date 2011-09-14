@@ -1,0 +1,50 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'jetty'
+apply plugin: 'eclipse'
+
+files('src')
+
+gwtBuildDir = 'build/gwt'
+
+configurations {
+	gwtCompile
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	providedCompile 'com.google.gwt:gwt-servlet:2.3.0'
+	providedCompile 'com.google.gwt:gwt-dev:2.3.0'
+	providedCompile 'com.google.gwt:gwt-user:2.3.0'
+	providedCompile 'org.timepedia.exporter:gwtexporter:2.3.0'
+}
+
+task gwtCompile << {
+	created = (new File(gwtBuildDir)).mkdirs()
+	ant.java(classname:'com.google.gwt.dev.Compiler', failOnError: 'true', fork: 'true') {
+		jvmarg(value: '-Xmx184M')
+		arg(line: '-war ' + gwtBuildDir)
+		arg(line: '-logLevel INFO')
+		arg(line: '-style OBF')
+		arg(value: 'at.ait.dme.yumaJS.YumaJS')
+		classpath(path: 'src/main/java')
+		classpath(path: configurations.compile.asPath)
+	}
+}
+
+war.dependsOn gwtCompile
+ 
+war {
+	baseName = 'yuma-min-js'
+	archiveName = "${baseName}.${extension}"
+	from gwtBuildDir
+ 
+	manifest {
+		attributes 'Implementation-Title': 'yuma.min.js'
+		attributes 'Implementation-Version': '0.1 alpha'
+		attributes 'provider': 'AIT Austrian Institute of Technology'
+	}
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   	<meta http-equiv="X-UA-Compatible" content="IE=8" >
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Zoomable Image Annotation - Sample Page</title>
+    <link rel="stylesheet" type="text/css" href="../css/yuma.min.css" />
+    <style type="text/css">
+      #viewer{
+        margin:0px;
+        color:white;   /* for error messages */
+      }
+      
+      .toggle-annotation {
+		float:left;
+		text-align:center;
+		font-family:Verdana, Arial;
+		font-size:11px;	
+		margin-top:10px;
+		border:1px solid #000;
+		padding:4px;
+		width:120px;
+		background-color:#aaa;
+		cursor:pointer;
+		cursor:hand;
+      }
+    </style>
+
+    <script type="text/javascript" src="http://seadragon.com/ajax/0.8/seadragon-min.js"></script>
+    <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>    
+    <script type="text/javascript" src="../yuma.min/yuma.min.nocache.js"></script>
+    <script type="text/javascript">    
+    var viewer;
+    
+    window.onload = function() {    	
+		function onZoomitResponse(response) {
+			if (response.error) {
+				alert(response.error);
+				return;
+			}
+         
+            var content = response.content;
+            if (content.ready) {
+				viewer = new Seadragon.Viewer("viewer");
+				viewer.openDzi(content.dzi);
+            } else if (content.failed) {
+				alert(content.url + " failed to convert.");
+            } else {
+				alert(content.url + " is " + Math.round(100 * content.progress) + "% done.");
+            }
+		}
+		
+		$.ajax({
+			url: "http://api.zoom.it/v1/content/WwI0",
+			dataType: "jsonp",
+			success: onZoomitResponse
+		});
+    }
+	</script>
+  </head>
+  
+  <body>
+    <div id="viewer" style="width:640px;height:480px;"></div>
+  </body>
+</html>
+
+
+

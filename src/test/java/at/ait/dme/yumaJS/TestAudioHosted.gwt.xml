@@ -1,0 +1,5 @@
+<module rename-to="yuma.min">	
+	<inherits name="com.google.gwt.user.User"/>	
+	<inherits name="org.timepedia.exporter.Exporter"/>
+	<entry-point class="at.ait.dme.yumaJS.client.TestAudioHosted"/>
+</module>

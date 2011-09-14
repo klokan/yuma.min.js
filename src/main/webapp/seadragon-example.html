@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   	<meta http-equiv="X-UA-Compatible" content="IE=8" >
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Zoomable Image Annotation - Sample Page</title>
+    <link rel="stylesheet" type="text/css" href="css/yuma.min.css" />
+    <style type="text/css">
+      #viewer{
+        margin:0px;
+        color:white;   /* for error messages */
+      }
+    </style>
+    
+    <script type="text/javascript" src="http://seadragon.com/ajax/0.8/seadragon-min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>    
+    <script type="text/javascript" src="yuma.min/yuma.min.nocache.js"></script>
+    <script type="text/javascript">
+    // Annotation canvas
+    var canvas;
+    
+    // Flag indicating whether we are currently in annotation mode
+	var fAnnotating = false;
+	
+    // Deepzoom viewer
+	var viewer;
+	
+    window.onload = function() {	
+		function onZoomitResponse(response) {
+			if (response.error) {
+				alert(response.error);
+				return;
+			}
+         
+            var content = response.content;
+            if (content.ready) {
+				viewer = new Seadragon.Viewer("viewer");
+				viewer.openDzi(content.dzi);
+				canvas = new YUMA.SeajaxAnnotationLayer('viewer', viewer);
+            } else if (content.failed) {
+				alert(content.url + " failed to convert.");
+            } else {
+				alert(content.url + " is " + Math.round(100 * content.progress) + "% done.");
+            }
+		}
+		
+		$.ajax({
+			url: "http://api.zoom.it/v1/content/WwI0",
+			dataType: "jsonp",
+			success: onZoomitResponse
+		});
+    }
+    
+	function toggleAnnotationMode() {
+		if (fAnnotating) {
+			$('#annotate-button').val("Start Annotating");
+			if (canvas)
+				canvas.deactivate();
+		} else {
+  			$('#annotate-button').val("Stop Annotating");
+  			if (canvas)
+  				canvas.activate();
+  		}
+		fAnnotating = !fAnnotating;
+	}
+	</script>
+  </head>
+  
+  <body>
+    <div id="viewer" style="width:640px;height:480px;"></div>
+    <input id="annotate-button" type="button" value="Start Annotating" onclick="toggleAnnotationMode()"/>
+  </body>
+</html>
+
+
+
