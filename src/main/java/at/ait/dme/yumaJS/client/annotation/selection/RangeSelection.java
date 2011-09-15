@@ -4,7 +4,6 @@ import at.ait.dme.yumaJS.client.annotation.core.Fragment;
 import at.ait.dme.yumaJS.client.annotation.core.Range;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserException;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
-import at.ait.dme.yumaJS.client.init.InitParams;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -21,20 +20,22 @@ public class RangeSelection extends Selection {
 
 	private Canvas selectionCanvas;
 	
+	private CanvasElement canvasElement;
+	
+	private Context2d context;
+	
 	private ProgressBar progressBar;
 	
 	private boolean dragging = false;
 	
 	private int startX, endX;
-	
-	private CanvasElement canvasElement;
-	
-	private Context2d context;
-	
+		
 	private SelectionHandler selectionHandler = null;
 	
-	public RangeSelection(ProgressBar progressBar, InitParams initParams) throws InadequateBrowserException {
+	public RangeSelection(ProgressBar progressBar, int start, int end) throws InadequateBrowserException {
 		this.progressBar = progressBar;
+		this.startX = start;
+		this.endX = end;
 		
 		selectionCanvas = Canvas.createIfSupported();
 		if (selectionCanvas == null)
@@ -78,6 +79,7 @@ public class RangeSelection extends Selection {
 		});
 		
 		RootPanel.get().add(selectionCanvas, progressBar.getAbsoluteLeft(), progressBar.getAbsoluteTop());
+		draw(startX, endX);
 	}
 		
 	private void draw(int fromX, int toX) {
@@ -105,7 +107,7 @@ public class RangeSelection extends Selection {
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub	
+		selectionCanvas.removeFromParent();
 	}
 
 }

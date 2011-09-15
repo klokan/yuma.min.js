@@ -12,7 +12,7 @@ import at.ait.dme.yumaJS.client.annotation.core.Range;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserException;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.event.TimeUpdateHandler;
-import at.ait.dme.yumaJS.client.annotation.selection.Selection;
+import at.ait.dme.yumaJS.client.annotation.selection.RangeSelection;
 import at.ait.dme.yumaJS.client.annotation.selection.SelectionHandler;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
@@ -46,7 +46,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 		this(audioURL, id, null);
 	}
 	
-	public AudioPlayer(String audioURL, String id, InitParams initParams) {
+	public AudioPlayer(String audioURL, String id, final InitParams initParams) {
 		super(initParams);
 		
 		final Element el = DOM.getElementById(id);
@@ -72,6 +72,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			audioElement.setAutoplay(false);
 			playerPanel.add(audio);
 			
+			// TODO pass stylesheet file via init param
 			final ToggleButton btnPlayPause = new ToggleButton(
 					new Image("../css/theme-dark/audio-play.png"),
 					new Image("../css/theme-dark/audio-pause.png"));
@@ -105,28 +106,15 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			btnAnnotate.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					// TODO dummy implementation!
-					showEditForm(
-							progressBar.getCurrentOffsetX() + progressBar.getAbsoluteLeft() - 4, 
-							progressBar.getAbsoluteTop() + progressBar.getOffsetHeight() - 4,
-							new Selection() {
-								@Override
-								public void setSelectionHandler(SelectionHandler handler) {
-									// TODO Auto-generated method stub
-									
-								}
-								
-								@Override
-								public Fragment getSelectedFragment() {
-									double time = audio.getAudioElement().getCurrentTime();
-									return Fragment.create(Range.create(time, time + 1));
-								}
-								
-								@Override
-								public void clear() {
-									// TODO Auto-generated method stub
-									
-								}
-							});
+					try {
+						showEditForm(
+								progressBar.getCurrentOffsetX() + progressBar.getAbsoluteLeft() - 4, 
+								progressBar.getAbsoluteTop() + progressBar.getOffsetHeight() - 4,
+								createRangeSelection(progressBar));
+					} catch (InadequateBrowserException e) {
+						// Can never happen
+						throw new RuntimeException(e);
+					}
 				}
 			});
 					
@@ -147,6 +135,21 @@ public class AudioPlayer extends Annotatable implements Exportable {
 		} catch (InadequateBrowserException e) {
 			YUMA.fatalError(e.getMessage());
 		}
+	}
+	
+	private RangeSelection createRangeSelection(ProgressBar progressBar) 
+		throws InadequateBrowserException {
+		
+		int currentX = progressBar.getCurrentOffsetX();
+		RangeSelection selection = new RangeSelection(progressBar, currentX, currentX + 10);
+		selection.setSelectionHandler(new SelectionHandler() {
+			public void onSelect(Fragment fragment) {
+				System.out.println("selected: " + fragment.getRange().getFrom() + " to " +
+						fragment.getRange().getTo());
+			}
+		});
+		
+		return selection;
 	}
 
 	public void play() {
