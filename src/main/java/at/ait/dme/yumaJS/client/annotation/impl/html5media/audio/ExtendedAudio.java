@@ -9,9 +9,8 @@ import com.google.gwt.media.client.Audio;
 import com.google.gwt.user.client.ui.Composite;
 
 /**
- * A class that wraps the default GWT HTML5 audio class and 
- * adds unsupported handler registration methods, plus a few 
- * utility functions.
+ * A class that wraps the default GWT HTML5 audio class and adds unsupported 
+ * handler registration methods, plus a few utility functions.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  * @author Paul Weichhart

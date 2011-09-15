@@ -3,8 +3,7 @@ package at.ait.dme.yumaJS.client.annotation.core;
 import com.google.gwt.core.client.JavaScriptObject;
 
 /**
- * A (temporal) range which can be part of an annotation
- * media fragment.
+ * A (temporal) range which can be part of an annotation media fragment.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */

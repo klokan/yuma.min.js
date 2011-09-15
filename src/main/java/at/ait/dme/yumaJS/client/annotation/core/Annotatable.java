@@ -15,8 +15,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
- * An abstract base class with cross-cutting functionality 
- * that's useful for all media annotation implementations.
+ * An abstract base class with cross-cutting functionality that's useful for
+ * all media annotation implementations.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */

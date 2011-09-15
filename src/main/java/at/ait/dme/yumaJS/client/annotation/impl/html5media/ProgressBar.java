@@ -1,5 +1,6 @@
 package at.ait.dme.yumaJS.client.annotation.impl.html5media;
 
+import at.ait.dme.yumaJS.client.annotation.impl.html5media.audio.AudioPlayer;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.audio.ExtendedAudio;
 
 import com.google.gwt.canvas.client.Canvas;
@@ -15,6 +16,11 @@ import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
 
+/**
+ * A progress bar GUI element for the VideoPlayer and {@link AudioPlayer} components.
+ * 
+ * @author Rainer Simon <rainer.simon@ait.ac.at>
+ */
 public class ProgressBar extends Composite {
 	
 	private static final int BAR_HEIGHT = 2;

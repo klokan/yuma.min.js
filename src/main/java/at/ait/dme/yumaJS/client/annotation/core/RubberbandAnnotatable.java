@@ -11,9 +11,8 @@ import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Panel;
 
 /**
- * An extension of {@link Annotatable}, specifically for
- * annotatable media that can have spatial fragments, i.e.
- * images, zoomable images, or video.
+ * An extension of {@link Annotatable}, specifically for annotatable media that 
+ * have spatial fragments, i.e. images, zoomable images, or video.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
