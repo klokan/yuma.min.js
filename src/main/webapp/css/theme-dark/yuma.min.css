@@ -201,3 +201,7 @@
 	float:right;
 	padding:3px 1px;
 }
+
+.extend-selection {
+	cursor:move;
+}

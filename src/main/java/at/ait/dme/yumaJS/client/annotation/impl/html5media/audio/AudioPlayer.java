@@ -7,13 +7,11 @@ import org.timepedia.exporter.client.Exportable;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
-import at.ait.dme.yumaJS.client.annotation.core.Fragment;
-import at.ait.dme.yumaJS.client.annotation.core.Range;
+import at.ait.dme.yumaJS.client.annotation.impl.html5media.AnnotationTrack;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserException;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.event.TimeUpdateHandler;
 import at.ait.dme.yumaJS.client.annotation.selection.RangeSelection;
-import at.ait.dme.yumaJS.client.annotation.selection.SelectionHandler;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
@@ -41,6 +39,8 @@ import com.google.gwt.user.client.ui.ToggleButton;
 public class AudioPlayer extends Annotatable implements Exportable {
 	
 	private AudioElement audioElement;
+	
+	private AnnotationTrack annotationTrack; 
 	
 	public AudioPlayer(String audioURL, String id) {
 		this(audioURL, id, null);
@@ -107,16 +107,19 @@ public class AudioPlayer extends Annotatable implements Exportable {
 				public void onClick(ClickEvent event) {
 					// TODO dummy implementation!
 					try {
+						int x = progressBar.getCurrentOffsetX();
 						showEditForm(
 								progressBar.getCurrentOffsetX() + progressBar.getAbsoluteLeft() - 4, 
 								progressBar.getAbsoluteTop() + progressBar.getOffsetHeight() - 4,
-								createRangeSelection(progressBar));
+								new RangeSelection(progressBar, x, x + 1));
 					} catch (InadequateBrowserException e) {
 						// Can never happen
 						throw new RuntimeException(e);
 					}
 				}
 			});
+			
+			annotationTrack = new AnnotationTrack(progressBar, initParams);
 					
 			final Label clock = new Label("0:00 | 0:00");
 			clock.setStyleName("clock");
@@ -137,21 +140,6 @@ public class AudioPlayer extends Annotatable implements Exportable {
 		}
 	}
 	
-	private RangeSelection createRangeSelection(ProgressBar progressBar) 
-		throws InadequateBrowserException {
-		
-		int currentX = progressBar.getCurrentOffsetX();
-		RangeSelection selection = new RangeSelection(progressBar, currentX, currentX + 10);
-		selection.setSelectionHandler(new SelectionHandler() {
-			public void onSelect(Fragment fragment) {
-				System.out.println("selected: " + fragment.getRange().getFrom() + " to " +
-						fragment.getRange().getTo());
-			}
-		});
-		
-		return selection;
-	}
-
 	public void play() {
 		audioElement.play();
 	}
@@ -166,8 +154,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 
 	@Override
 	protected void addAnnotation(Annotation a, Labels labels) {
-		Range r = a.getFragment().getRange();
-		System.out.println("Adding range " + r.getFrom() + " to " + r.getTo());
+		annotationTrack.addAnnotation(a);
 	}
 	
 }

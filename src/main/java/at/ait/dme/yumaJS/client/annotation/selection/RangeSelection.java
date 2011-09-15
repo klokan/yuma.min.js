@@ -28,9 +28,11 @@ public class RangeSelection extends Selection {
 	
 	private boolean dragging = false;
 	
-	private int startX, endX;
+	private boolean startHandle = false;
+	
+	private boolean endHandle = false;
 		
-	private SelectionHandler selectionHandler = null;
+	private int startX, endX;
 	
 	public RangeSelection(ProgressBar progressBar, int start, int end) throws InadequateBrowserException {
 		this.progressBar = progressBar;
@@ -51,20 +53,33 @@ public class RangeSelection extends Selection {
 			public void onMouseDown(MouseDownEvent event) {
 				disableTextSelection(RootPanel.get().getElement());
 				dragging = true;
-				startX = event.getX();
 			}
 		});
 		
 		selectionCanvas.addMouseMoveHandler(new MouseMoveHandler() {
 			public void onMouseMove(MouseMoveEvent event) {
-				endX = event.getX();
+				int x = event.getX();
+
 				if (dragging) {
-					if (startX < endX) {
-						draw(startX, endX);
-					} else {
-						draw(endX, startX);
+					if (startHandle) {
+						startX = x;
+					} else if (endHandle) {
+						endX = x;
 					}
-				}
+					refresh();
+				} else {
+					if (x < startX && x > (startX - 5)) {
+						startHandle = true;
+						selectionCanvas.addStyleName("extend-selection");
+					} else if (x > endX && (x < endX + 5)) {
+						endHandle = true;
+						selectionCanvas.addStyleName("extend-selection");
+					} else {
+						startHandle = false;
+						endHandle = false;
+						selectionCanvas.removeStyleName("extend-selection");
+					}					
+				}				
 			}
 		});
 		
@@ -72,25 +87,22 @@ public class RangeSelection extends Selection {
 			public void onMouseUp(MouseUpEvent event) {
 				enableTextSelection(RootPanel.get().getElement());
 				dragging = false;
-				endX = event.getX();
-				if (selectionHandler != null)
-					selectionHandler.onSelect(getSelectedFragment());
 			}
 		});
 		
 		RootPanel.get().add(selectionCanvas, progressBar.getAbsoluteLeft(), progressBar.getAbsoluteTop());
-		draw(startX, endX);
+		refresh();
 	}
 		
-	private void draw(int fromX, int toX) {
+	private void refresh() {
 		context.setFillStyle("#ff0000");
 		context.clearRect(0, 0, canvasElement.getWidth(), canvasElement.getHeight());
-		context.fillRect(fromX, 0, toX - fromX, canvasElement.getHeight());
+		context.fillRect(startX, 0, endX - startX, canvasElement.getHeight());
 	}
 
 	@Override
 	public void setSelectionHandler(SelectionHandler handler) {
-		this.selectionHandler = handler;
+		// We don't use selection events in audio mode
 	}
 
 	@Override
@@ -109,5 +121,5 @@ public class RangeSelection extends Selection {
 	public void clear() {
 		selectionCanvas.removeFromParent();
 	}
-
+	
 }
