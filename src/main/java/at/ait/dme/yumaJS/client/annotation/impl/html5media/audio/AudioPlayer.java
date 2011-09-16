@@ -155,7 +155,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 
 	@Override
 	protected void addAnnotation(Annotation a, Labels labels) {
-		annotationTrack.addAnnotation(a);
+		annotationTrack.addAnnotation(a, labels);
 	}
 	
 }

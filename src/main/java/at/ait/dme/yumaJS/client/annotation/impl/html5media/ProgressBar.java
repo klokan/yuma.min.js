@@ -13,6 +13,7 @@ import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -27,6 +28,8 @@ public class ProgressBar extends Composite {
 
 	private AudioElement audio;
 	
+	private Canvas progressBar;
+	
 	private CanvasElement canvasElement;
 	
 	private Context2d context;
@@ -36,7 +39,7 @@ public class ProgressBar extends Composite {
 	private boolean dragging = false;
 		
 	public ProgressBar(ExtendedAudio extendedAudio, int width, int height) throws InadequateBrowserException {
-		Canvas progressBar = Canvas.createIfSupported();
+		progressBar = Canvas.createIfSupported();
 		if (progressBar == null)
 			throw new InadequateBrowserException("HTML5 Canvas not supported");
 
@@ -72,6 +75,10 @@ public class ProgressBar extends Composite {
 		}, MouseUpEvent.getType());
 
 		initWidget(progressBar);
+	}
+	
+	public HandlerRegistration addMouseMoveHandler(MouseMoveHandler handler) {
+		return progressBar.addMouseMoveHandler(handler);
 	}
 	
 	public double toTime(double offsetX) {
