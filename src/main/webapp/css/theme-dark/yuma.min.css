@@ -202,6 +202,10 @@
 	padding:3px 1px;
 }
 
+.range-selection {
+	z-index:99999;
+}
+
 .extend-selection {
 	cursor:move;
 }

@@ -43,6 +43,7 @@ public class RangeSelection extends Selection {
 		if (selectionCanvas == null)
 			throw new InadequateBrowserException("HTML5 Canvas not supported");
 
+		selectionCanvas.setStyleName("range-selection");
 		canvasElement = selectionCanvas.getCanvasElement();
 		canvasElement.setWidth(progressBar.getOffsetWidth());
 		canvasElement.setHeight(progressBar.getOffsetHeight());

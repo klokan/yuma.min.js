@@ -101,15 +101,14 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			// TODO set via initParams!
 			final ProgressBar progressBar = new ProgressBar(audio, 275, 20);
 			progressBar.setStyleName("progressbar");
-			playerPanel.add(progressBar);
 			
 			btnAnnotate.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					// TODO dummy implementation!
 					try {
-						int x = progressBar.getCurrentOffsetX();
+						int x = progressBar.toOffsetX(audio.getAudioElement().getCurrentTime());
 						showEditForm(
-								progressBar.getCurrentOffsetX() + progressBar.getAbsoluteLeft() - 4, 
+								x + progressBar.getAbsoluteLeft() - 4, 
 								progressBar.getAbsoluteTop() + progressBar.getOffsetHeight() - 4,
 								new RangeSelection(progressBar, x, x + 1));
 					} catch (InadequateBrowserException e) {
@@ -120,6 +119,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			});
 			
 			annotationTrack = new AnnotationTrack(progressBar, initParams);
+			playerPanel.add(annotationTrack);
 					
 			final Label clock = new Label("0:00 | 0:00");
 			clock.setStyleName("clock");
@@ -134,7 +134,8 @@ public class AudioPlayer extends Annotatable implements Exportable {
 				}
 			});
 			
-			RootPanel.get(id).add(playerPanel);
+			RootPanel.get(id).add(playerPanel);	
+			RootPanel.get(id).add(progressBar, annotationTrack.getAbsoluteLeft(), annotationTrack.getAbsoluteTop());
 		} catch (InadequateBrowserException e) {
 			YUMA.fatalError(e.getMessage());
 		}

@@ -79,8 +79,8 @@ public class ProgressBar extends Composite {
 		return audio.getDuration() * percent;
 	}
 	
-	public int getCurrentOffsetX() {
-		double percent = audio.getCurrentTime() / audio.getDuration();
+	public int toOffsetX(double time) {
+		double percent = time / audio.getDuration();
 		return (int) (canvasElement.getOffsetWidth() * percent);
 	}
 	
