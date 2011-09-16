@@ -131,6 +131,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 				public void onTimeUpdate() {
 					clock.setText(audio.getCurrentTimeFormatted() + " | " + audio.getTotalTimeFormatted());
 					progressBar.update(audio.getCurrentPercentage());
+					annotationTrack.showAnnotationAt(audio.getAudioElement().getCurrentTime());
 				}
 			});
 			

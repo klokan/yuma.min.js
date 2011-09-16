@@ -51,16 +51,9 @@ public class AnnotationTrack extends Composite {
 			public void onMouseMove(MouseMoveEvent event) {
 				Annotation a = getAnnotation(event.getX());
 				if (a == null) {
-					if (currentPopup != null) {
-						currentPopup.removeFromParent();
-						currentPopup = null;
-					}
+					clearPopup();
 				} else {
-					if (currentPopup == null || currentPopup != annotations.get(a)) {
-						currentPopup = annotations.get(a);
-						RootPanel.get().add(currentPopup, event.getClientX(), event.getClientY());
-					}
-					currentPopup.setVisible(true);
+					showPopup(annotations.get(a), event.getClientX(), event.getClientY());
 				}
 			}
 		});
@@ -68,25 +61,57 @@ public class AnnotationTrack extends Composite {
 		initWidget(annotationTrack);
 	}
 	
+	public void showAnnotationAt(double time) {
+		if (currentPopup == null || !currentPopup.isVisible()) {
+			Annotation a = getAnnotation(time);
+			if (a != null)
+				showPopup(
+						annotations.get(a), 
+						canvasElement.getAbsoluteLeft() + progressBar.toOffsetX(time), 
+						canvasElement.getAbsoluteTop() + canvasElement.getOffsetHeight());
+		}
+	}
+	
+	private void clearPopup() {
+		if (currentPopup != null) {
+			currentPopup.removeFromParent();
+			currentPopup = null;
+		}
+	}
+	
+	private void showPopup(DetailsPopup popup, int x, int y) {
+		if (currentPopup != null && currentPopup != popup) {
+			clearPopup();
+		}
+		
+		if (currentPopup == null) {
+			currentPopup = popup;			
+			RootPanel.get().add(currentPopup, x, y);
+		}
+		
+		currentPopup.setVisible(true);
+	}
+	
 	public void addAnnotation(Annotation a, Labels labels) {
 		annotations.put(a, new DetailsPopup(a, labels));
 		refresh();
 	}
 	
-	private Annotation getAnnotation(int offsetX) {
+	private Annotation getAnnotation(double time) {
 		// TODO make this more efficient!
+		// TODO make this handle 'smallest first' overlap scenarios
 		for (Annotation a : annotations.keySet()) {
 			Range r = a.getFragment().getRange();
-			int start = progressBar.toOffsetX(r.getFrom());
-			if (offsetX >= start) {
-				int end = progressBar.toOffsetX(r.getTo());
-				if (offsetX <= end) {
-					return a;
-				}
+			if (time >= r.getFrom() && time <= r.getTo()) {
+				return a;
 			}
 		}
 		
 		return null;
+	}
+	
+	private Annotation getAnnotation(int offsetX) {
+		return getAnnotation(progressBar.toTime(offsetX));
 	}
 	
 	private void refresh() {
