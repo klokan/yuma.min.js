@@ -104,7 +104,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			btnPlayPause.addStyleName("button-state-pause");
 			playerPanel.add(btnPlayPause);
 	
-			Image imgAnnotate = new Image("../css/theme-dark/audio-annotate.png");
+			Image imgAnnotate = new Image(stylesheet + "/audio-annotate.png");
 			final PushButton btnAnnotate = new PushButton(imgAnnotate);
 			btnAnnotate.setStyleName("button-annotate");
 			playerPanel.add(btnAnnotate);

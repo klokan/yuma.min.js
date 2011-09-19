@@ -14,7 +14,12 @@
     <script type="text/javascript" src="yuma.min/yuma.min.nocache.js"></script>
     <script type="text/javascript">
 	window.onYUMAready = function() {
-		new YUMA.AudioPlayer('samples/KevinMacLeod-AcidTrumpet.ogg', 'annotateMe');
+		new YUMA.AudioPlayer('samples/KevinMacLeod-AcidTrumpet.ogg', 'annotateMe',
+				{
+					height:20,
+					width:360,
+					stylesheet:'css/theme-dark'
+				});
 	}
 	</script>
   </head>
