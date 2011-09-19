@@ -4,6 +4,7 @@ import at.ait.dme.yumaJS.client.annotation.impl.html5media.audio.AudioPlayer;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.audio.ExtendedAudio;
 
 import com.google.gwt.canvas.client.Canvas;
+import com.google.gwt.canvas.dom.client.CanvasGradient;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.dom.client.AudioElement;
 import com.google.gwt.dom.client.CanvasElement;
@@ -24,7 +25,7 @@ import com.google.gwt.user.client.ui.RootPanel;
  */
 public class ProgressBar extends Composite {
 	
-	private static final int BAR_HEIGHT = 2;
+	private static final int BAR_HEIGHT = 6;
 
 	private AudioElement audio;
 	
@@ -37,6 +38,10 @@ public class ProgressBar extends Composite {
 	private int offsetY;
 
 	private boolean dragging = false;
+	
+	private CanvasGradient backgroundGradient;
+	
+	private CanvasGradient foregroundGradient;
 		
 	public ProgressBar(ExtendedAudio extendedAudio, int width, int height) throws InadequateBrowserException {
 		progressBar = Canvas.createIfSupported();
@@ -51,7 +56,16 @@ public class ProgressBar extends Composite {
 		canvasElement.setHeight(height);	
 		
 		context = progressBar.getContext2d();
-		context.setFillStyle("#555");
+		
+		backgroundGradient = context.createLinearGradient(0, offsetY, 0, offsetY + BAR_HEIGHT);
+		backgroundGradient.addColorStop(0, "rgba(85, 85, 85, 0.7)");
+		backgroundGradient.addColorStop(1, "rgba(150, 150, 150, 0.7)");		
+		
+		foregroundGradient = context.createLinearGradient(0, offsetY, 0, offsetY + BAR_HEIGHT);
+		foregroundGradient.addColorStop(0, "rgba(240, 240, 240, 1)");
+		foregroundGradient.addColorStop(1, "rgba(120, 120, 120, 1)");		
+		
+		context.setFillStyle(backgroundGradient);
 		context.fillRect(0, offsetY, width - 2, BAR_HEIGHT);
 
 		progressBar.addMouseDownHandler(new MouseDownHandler() {
@@ -92,11 +106,14 @@ public class ProgressBar extends Composite {
 	}
 	
 	public void update(double percent) {
+		context.clearRect(0, 0, canvasElement.getWidth(), canvasElement.getHeight());
+		
 		double total = canvasElement.getOffsetWidth();
 		int width = (int) (total * percent);
-		context.setFillStyle("#555");
+		
+		context.setFillStyle(backgroundGradient);
 		context.fillRect(0, offsetY, total, BAR_HEIGHT);
-		context.setFillStyle("#fff");		
+		context.setFillStyle(foregroundGradient);		
 		context.fillRect(0, offsetY, width, BAR_HEIGHT);
 	}
 

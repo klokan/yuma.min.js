@@ -165,8 +165,15 @@
 .audio-player {
 	font-family:Verdana, Arial;
 	font-size:11px;
-	background-color:#000;
 	color:#fff;
+	padding:5px;
+	background:#ff0;
+	background:-moz-linear-gradient(top, #555, #000);
+	background:-webkit-gradient(linear, left top, left bottom, from(#555), to(#000));
+	-moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    -khtml-border-radius:4px;
+    border-radius:4px;
 }
 
 .audio-player .button-play-pause {
@@ -193,8 +200,8 @@
 	outline:none;
 }
 
-.annotation-timeline {
-	background-color: #ff0;
+.annotation-track {
+	outline:none;
 }
 
 .audio-player .clock {
@@ -203,9 +210,10 @@
 }
 
 .range-selection {
+	outline:none;
 	z-index:99999;
 }
 
 .extend-selection {
-	cursor:move;
+	cursor:e-resize;
 }

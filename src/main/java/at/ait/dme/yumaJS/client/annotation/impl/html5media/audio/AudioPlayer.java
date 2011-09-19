@@ -12,12 +12,15 @@ import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserExce
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.event.TimeUpdateHandler;
 import at.ait.dme.yumaJS.client.annotation.selection.RangeSelection;
+import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.dom.client.AudioElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
@@ -63,7 +66,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			playerPanel.setStyleName("audio-player");
 			
 			// TODO set via initParams!
-			playerPanel.setPixelSize(400, 20);
+			playerPanel.setPixelSize(460, 20);
 			
 			audioElement = audio.getAudioElement();
 			audioElement.setSrc(audioURL);
@@ -99,7 +102,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			playerPanel.add(btnAnnotate);
 			
 			// TODO set via initParams!
-			final ProgressBar progressBar = new ProgressBar(audio, 275, 20);
+			final ProgressBar progressBar = new ProgressBar(audio, 335, 20);
 			progressBar.setStyleName("progressbar");
 			
 			btnAnnotate.addClickHandler(new ClickHandler() {
@@ -108,8 +111,8 @@ public class AudioPlayer extends Annotatable implements Exportable {
 					try {
 						int x = progressBar.toOffsetX(audio.getAudioElement().getCurrentTime());
 						showEditForm(
-								x + progressBar.getAbsoluteLeft() - 4, 
-								progressBar.getAbsoluteTop() + progressBar.getOffsetHeight() - 4,
+								x + progressBar.getAbsoluteLeft() - 5, 
+								progressBar.getAbsoluteTop() + progressBar.getOffsetHeight() - 2,
 								new RangeSelection(progressBar, x, x + 1));
 					} catch (InadequateBrowserException e) {
 						// Can never happen
@@ -119,6 +122,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			});
 			
 			annotationTrack = new AnnotationTrack(progressBar, initParams);
+			annotationTrack.setStyleName("annotation-track");
 			playerPanel.add(annotationTrack);
 					
 			final Label clock = new Label("0:00 | 0:00");
@@ -134,6 +138,17 @@ public class AudioPlayer extends Annotatable implements Exportable {
 					annotationTrack.showAnnotationAt(audio.getAudioElement().getCurrentTime());
 				}
 			});
+			
+			progressBar.addDomHandler(new MouseOutHandler() {
+				public void onMouseOut(MouseOutEvent event) {
+					DetailsPopup popup = annotationTrack.getCurrentPopup();
+					if (popup != null) {
+						if (!popup.contains(event.getClientX(), event.getClientY())) {
+							annotationTrack.clearCurrentPopup();	
+						}
+					}
+				}
+			}, MouseOutEvent.getType());
 			
 			RootPanel.get(id).add(playerPanel);	
 			RootPanel.get(id).add(progressBar, annotationTrack.getAbsoluteLeft(), annotationTrack.getAbsoluteTop());

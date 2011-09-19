@@ -51,7 +51,7 @@ public class AnnotationTrack extends Composite {
 			public void onMouseMove(MouseMoveEvent event) {
 				Annotation a = getAnnotation(event.getX());
 				if (a == null) {
-					clearPopup();
+					clearCurrentPopup();
 				} else {
 					showPopup(annotations.get(a), event.getClientX(), event.getClientY());
 				}
@@ -62,26 +62,34 @@ public class AnnotationTrack extends Composite {
 	}
 	
 	public void showAnnotationAt(double time) {
-		if (currentPopup == null || !currentPopup.isVisible()) {
-			Annotation a = getAnnotation(time);
-			if (a != null)
-				showPopup(
-						annotations.get(a), 
-						canvasElement.getAbsoluteLeft() + progressBar.toOffsetX(time), 
-						canvasElement.getAbsoluteTop() + canvasElement.getOffsetHeight());
+		Annotation a = getAnnotation(time);
+		if (a == null) {
+			clearCurrentPopup();
+		} else {
+			if (currentPopup == null || !currentPopup.isVisible()) {
+				if (a != null)
+					showPopup(
+							annotations.get(a), 
+							canvasElement.getAbsoluteLeft() + progressBar.toOffsetX(time), 
+							canvasElement.getAbsoluteTop() + canvasElement.getOffsetHeight());
+			}
 		}
 	}
 	
-	private void clearPopup() {
+	public void clearCurrentPopup() {
 		if (currentPopup != null) {
 			currentPopup.removeFromParent();
 			currentPopup = null;
 		}
 	}
 	
+	public DetailsPopup getCurrentPopup() {
+		return currentPopup;
+	}
+	
 	private void showPopup(DetailsPopup popup, int x, int y) {
 		if (currentPopup != null && currentPopup != popup) {
-			clearPopup();
+			clearCurrentPopup();
 		}
 		
 		if (currentPopup == null) {
@@ -116,12 +124,17 @@ public class AnnotationTrack extends Composite {
 	
 	private void refresh() {
 		context.clearRect(0, 0, canvasElement.getWidth(), canvasElement.getHeight());
-		context.setFillStyle("#fff000");
+		context.setFillStyle("#ffff00");
 		
 		for (Annotation a : annotations.keySet()) {
 			Range r = a.getFragment().getRange();
 			int start = progressBar.toOffsetX(r.getFrom());
 			int end = progressBar.toOffsetX(r.getTo());
+			context.setGlobalAlpha(0.7);
+			context.fillRect(start, 0, 1, canvasElement.getHeight());
+			context.fillRect(end, 0, 1, canvasElement.getHeight());
+			
+			context.setGlobalAlpha(0.3);
 			context.fillRect(start, 0, end - start, canvasElement.getHeight());
 		}
 	}

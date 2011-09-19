@@ -96,8 +96,14 @@ public class RangeSelection extends Selection {
 	}
 		
 	private void refresh() {
-		context.setFillStyle("#ff0000");
 		context.clearRect(0, 0, canvasElement.getWidth(), canvasElement.getHeight());
+		context.setFillStyle("#ffff00");
+		
+		context.setGlobalAlpha(0.7);
+		context.fillRect(startX, 0, 1, canvasElement.getHeight());
+		context.fillRect(endX, 0, 1, canvasElement.getHeight());
+		
+		context.setGlobalAlpha(0.3);
 		context.fillRect(startX, 0, endX - startX, canvasElement.getHeight());
 	}
 
