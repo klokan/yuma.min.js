@@ -179,7 +179,8 @@
 .audio-player .button-play-pause {
 	float:left;
 	outline:none;
-	padding:1px;
+	padding:1px 5px 1px 0px;
+	width:20px;
 }
 
 .audio-player .button-state-play {
@@ -193,7 +194,8 @@
 .audio-player .button-annotate {
 	float:left;
 	outline:none;
-	padding:1px;
+	padding:1px 12px 1px 0px;
+	width:20px;
 }
 
 .progressbar {

@@ -25,7 +25,7 @@ import com.google.gwt.user.client.ui.RootPanel;
  */
 public class ProgressBar extends Composite {
 	
-	private static final int BAR_HEIGHT = 6;
+	private static final int BAR_HEIGHT = 8;
 
 	private AudioElement audio;
 	
