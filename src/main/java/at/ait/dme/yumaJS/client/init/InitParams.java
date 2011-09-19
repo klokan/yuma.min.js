@@ -16,7 +16,25 @@ public class InitParams extends JavaScriptObject {
 	protected InitParams() { }
 	
 	public final native Labels labels() /*-{
-		return this.labels
+		return this.labels;
+	}-*/;
+	
+	public final native int width() /*-{
+		if (this.width)
+			return this.width;
+			
+		return -1;
+	}-*/;
+	
+	public final native int height() /*-{
+		if (this.height)
+			return this.height;
+			
+		return -1;
+	}-*/;
+	
+	public final native String stylesheet() /*-{
+		return this.stylesheet;
 	}-*/;
 	
 }

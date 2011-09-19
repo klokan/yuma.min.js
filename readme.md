@@ -75,8 +75,8 @@ to build the project. Your optimized, minified yuma.min.js JavaScript file will 
 ``gradle jettyRunWar``
 
 to build the JavaScript and run the project in an embedded Jetty Web server. Example pages
-will be available at http://localhost:8080/yuma-js/image-example.html (image annotation example) 
-and http://localhost:8080/yuma-js/seadragon-example.html (zoomable image annotation example).
+will be available at http://localhost:8080/yuma-min-js/image-example.html (image annotation example) 
+and http://localhost:8080/yuma-min-js/seadragon-example.html (zoomable image annotation example).
 
 For those using Eclipse:
 

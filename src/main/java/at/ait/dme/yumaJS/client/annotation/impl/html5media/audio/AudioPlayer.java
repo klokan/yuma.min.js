@@ -41,6 +41,11 @@ import com.google.gwt.user.client.ui.ToggleButton;
 @ExportPackage("YUMA")
 public class AudioPlayer extends Annotatable implements Exportable {
 	
+	private static final int DEFAULT_WIDTH = 400;
+	private static final int DEFAULT_HEIGHT = 20;
+	private static final String DEFAULT_STYLESHEET = "css/yuma.min.css";
+	private static final int CLOCK_WIDTH = 70;
+	
 	private AudioElement audioElement;
 	
 	private AnnotationTrack annotationTrack; 
@@ -64,9 +69,12 @@ public class AudioPlayer extends Annotatable implements Exportable {
 		
 			FlowPanel playerPanel = new FlowPanel();
 			playerPanel.setStyleName("audio-player");
-			
-			// TODO set via initParams!
-			playerPanel.setPixelSize(460, 20);
+
+			int width = (initParams != null && initParams.width() > -1) ?
+					initParams.width() : DEFAULT_WIDTH;
+			int height = (initParams != null && initParams.height() > -1) ?
+					initParams.height() : DEFAULT_HEIGHT ;
+			playerPanel.setPixelSize(width, height);
 			
 			audioElement = audio.getAudioElement();
 			audioElement.setSrc(audioURL);
@@ -75,10 +83,12 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			audioElement.setAutoplay(false);
 			playerPanel.add(audio);
 			
-			// TODO pass stylesheet file via init param
-			final ToggleButton btnPlayPause = new ToggleButton(
-					new Image("../css/theme-dark/audio-play.png"),
-					new Image("../css/theme-dark/audio-pause.png"));
+			String stylesheet = (initParams != null && initParams.stylesheet() != null) ?
+					initParams.stylesheet() : DEFAULT_STYLESHEET;
+			
+			Image imgPlay = new Image(stylesheet + "/audio-play.png");
+			Image imgPause = new Image(stylesheet + "/audio-pause.png");
+			final ToggleButton btnPlayPause = new ToggleButton(imgPlay, imgPause);
 			btnPlayPause.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
 					if (audioElement.isPaused()) {
@@ -92,22 +102,20 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			});
 			btnPlayPause.setStyleName("button-play-pause");
 			btnPlayPause.addStyleName("button-state-pause");
-			// TODO set via initParams!
-			btnPlayPause.setPixelSize(20, 20);
 			playerPanel.add(btnPlayPause);
 	
-			final PushButton btnAnnotate = new PushButton(new Image("../css/theme-dark/audio-annotate.png"));
+			Image imgAnnotate = new Image("../css/theme-dark/audio-annotate.png");
+			final PushButton btnAnnotate = new PushButton(imgAnnotate);
 			btnAnnotate.setStyleName("button-annotate");
-			btnAnnotate.setPixelSize(25, 20);
 			playerPanel.add(btnAnnotate);
 			
-			// TODO set via initParams!
-			final ProgressBar progressBar = new ProgressBar(audio, 335, 20);
+			final ProgressBar progressBar = new ProgressBar(audio, 
+					width - imgPlay.getWidth() - imgAnnotate.getWidth() - CLOCK_WIDTH - 10, 
+					height);
 			progressBar.setStyleName("progressbar");
 			
 			btnAnnotate.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					// TODO dummy implementation!
 					try {
 						int x = progressBar.toOffsetX(audio.getAudioElement().getCurrentTime());
 						showEditForm(
@@ -127,8 +135,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 					
 			final Label clock = new Label("0:00 | 0:00");
 			clock.setStyleName("clock");
-			// TODO set via initParams!
-			clock.setPixelSize(70, 20);
+			clock.setPixelSize(CLOCK_WIDTH, height);
 			playerPanel.add(clock);
 			
 			audio.addTimeUpdateHandler(new TimeUpdateHandler() {

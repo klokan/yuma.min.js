@@ -9,7 +9,6 @@ public class TestImageHosted implements EntryPoint {
 
 	public void onModuleLoad() {
 		new ImageAnnotationLayer("annotateMe", createInitParams());
-		// canvas.addAnnotationCreatedListener(createCallback());
 	}
 	
 	private native InitParams createInitParams() /*-{
