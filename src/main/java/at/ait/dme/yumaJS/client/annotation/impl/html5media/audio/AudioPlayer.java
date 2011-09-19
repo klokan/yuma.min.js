@@ -110,7 +110,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			playerPanel.add(btnAnnotate);
 			
 			final ProgressBar progressBar = new ProgressBar(audio, 
-					width - imgPlay.getWidth() - imgAnnotate.getWidth() - CLOCK_WIDTH - 28, 
+					width - 65 - CLOCK_WIDTH, 
 					height);
 			progressBar.setStyleName("progressbar");
 			
