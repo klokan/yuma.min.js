@@ -1,8 +1,11 @@
 package at.ait.dme.yumaJS.client.annotation.widgets;
 
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
+import at.ait.dme.yumaJS.client.annotation.widgets.event.DeleteHandler;
 import at.ait.dme.yumaJS.client.init.Labels;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasMouseOutHandlers;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
@@ -34,7 +37,11 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 	
 	private PushButton btnReply, btnEdit, btnDelete;
 	
+	private Annotation annotation;
+	
 	public DetailsPopup(Annotation a, Labels labels) {
+		this.annotation = a;
+		
 		FlowPanel content = new FlowPanel();
 		content.setStyleName("annotation-popup-content");
 		content.add(new InlineHTML(a.getText()));
@@ -50,7 +57,7 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 		}
 
 		btnReply.setStyleName("annotation-popup-button");
-		btnEdit.setStyleName("annotation-popup-button");
+		btnEdit.setStyleName("annotation-popup-button");		
 		btnDelete.setStyleName("annotation-popup-button");
 		showButtons(false);
 		
@@ -103,6 +110,14 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 			return false;
 		
 		return true;
+	}
+	
+	public void addDeleteHandler(final DeleteHandler handler) {
+		btnDelete.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				handler.onDelete(annotation);
+			}
+		});
 	}
 	
 	public HandlerRegistration addMouseOutHandler(MouseOutHandler handler) {

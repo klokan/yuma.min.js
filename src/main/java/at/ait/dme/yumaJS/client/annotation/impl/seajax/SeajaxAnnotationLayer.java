@@ -79,4 +79,10 @@ public class SeajaxAnnotationLayer extends RubberbandAnnotatable implements Expo
 		new ZoomableAnnotationOverlay(a, viewer, labels);
 	}
 
+	@Override
+	protected void removeAnnotation(Annotation a, Labels labels) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

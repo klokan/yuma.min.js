@@ -180,5 +180,11 @@ public class AudioPlayer extends Annotatable implements Exportable {
 	protected void addAnnotation(Annotation a, Labels labels) {
 		annotationTrack.addAnnotation(a, labels);
 	}
+
+	@Override
+	protected void removeAnnotation(Annotation a, Labels labels) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

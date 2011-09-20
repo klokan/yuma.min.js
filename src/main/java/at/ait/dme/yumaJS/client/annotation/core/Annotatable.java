@@ -46,6 +46,8 @@ public abstract class Annotatable implements Exportable {
 	
 	protected abstract void addAnnotation(Annotation a, Labels labels);
 	
+	protected abstract void removeAnnotation(Annotation a, Labels labels);
+	
 	@Export
 	public void addAnnotationCreatedListener(JavaScriptObject callback) {
 		this.onAnnotationCreated = callback;

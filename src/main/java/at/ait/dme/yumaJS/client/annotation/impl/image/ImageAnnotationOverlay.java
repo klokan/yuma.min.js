@@ -10,7 +10,6 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -21,7 +20,7 @@ import com.google.gwt.user.client.ui.RootPanel;
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class ImageAnnotationOverlay extends Composite {
+public class ImageAnnotationOverlay {
 		
 	private BoundingBoxOverlay bboxOverlay;
 	
@@ -54,6 +53,10 @@ public class ImageAnnotationOverlay extends Composite {
 				bbox.getY() + canvas.getAbsoluteTop());
 		RootPanel.get().add(detailsPopup, bbox.getX() + canvas.getAbsoluteLeft(), 
 				bbox.getY() + canvas.getAbsoluteTop() + bbox.getHeight());
+	}
+	
+	public DetailsPopup getDetailsPopup() {
+		return detailsPopup;
 	}
 	
 	public void destroy() {

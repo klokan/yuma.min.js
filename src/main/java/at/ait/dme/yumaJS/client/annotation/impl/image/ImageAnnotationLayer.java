@@ -1,5 +1,7 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image;
 
+import java.util.HashMap;
+
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
@@ -9,6 +11,7 @@ import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.core.RubberbandAnnotatable;
 import at.ait.dme.yumaJS.client.annotation.selection.ResizableBoxSelection;
+import at.ait.dme.yumaJS.client.annotation.widgets.event.DeleteHandler;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
@@ -31,6 +34,9 @@ import com.google.gwt.user.client.ui.RootPanel;
 public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	
 	private AbsolutePanel annotationLayer;
+	
+	private HashMap<Annotation, ImageAnnotationOverlay> annotations = 
+		new HashMap<Annotation, ImageAnnotationOverlay>();
 	
 	public ImageAnnotationLayer(String id) {
 		this(id, null);
@@ -55,8 +61,17 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	}
 
 	@Override
-	protected void addAnnotation(Annotation a, Labels labels) {
-		new ImageAnnotationOverlay(a, annotationLayer.getElement(), labels);
+	protected void addAnnotation(final Annotation a, final Labels labels) {
+		ImageAnnotationOverlay overlay = 
+			new ImageAnnotationOverlay(a, annotationLayer.getElement(), labels);
+		
+		overlay.getDetailsPopup().addDeleteHandler(new DeleteHandler() {
+			public void onDelete(Annotation annotation) {
+				removeAnnotation(a, labels);
+			}
+		});
+		
+		annotations.put(a, overlay);
 	}
 	
 	public void newAnnotation() {
@@ -67,6 +82,15 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 				selection.remove();
 			}
 		});
+	}
+
+	@Override
+	protected void removeAnnotation(Annotation a, Labels labels) {
+		ImageAnnotationOverlay overlay = annotations.get(a);
+		if (overlay != null) {
+			overlay.destroy();
+			annotations.remove(a);
+		}
 	}
 
 }
