@@ -39,5 +39,4 @@ public abstract class RubberbandAnnotatable extends Annotatable {
 			}
 		}, MouseDownEvent.getType());
 	}
-
 }

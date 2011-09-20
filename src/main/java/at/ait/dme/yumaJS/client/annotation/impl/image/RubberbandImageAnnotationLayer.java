@@ -1,20 +1,17 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image;
 
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 
 import at.ait.dme.yumaJS.client.YUMA;
-import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.core.RubberbandAnnotatable;
-import at.ait.dme.yumaJS.client.annotation.selection.ResizableBoxSelection;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -23,17 +20,17 @@ import com.google.gwt.user.client.ui.RootPanel;
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-@Export
-@ExportPackage("YUMA")
-public class ImageAnnotationLayer extends Annotatable implements Exportable {
+public class RubberbandImageAnnotationLayer extends RubberbandAnnotatable implements Exportable {
 	
-	private AbsolutePanel annotationLayer;
+	private FlowPanel annotationLayer;
 	
-	public ImageAnnotationLayer(String id) {
+	private InlineHTML hint;
+	
+	public RubberbandImageAnnotationLayer(String id) {
 		this(id, null);
 	}
 
-	public ImageAnnotationLayer(String id, InitParams params) {	
+	public RubberbandImageAnnotationLayer(String id, InitParams params) {	
 		super(params);
 		
 		Element e = DOM.getElementById(id);
@@ -43,21 +40,20 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		if (!e.getTagName().toLowerCase().equals("img"))
 			YUMA.fatalError("Error: you can only create an ImageCanvas on an <img> element");
 
-		annotationLayer = new AbsolutePanel();
+		annotationLayer = new FlowPanel();
 		annotationLayer.setStyleName("image-canvas");
 		annotationLayer.setPixelSize(e.getClientWidth(), e.getClientHeight());
 		
+		hint = new InlineHTML("Click and Drag to add a note");
+		annotationLayer.add(hint);
+		
+		addRubberbandSelection(annotationLayer);
 		RootPanel.get().add(annotationLayer, e.getAbsoluteLeft(), e.getAbsoluteTop());
-		new ResizableBoxSelection(annotationLayer);
 	}
 
 	@Override
 	protected void addAnnotation(Annotation a, Labels labels) {
 		new ImageAnnotationOverlay(a, annotationLayer.getElement(), labels);
-	}
-	
-	public void newAnnotation() {
-		
 	}
 
 }

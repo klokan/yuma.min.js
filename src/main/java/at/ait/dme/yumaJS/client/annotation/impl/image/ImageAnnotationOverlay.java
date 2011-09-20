@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 /**
  * An overlay that represents an annotation on an 
- * {@link ImageAnnotationLayer} by combining a 
+ * {@link RubberbandImageAnnotationLayer} by combining a 
  * {@link BoundingBoxOverlay} with a fix-location
  * {@link DetailsPopup}.
  * 

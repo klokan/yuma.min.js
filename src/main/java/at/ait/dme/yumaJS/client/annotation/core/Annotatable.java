@@ -11,7 +11,6 @@ import at.ait.dme.yumaJS.client.init.Labels;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -20,7 +19,7 @@ import com.google.gwt.user.client.ui.RootPanel;
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public abstract class Annotatable extends Composite implements Exportable {
+public abstract class Annotatable implements Exportable {
 	
 	private InitParams initParams;
 	

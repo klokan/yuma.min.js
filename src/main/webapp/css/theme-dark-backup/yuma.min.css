@@ -1,0 +1,228 @@
+.rubberband-outer {
+	border:1px solid #000;
+	z-index:9010;
+}
+
+.rubberband-inner {
+	width:100%;
+	height:100%;
+	background-color:#000;
+	opacity:0.3;
+	filter: alpha(opacity=30);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+}
+
+.annotation-bbox-outer {
+	border:1px solid #000;
+	z-index:9010;
+}
+
+.annotation-bbox-inner {
+	width:100%;
+	height:100%;
+	background-color:#000;
+	opacity:0.3;
+	filter: alpha(opacity=30);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+}
+
+.annotation-editform {
+	background:url('grad-transp.png');
+	margin:5px 0px 0px 5px;
+	width:220px;
+	padding:4px;
+	z-index:9010;
+	border: solid 1px #333;
+	-moz-box-shadow: 3px 3px 10px #333;
+	-webkit-box-shadow: 3px 3px 10px #333;
+	box-shadow: 3px 3px 10px #333; 
+}
+
+.annotation-editform textarea {
+	outline:none;  
+	background-color:#333;
+	border-width:0px;
+	font-family:Verdana, Arial;
+	font-size:11px;	
+	color:#fff;
+	padding:4px;
+	width:211px;
+	height:70px;
+	resize:none; 
+	opacity:0.8;
+	filter: alpha(opacity=80);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+}
+
+.annotation-editform .button  {
+	float:left;
+	text-align:center;
+	font-family:Verdana, Arial;
+	font-size:10px;	
+	color: #fff;
+	border: solid 1px #333;
+	background-color: #888;
+	padding:4px 10px;
+	margin:0px 0px 0px 0px;
+	cursor:pointer;
+	cursor:hand;
+	opacity:0.5;
+	filter:alpha(opacity=50);
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	background: -webkit-gradient(linear, left top, left bottom, from(#888), to(#555));
+	background: -moz-linear-gradient(top,  #888,  #555);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#888888', endColorstr='#555555');
+}
+
+.annotation-editform .button:hover {
+	background: #333;
+}
+
+.annotation-editform .button:active {
+	color: #666;
+}
+
+.annotation-editform .button-save {
+}
+
+.annotation-editform .button-cancel {
+	margin-left:5px;
+}
+
+.annotation-popup {
+	background:url('grad-transp.png');
+	margin:5px 0px 0px 0px;
+	padding:4px;
+	z-index:9010;
+	border: solid 1px #333;
+	-moz-box-shadow: 3px 3px 10px #333;
+	-webkit-box-shadow: 3px 3px 10px #333;
+	box-shadow: 3px 3px 10px #333; 
+}
+
+.annotation-popup-content {
+	font-family:Verdana, Arial;
+	font-size:11px;
+	color:#fff;
+	padding:4px;
+	resize:none;
+	margin-bottom:3px; 
+	opacity:0.8;
+	filter: alpha(opacity=80);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+}
+
+.annotation-popup-button {
+	float:left;
+	text-align:center;
+	font-family:Verdana, Arial;
+	font-size:10px;	
+	color: #d7d7d7;
+	border: solid 1px #333;
+	background: #333;
+	background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#000));
+	background: -moz-linear-gradient(top,  #666,  #000);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#666666', endColorstr='#000000');
+	padding:4px 10px;
+	margin:0px 3px 0px 0px;
+	cursor:pointer;
+	cursor:hand;
+}
+
+.annotation-popup-button:hover {
+	background: #000;
+	background: -webkit-gradient(linear, left top, left bottom, from(#444), to(#000));
+	background: -moz-linear-gradient(top,  #444,  #000);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#444444', endColorstr='#000000');
+}
+
+.annotation-popup-button:active {
+	color: #666;
+	background: -webkit-gradient(linear, left top, left bottom, from(#000), to(#444));
+	background: -moz-linear-gradient(top,  #000,  #444);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#666666');
+}
+
+.image-canvas {
+	text-align:center;
+	z-index:9000;
+}
+
+.image-canvas span {
+	color:#fff;
+	font-family:Arial;
+	font-size:28px;
+	font-weight:bold;
+	position:relative;
+	top:50%;
+	margin-top:-0.5em;
+	opacity:0.6;
+	filter: alpha(opacity=60);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+}
+
+.deepzoom-canvas {
+	background-color:#fff;
+	opacity:0.2;
+	filter: alpha(opacity=20);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+	z-index:9000;
+}
+
+.audio-player {
+	font-family:Verdana, Arial;
+	font-size:11px;
+	color:#fff;
+	padding:5px;
+	background:#ff0;
+	background:-moz-linear-gradient(top, #555, #000);
+	background:-webkit-gradient(linear, left top, left bottom, from(#555), to(#000));
+	-moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    -khtml-border-radius:4px;
+    border-radius:4px;
+}
+
+.audio-player .button-play-pause {
+	float:left;
+	outline:none;
+	padding:1px 5px 1px 0px;
+	width:20px;
+}
+
+.audio-player .button-state-play {
+
+}
+
+.audio-player .button-state-pause {
+
+}
+
+.audio-player .button-annotate {
+	float:left;
+	outline:none;
+	padding:1px 12px 1px 0px;
+	width:20px;
+}
+
+.progressbar {
+	outline:none;
+}
+
+.annotation-track {
+	outline:none;
+}
+
+.audio-player .clock {
+	float:right;
+	padding:3px 1px;
+}
+
+.range-selection {
+	outline:none;
+	z-index:99999;
+}
+
+.extend-selection {
+	cursor:e-resize;
+}
