@@ -13,6 +13,7 @@ import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
@@ -54,6 +55,7 @@ public class SeajaxAnnotationLayer extends RubberbandAnnotatable implements Expo
 		annotationLayer = new AbsolutePanel();
 		annotationLayer.setVisible(false);
 		annotationLayer.setStyleName("deepzoom-canvas");
+		annotationLayer.getElement().getStyle().setOverflow(Overflow.VISIBLE);
 		annotationLayer.setPixelSize(div.getOffsetWidth(), div.getOffsetHeight());
 		RootPanel.get().add(annotationLayer, div.getAbsoluteLeft(), div.getAbsoluteTop());
 		
