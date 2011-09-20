@@ -9,8 +9,6 @@ import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -109,12 +107,6 @@ public class ResizableBoxSelection extends Selection {
 				removeHandler();
 			}
 		}, MouseUpEvent.getType());
-		
-		RootPanel.get().addDomHandler(new MouseOutHandler() {
-			public void onMouseOut(MouseOutEvent event) {
-				removeHandler();
-			}
-		}, MouseOutEvent.getType());
 	}
 	
 	private void removeHandler() {
@@ -178,7 +170,7 @@ public class ResizableBoxSelection extends Selection {
 							outer.getElement().getStyle().setWidth(newWidth, Unit.PX);
 							inner.setWidgetPosition(east, newWidth - HANDLE_WIDTH / 2, 0);
 						} else if (direction == Direction.SOUTH) {
-							int top = outer.getAbsoluteTop() - parent.getAbsoluteLeft();
+							int top = outer.getAbsoluteTop() - parent.getAbsoluteTop();
 							int newHeight = mouseY - top;
 							
 							outer.getElement().getStyle().setHeight(newHeight, Unit.PX);
