@@ -5,8 +5,8 @@ import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 
 import at.ait.dme.yumaJS.client.YUMA;
+import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
-import at.ait.dme.yumaJS.client.annotation.core.RubberbandAnnotatable;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
 import at.ait.dme.yumaJS.client.annotation.selection.ResizableBoxSelection;
 import at.ait.dme.yumaJS.client.init.InitParams;
@@ -29,7 +29,7 @@ import com.google.gwt.user.client.ui.RootPanel;
  */
 @Export
 @ExportPackage("YUMA")
-public class SeajaxAnnotationLayer extends RubberbandAnnotatable implements Exportable {
+public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	
 	private AbsolutePanel annotationLayer;
 	
