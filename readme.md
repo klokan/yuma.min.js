@@ -5,21 +5,22 @@ __yuma.min.js__ aims to be a leaner, lighter and more portable user interface fo
 JavaScript API'-like library: add annotation features to your existing HTML pages with 
 just a few lines of JavaScript!
 
-The present version of yuma.min.js is limited to images and provides annotation for
+The present version of yuma.min.js provides annotation for
 
    * ordinary static images (any JPG, PNG, etc. included in your HTML page)
    * zoomable images embedded with the [Seadragon AJAX] 
      (http://gallery.expression.microsoft.com/SeadragonAjax) JavaScript viewer. 
+   * audio files (unfinished, HTML5-capable browsers only)
 
 ## Getting Started
 
-To make images in your Web page annotatable, simply perform the following three steps:
+To make content in your Web page annotatable, simply perform the following three steps:
 
 __Include the yuma.min.js JavaScript__ file in the \<head\> of your HTML page
 
      <head>
        ...
-       <script type="text/javascript" src="yuma.min.js.nocache.js"></script>
+       <script type="text/javascript" src="yuma.min.nocache.js"></script>
        ...
      </head>  
      
@@ -27,7 +28,7 @@ __Include the yuma.min.js CSS stylesheet__ file in the \<head\> of your HTML pag
 
      <head>
        ...
-       <link rel="stylesheet" type="text/css" href="css/yuma.min.js.css" />
+       <link rel="stylesheet" type="text/css" href="css/yuma.min.css" />
        <script type="text/javascript" src="yuma.min.js.nocache.js"></script>
        ...
      </head>  
@@ -41,7 +42,7 @@ start your initialization.
        ...
        <script type="text/javascript">
        window.onYUMAready = function() {
-         new YUMA.ImageCanvas('annotateMe');
+         var annotationLayer = new YUMA.ImageAnnotationLayer('annotateMe');
        }
        </script>
      </head>
@@ -52,15 +53,14 @@ start your initialization.
        ...
      </body>
      
-That's it for the basics. 
+Calling ``annotationLayer.newAnnotation();`` will open the annotation editing form. That's it for the basics. 
 
 ## What Else is in There?
 
-Flexible skinning via CSS, customization
-& I18N of button texts and labels via object literal init parameters, lifecycle
-callbacks so can get a handle on annotations when they are created, edited, deleted etc. etc.
-Essentially, you'll be able to build your own, customized annotation application around yuma.min.js!
-We'll have a more complete API documentation on the Wiki shortly!
+Flexible skinning via CSS, customization & I18N of button texts and labels via object literal 
+init parameters, lifecycle callbacks so can get a handle on annotations when they are created, 
+edited, deleted etc. etc. Essentially, you'll be able to build your own, customized annotation 
+application around yuma.min.js! We'll have a more complete API documentation on the Wiki shortly!
 
 ## Developer Info
 
@@ -70,21 +70,22 @@ and built with [Gradle] (http://www.gradle.org/). Use
 ``gradle gwtCompile``
 
 to build the project. Your optimized, minified yuma.min.js JavaScript file will be at 
-/build/gwt/yuma.min.js/yuma.min.js.nocache.js. Use
+/build/gwt/yuma.min/yuma.min.nocache.js. Use
 
 ``gradle jettyRunWar``
 
 to build the JavaScript and run the project in an embedded Jetty Web server. Example pages
-will be available at http://localhost:8080/yuma-min-js/image-example.html (image annotation example) 
-and http://localhost:8080/yuma-min-js/seadragon-example.html (zoomable image annotation example).
+will be available at http://localhost:8080/yuma-min-js/image-example.html (image annotation example), 
+http://localhost:8080/yuma-min-js/seadragon-example.html (zoomable image annotation example) and
+http://localhost:8080/yuma-min-js/audio-example.html (HTML5 audio example).
 
 For those using Eclipse:
 
 ``gradle eclipse``
 
 will generate Eclipse project files. I also added pre-configured launch configurations (named
-_image.launch_ and _seadragon.launch_) which launch sample pages for image- and 
-zoomable-image-annotation in [GWT development mode]
+_image.launch_, _seadragon.launch_ and _audio.launch_) which launch sample pages for image-, 
+zoomable-image- and audio-annotation in [GWT development mode]
 (http://code.google.com/intl/de-DE/webtoolkit/doc/latest/DevGuideCompilingAndDebugging.html#dev_mode).
 
 ## Why Google Web Toolkit?
@@ -111,4 +112,4 @@ need to re-compile, restart the server etc. Refresh your browser to see your cha
 in regular JavaScript.
 * Once you're ready for the real deal, run ``gradle jettyRunWar`` from the command line. This
 will compile the application, build the optimized JavaScript, and launch a Jetty Web server with
-some sample pages.
+the sample pages.
