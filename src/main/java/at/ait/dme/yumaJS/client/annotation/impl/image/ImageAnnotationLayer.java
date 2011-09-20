@@ -12,6 +12,7 @@ import at.ait.dme.yumaJS.client.annotation.selection.ResizableBoxSelection;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.AbsolutePanel;
@@ -45,6 +46,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 
 		annotationLayer = new AbsolutePanel();
 		annotationLayer.setStyleName("image-canvas");
+		annotationLayer.getElement().getStyle().setOverflow(Overflow.VISIBLE);
 		annotationLayer.setPixelSize(e.getClientWidth(), e.getClientHeight());
 		
 		RootPanel.get().add(annotationLayer, e.getAbsoluteLeft(), e.getAbsoluteTop());

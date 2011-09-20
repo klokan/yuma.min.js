@@ -38,6 +38,8 @@ public class ResizableBoxSelection extends Selection {
 	
 	private int dragStartX, dragStartY;
 	
+	private EditForm editForm;
+	
 	private static HandlerRegistration moveHandler;
 	
 	public ResizableBoxSelection(AbsolutePanel parent, InitParams initParams) {
@@ -85,9 +87,11 @@ public class ResizableBoxSelection extends Selection {
 		makeResizable(west, Direction.WEST);
 		
 		Labels labels = (initParams == null) ? null : initParams.labels();
-		EditForm editForm = new EditForm(this, labels);
+		editForm = new EditForm(this, labels);
 		
 		parent.add(outer, 0, 0);
+		parent.add(editForm, 0, 0);
+		updateEditForm();
 		
 		RootPanel.get().addDomHandler(new MouseUpHandler() {
 			public void onMouseUp(MouseUpEvent event) {
@@ -129,6 +133,7 @@ public class ResizableBoxSelection extends Selection {
 						int left = outer.getAbsoluteLeft() - parent.getAbsoluteLeft();
 						int top = outer.getAbsoluteTop() - parent.getAbsoluteTop();
 						parent.setWidgetPosition(outer, left + dX, top + dY);
+						updateEditForm();
 					}
 				}, MouseMoveEvent.getType());
 			}
@@ -176,10 +181,18 @@ public class ResizableBoxSelection extends Selection {
 							outer.getElement().getStyle().setWidth(newWidth, Unit.PX);
 							inner.setWidgetPosition(east, 0, newWidth - DEFAULT_HANDLE_WIDTH / 2);
 						}
+						
+						updateEditForm();
 					}
 				}, MouseMoveEvent.getType());
 			}
 		}, MouseDownEvent.getType());
+	}
+	
+	private void updateEditForm() {
+		int left = outer.getAbsoluteLeft() - parent.getAbsoluteLeft() - 4;
+		int top = outer.getAbsoluteTop() - parent.getAbsoluteTop() + outer.getOffsetHeight();
+		parent.setWidgetPosition(editForm, left, top);
 	}
 	
 	@Override
