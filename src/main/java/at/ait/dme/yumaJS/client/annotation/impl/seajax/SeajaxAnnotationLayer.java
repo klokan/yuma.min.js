@@ -1,18 +1,23 @@
 package at.ait.dme.yumaJS.client.annotation.impl.seajax;
 
+import org.timepedia.exporter.client.Export;
+import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.core.RubberbandAnnotatable;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
+import at.ait.dme.yumaJS.client.annotation.selection.ResizableBoxSelection;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -21,17 +26,19 @@ import com.google.gwt.user.client.ui.RootPanel;
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
-public class RubberbandSeajaxAnnotationLayer extends RubberbandAnnotatable implements Exportable {
+@Export
+@ExportPackage("YUMA")
+public class SeajaxAnnotationLayer extends RubberbandAnnotatable implements Exportable {
 	
-	private FlowPanel canvas;
+	private AbsolutePanel annotationLayer;
 	
 	private SeadragonViewer viewer;
 
-	public RubberbandSeajaxAnnotationLayer(String id, JavaScriptObject deepZoomViewer) {
+	public SeajaxAnnotationLayer(String id, JavaScriptObject deepZoomViewer) {
 		this(id, deepZoomViewer, null);
 	}
 	
-	public RubberbandSeajaxAnnotationLayer(String id, JavaScriptObject deepZoomViewer, InitParams params) {
+	public SeajaxAnnotationLayer(String id, JavaScriptObject deepZoomViewer, InitParams params) {
 		super(params);
 		
 		Element div = DOM.getElementById(id);
@@ -44,26 +51,25 @@ public class RubberbandSeajaxAnnotationLayer extends RubberbandAnnotatable imple
 		if (deepZoomViewer == null) 
 			YUMA.fatalError("Error: Seadragon viewer not found (not initialized yet?)");
 			
-		canvas = new FlowPanel();
-		canvas.setVisible(false);
-		canvas.setStyleName("deepzoom-canvas");
-		canvas.setPixelSize(div.getOffsetWidth(), div.getOffsetHeight());
-		addRubberbandSelection(canvas);
-		RootPanel.get().add(canvas, div.getAbsoluteLeft(), div.getAbsoluteTop());
+		annotationLayer = new AbsolutePanel();
+		annotationLayer.setVisible(false);
+		annotationLayer.setStyleName("deepzoom-canvas");
+		annotationLayer.setPixelSize(div.getOffsetWidth(), div.getOffsetHeight());
+		RootPanel.get().add(annotationLayer, div.getAbsoluteLeft(), div.getAbsoluteTop());
 		
 		viewer = new SeadragonViewer(deepZoomViewer);
 	}
 	
-	public void activate() {
-		canvas.setVisible(true);
-	}
-	
-	public void deactivate() {
-		canvas.setVisible(false);
-	}
-	
-	public boolean isActivated() {
-		return canvas.isVisible();
+	public void newAnnotation() {
+		annotationLayer.setVisible(true);
+		final ResizableBoxSelection selection = new ResizableBoxSelection(annotationLayer, null);
+		selection.addSaveClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				addAnnotation(selection.getAnnotation(), null);
+				selection.remove();
+				annotationLayer.setVisible(false);
+			}
+		});
 	}
 	
 	@Override

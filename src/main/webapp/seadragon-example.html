@@ -4,7 +4,7 @@
    	<meta http-equiv="X-UA-Compatible" content="IE=8" >
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>Zoomable Image Annotation - Sample Page</title>
-    <link rel="stylesheet" type="text/css" href="css/yuma.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/theme-dark/yuma.min.css" />
     <style type="text/css">
       #viewer{
         margin:0px;
@@ -18,9 +18,6 @@
     <script type="text/javascript">
     // Annotation canvas
     var canvas;
-    
-    // Flag indicating whether we are currently in annotation mode
-	var fAnnotating = false;
 	
     // Deepzoom viewer
 	var viewer;
@@ -50,25 +47,12 @@
 			success: onZoomitResponse
 		});
     }
-    
-	function toggleAnnotationMode() {
-		if (fAnnotating) {
-			$('#annotate-button').val("Start Annotating");
-			if (canvas)
-				canvas.deactivate();
-		} else {
-  			$('#annotate-button').val("Stop Annotating");
-  			if (canvas)
-  				canvas.activate();
-  		}
-		fAnnotating = !fAnnotating;
-	}
 	</script>
   </head>
   
   <body>
     <div id="viewer" style="width:640px;height:480px;"></div>
-    <input id="annotate-button" type="button" value="Start Annotating" onclick="toggleAnnotationMode()"/>
+    <input id="annotate-button" type="button" value="Add Note" onclick="canvas.newAnnotation()"/>
   </body>
 </html>
 

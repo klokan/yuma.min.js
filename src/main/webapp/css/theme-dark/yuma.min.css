@@ -122,9 +122,5 @@
 }
 
 .deepzoom-canvas {
-	background-color:#fff;
-	opacity:0.2;
-	filter: alpha(opacity=20);
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-	z-index:9000;
+
 }

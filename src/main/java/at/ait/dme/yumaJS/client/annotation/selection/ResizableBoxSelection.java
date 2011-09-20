@@ -3,6 +3,7 @@ package at.ait.dme.yumaJS.client.annotation.selection;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
@@ -31,7 +32,9 @@ public class ResizableBoxSelection extends Selection {
 	
 	private static final int DEFAULT_SIZE = 60;
 	
-	private static final int DEFAULT_HANDLE_WIDTH = 11;
+	private static final int HANDLE_WIDTH = 11;
+	
+	private static final int DEFAULT_START_OFFSET = 30;
 	
 	private AbsolutePanel parent;
 	
@@ -63,36 +66,41 @@ public class ResizableBoxSelection extends Selection {
 		
 		north = new FlowPanel();
 		north.setWidth("100%");
-		north.setHeight(DEFAULT_HANDLE_WIDTH + "px");
+		north.setHeight(HANDLE_WIDTH + "px");
 		north.getElement().getStyle().setCursor(Cursor.N_RESIZE);
-		inner.add(north, 0, - DEFAULT_HANDLE_WIDTH / 2);
+		inner.add(north, 0, - HANDLE_WIDTH / 2);
 		makeResizable(north, Direction.NORTH);
 		
 		east = new FlowPanel();
-		east.setWidth(DEFAULT_HANDLE_WIDTH + "px");
+		east.setWidth(HANDLE_WIDTH + "px");
 		east.setHeight("100%");
 		east.getElement().getStyle().setCursor(Cursor.E_RESIZE);
-		inner.add(east, DEFAULT_SIZE - DEFAULT_HANDLE_WIDTH / 2, 0);
+		inner.add(east, DEFAULT_SIZE - HANDLE_WIDTH / 2, 0);
 		makeResizable(east, Direction.EAST);
 		
 		south = new FlowPanel();
 		south.setWidth("100%");
-		south.setHeight(DEFAULT_HANDLE_WIDTH + "px");
+		south.setHeight(HANDLE_WIDTH + "px");
 		south.getElement().getStyle().setCursor(Cursor.S_RESIZE);
-		inner.add(south, 0, DEFAULT_SIZE - DEFAULT_HANDLE_WIDTH / 2);
+		inner.add(south, 0, DEFAULT_SIZE - HANDLE_WIDTH / 2);
 		makeResizable(south, Direction.SOUTH);
 		
 		west = new FlowPanel();
-		west.setWidth(DEFAULT_HANDLE_WIDTH + "px");
+		west.setWidth(HANDLE_WIDTH + "px");
 		west.setHeight("100%");
 		west.getElement().getStyle().setCursor(Cursor.W_RESIZE);
-		inner.add(west, - DEFAULT_HANDLE_WIDTH / 2, 0);
+		inner.add(west, - HANDLE_WIDTH / 2, 0);
 		makeResizable(west, Direction.WEST);
 		
 		Labels labels = (initParams == null) ? null : initParams.labels();
 		editForm = new EditForm(this, labels);
+		editForm.addCancelClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				remove();
+			}
+		});
 		
-		parent.add(outer, 0, 0);
+		parent.add(outer, DEFAULT_START_OFFSET, DEFAULT_START_OFFSET);
 		parent.add(editForm, 0, 0);
 		updateEditForm();
 		
@@ -162,19 +170,19 @@ public class ResizableBoxSelection extends Selection {
 			
 							outer.getElement().getStyle().setTop(mouseY, Unit.PX);
 							outer.getElement().getStyle().setHeight(newHeight, Unit.PX);
-							inner.setWidgetPosition(south, 0, newHeight - DEFAULT_HANDLE_WIDTH / 2);
+							inner.setWidgetPosition(south, 0, newHeight - HANDLE_WIDTH / 2);
 						} else if (direction == Direction.EAST) {
 							int left = outer.getAbsoluteLeft() - parent.getAbsoluteLeft();
 							int newWidth = mouseX - left;
 							
 							outer.getElement().getStyle().setWidth(newWidth, Unit.PX);
-							inner.setWidgetPosition(east, newWidth - DEFAULT_HANDLE_WIDTH / 2, 0);
+							inner.setWidgetPosition(east, newWidth - HANDLE_WIDTH / 2, 0);
 						} else if (direction == Direction.SOUTH) {
 							int top = outer.getAbsoluteTop() - parent.getAbsoluteLeft();
 							int newHeight = mouseY - top;
 							
 							outer.getElement().getStyle().setHeight(newHeight, Unit.PX);
-							inner.setWidgetPosition(south, 0, newHeight - DEFAULT_HANDLE_WIDTH / 2);
+							inner.setWidgetPosition(south, 0, newHeight - HANDLE_WIDTH / 2);
 						} else if (direction == Direction.WEST) {
 							int currentWidth = inner.getElement().getClientWidth();
 							int right = outer.getAbsoluteLeft() - parent.getAbsoluteLeft() + currentWidth;
@@ -182,7 +190,7 @@ public class ResizableBoxSelection extends Selection {
 							
 							outer.getElement().getStyle().setLeft(mouseX, Unit.PX);
 							outer.getElement().getStyle().setWidth(newWidth, Unit.PX);
-							inner.setWidgetPosition(east, 0, newWidth - DEFAULT_HANDLE_WIDTH / 2);
+							inner.setWidgetPosition(east, 0, newWidth - HANDLE_WIDTH / 2);
 						}
 						
 						updateEditForm();

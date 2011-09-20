@@ -1,6 +1,6 @@
 package at.ait.dme.yumaJS.client;
 
-import at.ait.dme.yumaJS.client.annotation.impl.seajax.RubberbandSeajaxAnnotationLayer;
+import at.ait.dme.yumaJS.client.annotation.impl.seajax.SeajaxAnnotationLayer;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -10,35 +10,26 @@ import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class TestDeepZoomHosted implements EntryPoint {
-	
-	private static String BTN_LABEL_ACTIVATED = "STOP ANNOTATING";
-	private static String BTN_LABEL_DEACTIVATED = "START ANNOTATING";
 
-	private RubberbandSeajaxAnnotationLayer canvas = null;
+	private SeajaxAnnotationLayer canvas = null;
 	
 	public void onModuleLoad() {				
-		final PushButton toggleAnnotation = new PushButton(BTN_LABEL_DEACTIVATED);
-		toggleAnnotation.setStyleName("toggle-annotation");
-		toggleAnnotation.addClickHandler(new ClickHandler() {
+		final PushButton annotate = new PushButton("Add Note");
+		annotate.setStyleName("toggle-annotation");
+		annotate.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (canvas == null)
 					initCanvas();
 				
-				if (canvas.isActivated()) {
-					canvas.deactivate();
-					toggleAnnotation.getUpFace().setText(BTN_LABEL_DEACTIVATED);
-				} else {
-					canvas.activate();
-					toggleAnnotation.getUpFace().setText(BTN_LABEL_ACTIVATED);					
-				}
+				canvas.newAnnotation();
 			}
 		});
 		
-		RootPanel.get().add(toggleAnnotation);
+		RootPanel.get().add(annotate);
 	}
 	
 	private void initCanvas() {
-		canvas = new RubberbandSeajaxAnnotationLayer("viewer", getViewer());
+		canvas = new SeajaxAnnotationLayer("viewer", getViewer());
 	}
 	
 	private native JavaScriptObject getViewer() /*-{

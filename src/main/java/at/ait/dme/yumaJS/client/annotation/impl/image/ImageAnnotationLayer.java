@@ -52,14 +52,6 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		annotationLayer.setPixelSize(e.getClientWidth(), e.getClientHeight());
 		
 		RootPanel.get().add(annotationLayer, e.getAbsoluteLeft(), e.getAbsoluteTop());
-		
-		final ResizableBoxSelection selection = new ResizableBoxSelection(annotationLayer, params);
-		selection.addSaveClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				addAnnotation(selection.getAnnotation(), null);
-				selection.remove();
-			}
-		});
 	}
 
 	@Override
@@ -68,7 +60,13 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	}
 	
 	public void newAnnotation() {
-		
+		final ResizableBoxSelection selection = new ResizableBoxSelection(annotationLayer, null);
+		selection.addSaveClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				addAnnotation(selection.getAnnotation(), null);
+				selection.remove();
+			}
+		});
 	}
 
 }
