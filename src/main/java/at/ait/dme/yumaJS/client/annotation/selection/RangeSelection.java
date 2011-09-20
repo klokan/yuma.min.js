@@ -52,7 +52,7 @@ public class RangeSelection extends Selection {
 		
 		selectionCanvas.addMouseDownHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
-				disableTextSelection(RootPanel.get().getElement());
+				disableTextSelection();
 				dragging = true;
 			}
 		});
@@ -86,7 +86,7 @@ public class RangeSelection extends Selection {
 		
 		selectionCanvas.addMouseUpHandler(new MouseUpHandler() {
 			public void onMouseUp(MouseUpEvent event) {
-				enableTextSelection(RootPanel.get().getElement());
+				enableTextSelection();
 				dragging = false;
 			}
 		});

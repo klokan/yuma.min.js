@@ -12,12 +12,12 @@
 .annotation-bbox-outer {
 	border:1px solid #000;
 	padding:0px 2px 2px 0px;
-	z-index:9010;
+	z-index:9009;
 }
 
 .annotation-bbox-inner {
 	border:1px solid #fff;
-	z-index:9010;
+	z-index:9009;
 }
 
 .annotation-editform {

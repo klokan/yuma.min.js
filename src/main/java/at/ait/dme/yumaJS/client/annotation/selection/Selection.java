@@ -2,8 +2,6 @@ package at.ait.dme.yumaJS.client.annotation.selection;
 
 import at.ait.dme.yumaJS.client.annotation.core.Fragment;
 
-import com.google.gwt.dom.client.Element;
-
 /**
  * An abstract base class for fragment selection tools.
  * 
@@ -17,14 +15,16 @@ public abstract class Selection {
 	
 	public abstract void clear();
 
-	public static native void disableTextSelection(Element el) /*-{
-		el.onselectstart=function(){return false};
-		document.body.style.MozUserSelect='none';
+	public static native void disableTextSelection() /*-{
+		document.onselectstart = function() {return false;} 
+		document.onmousedown = function() {return false;}
+		document.body.style.MozUserSelect='none'; 
 	}-*/;
 	
-	public static native void enableTextSelection(Element el) /*-{
-		el.onselectstart=function(){return true};
-		document.body.style.MozUserSelect='all';
+	public static native void enableTextSelection() /*-{
+		document.onselectstart = function() {return true;}
+  		document.onmousedown = function() {return true;}
+  		document.body.style.MozUserSelect='all';
 	}-*/;
 	
 }

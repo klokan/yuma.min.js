@@ -79,7 +79,7 @@ public class RubberbandSelection extends Selection {
 		innerBorder.setStyleName("rubberband-inner");
 		outerBorder.add(innerBorder);
 		RootPanel r = RootPanel.get();
-		disableTextSelection(r.getElement());
+		disableTextSelection();
 		r.add(outerBorder, x + parentEl.getAbsoluteLeft(), y + parentEl.getAbsoluteTop());
 	}
 	
@@ -105,7 +105,7 @@ public class RubberbandSelection extends Selection {
 		// De-activate the rubberband
 		mouseMoveRegistration.removeHandler();
 		mouseUpRegistration.removeHandler();
-		enableTextSelection(RootPanel.get().getElement());
+		enableTextSelection();
 		
 		// Return the currently selected BBox
 		return getSelectedFragment();

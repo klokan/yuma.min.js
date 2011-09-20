@@ -105,6 +105,7 @@ public class ResizableBoxSelection extends Selection {
 		RootPanel.get().addDomHandler(new MouseUpHandler() {
 			public void onMouseUp(MouseUpEvent event) {
 				removeHandler();
+				Selection.enableTextSelection();
 			}
 		}, MouseUpEvent.getType());
 	}
@@ -119,6 +120,7 @@ public class ResizableBoxSelection extends Selection {
 	private void makeDraggable(Panel panel) {
 		panel.addDomHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
+				Selection.disableTextSelection();
 				dragStartX = event.getClientX();
 				dragStartY = event.getClientY();
 				removeHandler();
@@ -146,6 +148,7 @@ public class ResizableBoxSelection extends Selection {
 	private void makeResizable(Panel handle, final Direction direction) {
 		handle.addDomHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
+				Selection.disableTextSelection();
 				event.stopPropagation();
 				dragStartX = event.getClientX();
 				dragStartY = event.getClientY();
