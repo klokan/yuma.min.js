@@ -30,7 +30,7 @@ public class EditForm extends Composite {
 	
 	private PushButton btnCancel;
 	
-	public EditForm(int x, int y, Selection selection, Labels labels) {
+	public EditForm(Selection selection, Labels labels) {
 		this.selection = selection;
 		
 		textArea = new TextArea();

@@ -18,6 +18,9 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import at.ait.dme.yumaJS.client.annotation.core.Fragment;
+import at.ait.dme.yumaJS.client.annotation.widgets.EditForm;
+import at.ait.dme.yumaJS.client.init.InitParams;
+import at.ait.dme.yumaJS.client.init.Labels;
 
 public class ResizableBoxSelection extends Selection {
 	
@@ -37,7 +40,7 @@ public class ResizableBoxSelection extends Selection {
 	
 	private static HandlerRegistration moveHandler;
 	
-	public ResizableBoxSelection(AbsolutePanel parent) {
+	public ResizableBoxSelection(AbsolutePanel parent, InitParams initParams) {
 		this.parent = parent;
 		
 		outer = new FlowPanel();
@@ -80,6 +83,9 @@ public class ResizableBoxSelection extends Selection {
 		west.getElement().getStyle().setCursor(Cursor.W_RESIZE);
 		inner.add(west, - DEFAULT_HANDLE_WIDTH / 2, 0);
 		makeResizable(west, Direction.WEST);
+		
+		Labels labels = (initParams == null) ? null : initParams.labels();
+		EditForm editForm = new EditForm(this, labels);
 		
 		parent.add(outer, 0, 0);
 		

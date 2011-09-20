@@ -48,7 +48,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		annotationLayer.setPixelSize(e.getClientWidth(), e.getClientHeight());
 		
 		RootPanel.get().add(annotationLayer, e.getAbsoluteLeft(), e.getAbsoluteTop());
-		new ResizableBoxSelection(annotationLayer);
+		new ResizableBoxSelection(annotationLayer, params);
 	}
 
 	@Override

@@ -31,7 +31,7 @@ public abstract class Annotatable implements Exportable {
 		
 	protected void showEditForm(int x, int y, final Selection selection) {
 		final Labels labels = (initParams == null) ? null : initParams.labels();
-		final EditForm f = new EditForm(x, y, selection, labels);
+		final EditForm f = new EditForm(selection, labels);
 		
 		f.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
