@@ -3,6 +3,7 @@ package at.ait.dme.yumaJS.client.annotation.selection;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
@@ -17,6 +18,8 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import at.ait.dme.yumaJS.client.annotation.core.Annotation;
+import at.ait.dme.yumaJS.client.annotation.core.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.core.Fragment;
 import at.ait.dme.yumaJS.client.annotation.widgets.EditForm;
 import at.ait.dme.yumaJS.client.init.InitParams;
@@ -195,6 +198,14 @@ public class ResizableBoxSelection extends Selection {
 		parent.setWidgetPosition(editForm, left, top);
 	}
 	
+	public void addSaveClickHandler(ClickHandler handler) {
+		editForm.addSaveClickHandler(handler);
+	}
+	
+	public Annotation getAnnotation() {
+		return Annotation.create(getSelectedFragment(), editForm.getText());
+	}
+	
 	@Override
 	public void setSelectionHandler(SelectionHandler handler) {
 		// We don't use selection events in this mode
@@ -202,13 +213,19 @@ public class ResizableBoxSelection extends Selection {
 
 	@Override
 	public Fragment getSelectedFragment() {
-		return null; //;Fragment.create(BoundingBox.create(left, top, width, height));
+		int left = outer.getAbsoluteLeft() - parent.getAbsoluteLeft();
+		int top = outer.getAbsoluteTop() - parent.getAbsoluteTop();
+		return Fragment.create(BoundingBox.create(left, top, 
+				inner.getElement().getClientWidth(), inner.getElement().getClientHeight()));
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+
+	}
+	
+	public void remove() {
+		outer.removeFromParent();
 	}
 
 }

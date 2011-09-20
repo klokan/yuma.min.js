@@ -13,6 +13,8 @@ import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.AbsolutePanel;
@@ -50,7 +52,14 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		annotationLayer.setPixelSize(e.getClientWidth(), e.getClientHeight());
 		
 		RootPanel.get().add(annotationLayer, e.getAbsoluteLeft(), e.getAbsoluteTop());
-		new ResizableBoxSelection(annotationLayer, params);
+		
+		final ResizableBoxSelection selection = new ResizableBoxSelection(annotationLayer, params);
+		selection.addSaveClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				addAnnotation(selection.getAnnotation(), null);
+				selection.remove();
+			}
+		});
 	}
 
 	@Override
