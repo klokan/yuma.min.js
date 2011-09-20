@@ -6,6 +6,8 @@ import at.ait.dme.yumaJS.client.init.Labels;
 import com.google.gwt.event.dom.client.HasMouseOutHandlers;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -30,12 +32,13 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 	
 	private FlowPanel container;
 	
+	private PushButton btnReply, btnEdit, btnDelete;
+	
 	public DetailsPopup(Annotation a, Labels labels) {
 		FlowPanel content = new FlowPanel();
 		content.setStyleName("annotation-popup-content");
 		content.add(new InlineHTML(a.getText()));
 		
-		PushButton btnReply, btnEdit, btnDelete;
 		if (labels == null) {
 			btnReply = new PushButton("REPLY");
 			btnEdit = new PushButton("EDIT");
@@ -49,6 +52,13 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 		btnReply.setStyleName("annotation-popup-button");
 		btnEdit.setStyleName("annotation-popup-button");
 		btnDelete.setStyleName("annotation-popup-button");
+		showButtons(false);
+		
+		content.addDomHandler(new MouseOverHandler() {
+			public void onMouseOver(MouseOverEvent event) {
+				showButtons(true);
+			}
+		}, MouseOverEvent.getType());
 		
 		container = new FlowPanel();
 		container.setStyleName("annotation-popup");		
@@ -63,8 +73,15 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 		addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				container.setVisible(false);
+				showButtons(false);
 			}
 		});
+	}
+	
+	private void showButtons(boolean show) {
+		btnReply.setVisible(show);
+		btnEdit.setVisible(show);
+		btnDelete.setVisible(show);
 	}
 	
 	public boolean contains(int x, int y) {
