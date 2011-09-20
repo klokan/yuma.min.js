@@ -1,6 +1,6 @@
 package at.ait.dme.yumaJS.client;
 
-import at.ait.dme.yumaJS.client.annotation.impl.seajax.SeajaxAnnotationLayer;
+import at.ait.dme.yumaJS.client.annotation.impl.seajax.RubberbandSeajaxAnnotationLayer;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -14,7 +14,7 @@ public class TestDeepZoomHosted implements EntryPoint {
 	private static String BTN_LABEL_ACTIVATED = "STOP ANNOTATING";
 	private static String BTN_LABEL_DEACTIVATED = "START ANNOTATING";
 
-	private SeajaxAnnotationLayer canvas = null;
+	private RubberbandSeajaxAnnotationLayer canvas = null;
 	
 	public void onModuleLoad() {				
 		final PushButton toggleAnnotation = new PushButton(BTN_LABEL_DEACTIVATED);
@@ -38,7 +38,7 @@ public class TestDeepZoomHosted implements EntryPoint {
 	}
 	
 	private void initCanvas() {
-		canvas = new SeajaxAnnotationLayer("viewer", getViewer());
+		canvas = new RubberbandSeajaxAnnotationLayer("viewer", getViewer());
 	}
 	
 	private native JavaScriptObject getViewer() /*-{

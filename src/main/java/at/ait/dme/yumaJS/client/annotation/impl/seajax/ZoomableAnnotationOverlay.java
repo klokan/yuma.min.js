@@ -18,7 +18,7 @@ import at.ait.dme.yumaJS.client.init.Labels;
 
 /**
  * An overlay that represents an annotation on a 
- * {@link SeajaxAnnotationLayer} by attaching a 
+ * {@link RubberbandSeajaxAnnotationLayer} by attaching a 
  * {@link BoundingBoxOverlay} to a Seadragon rectangle
  * overlay and combining it with a movable
  * {@link DetailsPopup}.
