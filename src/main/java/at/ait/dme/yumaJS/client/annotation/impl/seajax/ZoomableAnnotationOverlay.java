@@ -27,15 +27,21 @@ import at.ait.dme.yumaJS.client.init.Labels;
  */
 public class ZoomableAnnotationOverlay {
 	
+	private SeadragonViewer viewer;
+	
 	private BoundingBoxOverlay bboxOverlay;
+	
+	private Element bboxDiv;
 	
 	private DetailsPopup detailsPopup;
 	
 	public ZoomableAnnotationOverlay(Annotation a, SeadragonViewer viewer, Labels labels) {
+		this.viewer = viewer;
+		
 		// The bounding box overlay
 		BoundingBox bbox = a.getFragment().getBoundingBox();
 		bboxOverlay = new BoundingBoxOverlay(bbox);
-		final Element bboxDiv = bboxOverlay.getElement();
+		bboxDiv = bboxOverlay.getElement();
 		DOM.sinkEvents(bboxDiv, Event.ONMOUSEOVER | Event.ONMOUSEOUT);
 		Event.setEventListener(bboxDiv, new EventListener() {
 			public void onBrowserEvent(Event event) {
@@ -82,7 +88,12 @@ public class ZoomableAnnotationOverlay {
 		RootPanel.get().add(detailsPopup);
 	}
 	
+	public DetailsPopup getDetailsPopup() {
+		return detailsPopup;
+	}
+	
 	public void destroy() {
+		viewer.removeOverlay(bboxDiv);
 		bboxOverlay.removeFromParent();
 		detailsPopup.removeFromParent();
 	}

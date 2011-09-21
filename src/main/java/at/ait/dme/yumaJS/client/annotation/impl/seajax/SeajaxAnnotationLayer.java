@@ -1,5 +1,7 @@
 package at.ait.dme.yumaJS.client.annotation.impl.seajax;
 
+import java.util.HashMap;
+
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
@@ -9,6 +11,7 @@ import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
 import at.ait.dme.yumaJS.client.annotation.selection.ResizableBoxSelection;
+import at.ait.dme.yumaJS.client.annotation.widgets.event.DeleteHandler;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
@@ -34,6 +37,9 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	private AbsolutePanel annotationLayer;
 	
 	private SeadragonViewer viewer;
+	
+	private HashMap<Annotation, ZoomableAnnotationOverlay> annotations = 
+		new HashMap<Annotation, ZoomableAnnotationOverlay>();
 
 	public SeajaxAnnotationLayer(String id, JavaScriptObject deepZoomViewer) {
 		this(id, deepZoomViewer, null);
@@ -75,14 +81,26 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	}
 	
 	@Override
-	protected void addAnnotation(Annotation a, Labels labels) {
-		new ZoomableAnnotationOverlay(a, viewer, labels);
+	protected void addAnnotation(final Annotation a, final Labels labels) {
+		ZoomableAnnotationOverlay overlay = 
+			new ZoomableAnnotationOverlay(a, viewer, labels);
+
+		overlay.getDetailsPopup().addDeleteHandler(new DeleteHandler() {
+			public void onDelete(Annotation annotation) {
+				removeAnnotation(a, labels);
+			}
+		});
+		
+		annotations.put(a, overlay);
 	}
 
 	@Override
 	protected void removeAnnotation(Annotation a, Labels labels) {
-		// TODO Auto-generated method stub
-		
+		ZoomableAnnotationOverlay overlay = annotations.get(a);
+		if (overlay != null) {
+			overlay.destroy();
+			annotations.remove(a);
+		}
 	}
 
 }
