@@ -137,6 +137,23 @@ public class ResizableBoxSelection extends Selection {
 						
 						int left = outer.getAbsoluteLeft() - parent.getAbsoluteLeft();
 						int top = outer.getAbsoluteTop() - parent.getAbsoluteTop();
+						
+						if (left + dX < 0) {
+							left = 0;
+							dX = 0;
+						} else if (left + dX + outer.getOffsetWidth() > parent.getOffsetWidth()) {
+							left = parent.getOffsetWidth() - outer.getOffsetWidth();
+							dX = 0;
+						}
+						
+						if (top + dY < 0) {
+							top = 0;
+							dY = 0;
+						} else if (top + dY + outer.getOffsetHeight() > parent.getOffsetHeight()) {
+							top = parent.getOffsetHeight() - outer.getOffsetHeight();
+							dY = 0;
+						}
+						
 						parent.setWidgetPosition(outer, left + dX, top + dY);
 						updateEditForm();
 					}

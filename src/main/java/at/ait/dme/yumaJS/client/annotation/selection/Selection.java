@@ -14,12 +14,14 @@ public abstract class Selection {
 	public abstract void clear();
 
 	public static native void disableTextSelection() /*-{
+		console.log('disable');
 		document.onselectstart = function() {return false;} 
 		document.onmousedown = function() {return false;}
 		document.body.style.MozUserSelect='none'; 
 	}-*/;
 	
 	public static native void enableTextSelection() /*-{
+	    console.log('enable');
 		document.onselectstart = function() {return true;}
   		document.onmousedown = function() {return true;}
   		document.body.style.MozUserSelect='all';
