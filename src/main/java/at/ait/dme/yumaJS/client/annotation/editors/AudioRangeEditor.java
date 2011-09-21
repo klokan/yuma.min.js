@@ -12,15 +12,19 @@ import at.ait.dme.yumaJS.client.init.Labels;
 
 public class AudioRangeEditor extends Editor {
 	
-	public AudioRangeEditor(Annotatable annotatable, ProgressBar progressBar, int start, int end, Labels labels) throws InadequateBrowserException {
-		super(annotatable);
+	public AudioRangeEditor(Annotatable annotatable, ProgressBar progressBar, int offsetX, Labels labels)
+		throws InadequateBrowserException {
 		
-		Selection selection = new RangeSelection(progressBar, start, end); 
+		super(annotatable);
+				
+		Selection selection = new RangeSelection(progressBar, offsetX, offsetX + 1); 
 		setSelection(selection);
 		
 		EditForm editForm = new EditForm(selection, labels);
 		setEditForm(editForm);
-		RootPanel.get().add(editForm, start, end);
+		RootPanel.get().add(editForm, 
+				offsetX + progressBar.getAbsoluteLeft(), 
+				progressBar.getAbsoluteTop() + progressBar.getOffsetHeight());
 	}
 
 }

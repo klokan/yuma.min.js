@@ -35,10 +35,12 @@ public class RangeSelection extends Selection {
 		
 	private int startX, endX;
 	
-	public RangeSelection(ProgressBar progressBar, int start, int end) throws InadequateBrowserException {
+	public RangeSelection(ProgressBar progressBar, int startOffsetX, int endOffsetX) 
+		throws InadequateBrowserException {
+		
 		this.progressBar = progressBar;
-		this.startX = start;
-		this.endX = end;
+		this.startX = startOffsetX;
+		this.endX = endOffsetX;
 		
 		selectionCanvas = Canvas.createIfSupported();
 		if (selectionCanvas == null)

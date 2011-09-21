@@ -109,11 +109,9 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			final AudioPlayer self = this;
 			btnAnnotate.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					int x = progressBar.toOffsetX(audio.getAudioElement().getCurrentTime());
 					try {
 						new AudioRangeEditor(self, progressBar,
-								x + progressBar.getAbsoluteLeft() - 5, 
-								progressBar.getAbsoluteTop() + progressBar.getOffsetHeight(),
+								progressBar.toOffsetX(audio.getAudioElement().getCurrentTime()),
 								getLabels());
 					} catch (InadequateBrowserException e) {
 						// Should never happen
