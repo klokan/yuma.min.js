@@ -5,9 +5,8 @@ import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import com.google.gwt.core.client.JavaScriptObject;
 
 /**
- * Wraps a JavaScript object literal that carries
- * initialization information to be used by implementations
- * of {@link Annotatable}.
+ * Wraps a JavaScript object literal that carries initialization
+ * information to be used by implementations of {@link Annotatable}.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
@@ -22,7 +21,6 @@ public class InitParams extends JavaScriptObject {
 	public final native int width() /*-{
 		if (this.width)
 			return this.width;
-			
 		return -1;
 	}-*/;
 	

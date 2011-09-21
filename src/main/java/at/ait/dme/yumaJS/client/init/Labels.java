@@ -5,9 +5,8 @@ import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import com.google.gwt.core.client.JavaScriptObject;
 
 /**
- * Wraps a JavaScript object literal that contains
- * custom labels to be used by implementations
- * of {@link Annotatable}.
+ * Wraps a JavaScript object literal that contains custom labels
+ * to be used by implementations of {@link Annotatable}.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */

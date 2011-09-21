@@ -16,9 +16,15 @@ import com.google.gwt.core.client.JavaScriptObject;
  */
 public abstract class Annotatable implements Exportable {
 	
+	/**
+	 * Initialization parameters handed to the Annotatable on instantiation
+	 */
 	private InitParams initParams;
 	
-	private JavaScriptObject onAnnotationCreated = null;
+	/**
+	 * The onAnnotationCreated callback function 
+	 */
+	private JavaScriptObject onAnnotationCreatedCallback = null;
 	
 	public Annotatable(InitParams params) {
 		this.initParams = params;
@@ -46,14 +52,18 @@ public abstract class Annotatable implements Exportable {
 		return initParams.labels();
 	}
 	
+	/**
+	 * Adds a callback function for catching 'annotationCreated' events
+	 * @param callback the callback function
+	 */
 	@Export
 	public void addAnnotationCreatedListener(JavaScriptObject callback) {
-		this.onAnnotationCreated = callback;
+		this.onAnnotationCreatedCallback = callback;
 	};
 	
 	protected void fireOnAnnotationCreated(Annotation a) {
-		if (onAnnotationCreated != null)
-			_fireOnAnnotationCreated(a, onAnnotationCreated);
+		if (onAnnotationCreatedCallback != null)
+			_fireOnAnnotationCreated(a, onAnnotationCreatedCallback);
 	}
 	
 	private native void _fireOnAnnotationCreated(Annotation a, JavaScriptObject callback) /*-{
