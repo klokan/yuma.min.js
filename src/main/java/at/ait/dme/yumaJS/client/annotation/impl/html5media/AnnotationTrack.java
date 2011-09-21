@@ -124,17 +124,17 @@ public class AnnotationTrack extends Composite {
 	
 	private void refresh() {
 		context.clearRect(0, 0, canvasElement.getWidth(), canvasElement.getHeight());
-		context.setFillStyle("#ffff00");
+		context.setFillStyle("#ffa500");
 		
 		for (Annotation a : annotations.keySet()) {
 			Range r = a.getFragment().getRange();
 			int start = progressBar.toOffsetX(r.getFrom());
 			int end = progressBar.toOffsetX(r.getTo());
-			context.setGlobalAlpha(0.7);
+			context.setGlobalAlpha(0.8);
 			context.fillRect(start, 0, 1, canvasElement.getHeight());
 			context.fillRect(end, 0, 1, canvasElement.getHeight());
 			
-			context.setGlobalAlpha(0.3);
+			context.setGlobalAlpha(0.4);
 			context.fillRect(start, 0, end - start, canvasElement.getHeight());
 		}
 	}
