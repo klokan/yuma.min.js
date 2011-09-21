@@ -143,6 +143,7 @@ public class ResizableBoxSelection extends Selection {
 							left = 0;
 							dX = 0;
 						} else if (left + dX + outer.getOffsetWidth() > parent.getOffsetWidth()) {
+							dragStartX = parent.getOffsetWidth();
 							left = parent.getOffsetWidth() - outer.getOffsetWidth();
 							dX = 0;
 						}
@@ -151,6 +152,7 @@ public class ResizableBoxSelection extends Selection {
 							top = 0;
 							dY = 0;
 						} else if (top + dY + outer.getOffsetHeight() > parent.getOffsetHeight()) {
+							dragStartY = parent.getOffsetHeight();
 							top = parent.getOffsetHeight() - outer.getOffsetHeight();
 							dY = 0;
 						}
