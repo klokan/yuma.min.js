@@ -12,7 +12,9 @@ import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserExce
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.event.TimeUpdateHandler;
 import at.ait.dme.yumaJS.client.annotation.selection.RangeSelection;
+import at.ait.dme.yumaJS.client.annotation.selection.Selection;
 import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
+import at.ait.dme.yumaJS.client.annotation.widgets.EditForm;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
@@ -155,6 +157,21 @@ public class AudioPlayer extends Annotatable implements Exportable {
 		} catch (InadequateBrowserException e) {
 			YUMA.fatalError(e.getMessage());
 		}
+	}
+	
+	private void showEditForm(int x, int y, final Selection selection) {
+		final Labels labels = (initParams == null) ? null : initParams.labels();
+		final EditForm f = new EditForm(selection, labels);
+		
+		f.addSaveClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				Annotation a = Annotation.create(selection.getSelectedFragment(), f.getText());
+				addAnnotation(a, labels);
+				fireOnAnnotationCreated(a);
+			}
+		});
+		
+		RootPanel.get().add(f, x, y);
 	}
 	
 	public void play() {

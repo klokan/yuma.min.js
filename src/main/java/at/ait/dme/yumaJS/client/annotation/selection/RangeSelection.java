@@ -111,11 +111,6 @@ public class RangeSelection extends Selection {
 	}
 
 	@Override
-	public void setSelectionHandler(SelectionHandler handler) {
-		// We don't use selection events in audio mode
-	}
-
-	@Override
 	public Fragment getSelectedFragment() {
 		double startTime = progressBar.toTime(startX);
 		double endTime = progressBar.toTime(endX);

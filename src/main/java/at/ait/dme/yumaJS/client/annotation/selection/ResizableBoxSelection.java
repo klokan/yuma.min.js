@@ -208,11 +208,6 @@ public class ResizableBoxSelection extends Selection {
 	public Annotation getAnnotation() {
 		return Annotation.create(getSelectedFragment(), editForm.getText());
 	}
-	
-	@Override
-	public void setSelectionHandler(SelectionHandler handler) {
-		// We don't use selection events in this mode
-	}
 
 	@Override
 	public Fragment getSelectedFragment() {

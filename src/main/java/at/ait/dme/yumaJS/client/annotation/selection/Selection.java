@@ -9,8 +9,6 @@ import at.ait.dme.yumaJS.client.annotation.core.Fragment;
  */
 public abstract class Selection {
 	
-	public abstract void setSelectionHandler(final SelectionHandler handler);
-	
 	public abstract Fragment getSelectedFragment();
 	
 	public abstract void clear();
