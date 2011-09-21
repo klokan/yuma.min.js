@@ -13,11 +13,7 @@ public class TestAudioHosted implements EntryPoint {
 	}
 	
 	private native InitParams createInitParams() /*-{
-		return {
-			height:20,
-			width:360,
-			stylesheet:'../css/theme-dark'
-		};
+		return { width:360,	icons:'../css/theme-plain-gray'	};
 	}-*/;
 
 }

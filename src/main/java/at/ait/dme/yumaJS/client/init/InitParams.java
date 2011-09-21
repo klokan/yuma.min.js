@@ -26,15 +26,8 @@ public class InitParams extends JavaScriptObject {
 		return -1;
 	}-*/;
 	
-	public final native int height() /*-{
-		if (this.height)
-			return this.height;
-			
-		return -1;
-	}-*/;
-	
-	public final native String stylesheet() /*-{
-		return this.stylesheet;
+	public final native String iconPath() /*-{
+		return this.icons;
 	}-*/;
 	
 }

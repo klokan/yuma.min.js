@@ -53,7 +53,7 @@ public class AnnotationTrack extends Composite {
 				if (a == null) {
 					clearCurrentPopup();
 				} else {
-					showPopup(annotations.get(a), event.getClientX(), event.getClientY());
+					showAnnotationAt(a.getFragment().getRange().getFrom());
 				}
 			}
 		});

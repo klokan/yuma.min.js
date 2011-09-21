@@ -41,9 +41,9 @@ import com.google.gwt.user.client.ui.ToggleButton;
 @ExportPackage("YUMA")
 public class AudioPlayer extends Annotatable implements Exportable {
 	
-	private static final int DEFAULT_WIDTH = 400;
-	private static final int DEFAULT_HEIGHT = 20;
-	private static final String DEFAULT_STYLESHEET = "css/yuma.min.css";
+	private static final int PLAYER_HEIGHT = 20;
+	private static final int PLAYER_DEFAULT_WIDTH = 400;
+	private static final String DEFAULT_ICON_PATH = "css/yuma.min.css";
 	private static final int CLOCK_WIDTH = 70;
 	
 	private AudioElement audioElement;
@@ -63,18 +63,15 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			throw new RuntimeException();
 		}
 		
-		
 		try {
 			final ExtendedAudio audio = new ExtendedAudio();		
 		
 			FlowPanel playerPanel = new FlowPanel();
-			playerPanel.setStyleName("audio-player");
+			playerPanel.setStyleName("yuma-audio-player");
 
 			int width = (initParams != null && initParams.width() > -1) ?
-					initParams.width() : DEFAULT_WIDTH;
-			int height = (initParams != null && initParams.height() > -1) ?
-					initParams.height() : DEFAULT_HEIGHT ;
-			playerPanel.setPixelSize(width, height);
+					initParams.width() : PLAYER_DEFAULT_WIDTH;
+			playerPanel.setPixelSize(width, PLAYER_HEIGHT);
 			
 			audioElement = audio.getAudioElement();
 			audioElement.setSrc(audioURL);
@@ -83,36 +80,34 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			audioElement.setAutoplay(false);
 			playerPanel.add(audio);
 			
-			String stylesheet = (initParams != null && initParams.stylesheet() != null) ?
-					initParams.stylesheet() : DEFAULT_STYLESHEET;
+			String iconPath = (initParams != null && initParams.iconPath() != null) ?
+					initParams.iconPath() : DEFAULT_ICON_PATH;
 			
-			Image imgPlay = new Image(stylesheet + "/audio-play.png");
-			Image imgPause = new Image(stylesheet + "/audio-pause.png");
+			Image imgPlay = new Image(iconPath + "/audio-play.png");
+			Image imgPause = new Image(iconPath + "/audio-pause.png");
 			final ToggleButton btnPlayPause = new ToggleButton(imgPlay, imgPause);
 			btnPlayPause.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
-					if (audioElement.isPaused()) {
-						btnPlayPause.addStyleName("button-state-play");
+					if (audioElement.isPaused())
 						play();
-					} else {
-						btnPlayPause.addStyleName("button-state-pause");
+					else
 						pause();
-					}
 				}
 			});
-			btnPlayPause.setStyleName("button-play-pause");
-			btnPlayPause.addStyleName("button-state-pause");
+			btnPlayPause.setStyleName("yuma-audio-button");
+			btnPlayPause.setWidth("25px");
 			playerPanel.add(btnPlayPause);
 	
-			Image imgAnnotate = new Image(stylesheet + "/audio-annotate.png");
+			Image imgAnnotate = new Image(iconPath + "/audio-annotate.png");
 			final PushButton btnAnnotate = new PushButton(imgAnnotate);
-			btnAnnotate.setStyleName("button-annotate");
+			btnAnnotate.setWidth("28px");
+			btnAnnotate.setStyleName("yuma-audio-button");
 			playerPanel.add(btnAnnotate);
 			
 			final ProgressBar progressBar = new ProgressBar(audio, 
 					width - 65 - CLOCK_WIDTH, 
-					height);
-			progressBar.setStyleName("progressbar");
+					PLAYER_HEIGHT);
+			progressBar.setStyleName("yuma-audio-progressbar");
 			
 			btnAnnotate.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
@@ -120,7 +115,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 						int x = progressBar.toOffsetX(audio.getAudioElement().getCurrentTime());
 						showEditForm(
 								x + progressBar.getAbsoluteLeft() - 5, 
-								progressBar.getAbsoluteTop() + progressBar.getOffsetHeight() - 2,
+								progressBar.getAbsoluteTop() + progressBar.getOffsetHeight(),
 								new RangeSelection(progressBar, x, x + 1));
 					} catch (InadequateBrowserException e) {
 						// Can never happen
@@ -130,12 +125,12 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			});
 			
 			annotationTrack = new AnnotationTrack(progressBar, initParams);
-			annotationTrack.setStyleName("annotation-track");
+			annotationTrack.setStyleName("yuma-audio-annotationtrack");
 			playerPanel.add(annotationTrack);
 					
 			final Label clock = new Label("0:00 | 0:00");
-			clock.setStyleName("clock");
-			clock.setPixelSize(CLOCK_WIDTH, height);
+			clock.setStyleName("yuma-audio-clock");
+			clock.setPixelSize(CLOCK_WIDTH, PLAYER_HEIGHT);
 			playerPanel.add(clock);
 			
 			audio.addTimeUpdateHandler(new TimeUpdateHandler() {

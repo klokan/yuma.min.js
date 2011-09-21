@@ -8,6 +8,7 @@ import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.dom.client.CanvasElement;
+import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
@@ -43,7 +44,9 @@ public class RangeSelection extends Selection {
 		if (selectionCanvas == null)
 			throw new InadequateBrowserException("HTML5 Canvas not supported");
 
-		selectionCanvas.setStyleName("range-selection");
+		selectionCanvas.getElement().getStyle().setProperty("outline", "none");
+		selectionCanvas.getElement().getStyle().setZIndex(999999);
+		
 		canvasElement = selectionCanvas.getCanvasElement();
 		canvasElement.setWidth(progressBar.getOffsetWidth());
 		canvasElement.setHeight(progressBar.getOffsetHeight());
@@ -71,14 +74,14 @@ public class RangeSelection extends Selection {
 				} else {
 					if (x < startX && x > (startX - 5)) {
 						startHandle = true;
-						selectionCanvas.addStyleName("extend-selection");
+						selectionCanvas.getElement().getStyle().setCursor(Cursor.E_RESIZE);
 					} else if (x > endX && (x < endX + 5)) {
 						endHandle = true;
-						selectionCanvas.addStyleName("extend-selection");
+						selectionCanvas.getElement().getStyle().setCursor(Cursor.E_RESIZE);
 					} else {
 						startHandle = false;
 						endHandle = false;
-						selectionCanvas.removeStyleName("extend-selection");
+						selectionCanvas.getElement().getStyle().setCursor(Cursor.AUTO);
 					}					
 				}				
 			}
