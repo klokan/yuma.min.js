@@ -14,9 +14,9 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
- * The main entry point to the yuma.js library. Exports the yuma.js
- * API and calls the window.onYUMAready JavaScript callback function
- * once yuma.js and all images on the page have been loaded.
+ * The main entry point to the yuma.min.js library. Exports the API
+ * and calls the window.onYUMAready JavaScript callback function
+ * once yuma.min.js and all images on the page have been loaded.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
