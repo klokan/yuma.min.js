@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.selection;
+package at.ait.dme.yumaJS.client.annotation.editors;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style;

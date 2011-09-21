@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.selection;
+package at.ait.dme.yumaJS.client.annotation.editors;
 
 import at.ait.dme.yumaJS.client.annotation.core.Fragment;
 import at.ait.dme.yumaJS.client.annotation.core.Range;

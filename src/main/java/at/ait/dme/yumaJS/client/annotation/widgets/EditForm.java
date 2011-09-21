@@ -1,6 +1,6 @@
 package at.ait.dme.yumaJS.client.annotation.widgets;
 
-import at.ait.dme.yumaJS.client.annotation.selection.Selection;
+import at.ait.dme.yumaJS.client.annotation.editors.Selection;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.core.client.Scheduler;
