@@ -126,6 +126,7 @@ public class ResizableBoxSelection extends Selection {
 				removeHandler();
 				moveHandler = RootPanel.get().addDomHandler(new MouseMoveHandler() {
 					public void onMouseMove(MouseMoveEvent event) {
+						event.preventDefault();
 						int x = event.getClientX();
 						int y = event.getClientY();
 						
