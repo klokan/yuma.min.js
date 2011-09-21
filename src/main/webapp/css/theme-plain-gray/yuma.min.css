@@ -80,6 +80,9 @@
 .annotation-popup {
 	padding-top:2px;
 	z-index:9010;
+	opacity:0;
+	transition:opacity 0.15s linear;
+	-webkit-transition:opacity 0.15s linear; 
 }
 
 .annotation-popup-content {

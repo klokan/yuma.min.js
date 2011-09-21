@@ -4,6 +4,7 @@ import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.widgets.event.DeleteHandler;
 import at.ait.dme.yumaJS.client.init.Labels;
 
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasMouseOutHandlers;
@@ -73,16 +74,27 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 		container.add(btnReply);
 		container.add(btnEdit);
 		container.add(btnDelete);
-		container.setVisible(false);
+		setVisible(false);
 		
 		initWidget(container);
 		
 		addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
-				container.setVisible(false);
+				setVisible(false);
 				showButtons(false);
 			}
 		});
+	}
+	
+	@Override
+	public void setVisible(boolean visible) {
+		container.setVisible(true);
+		Style style = container.getElement().getStyle();
+		if (visible) {
+			style.setOpacity(1);
+		} else {
+			style.setOpacity(0);
+		}
 	}
 	
 	private void showButtons(boolean show) {
