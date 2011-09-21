@@ -80,7 +80,6 @@ public class ZoomableAnnotationOverlay {
 					RootPanel.get().setWidgetPosition(detailsPopup, 
 							bboxDiv.getAbsoluteLeft(), 
 							bboxDiv.getAbsoluteTop() +  bboxDiv.getOffsetHeight());
-					detailsPopup.setVisible(true);
 				}
 			}
 		});
