@@ -7,16 +7,13 @@ import org.timepedia.exporter.client.Exportable;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
-import at.ait.dme.yumaJS.client.annotation.editors.RangeSelection;
-import at.ait.dme.yumaJS.client.annotation.editors.Selection;
+import at.ait.dme.yumaJS.client.annotation.editors.AudioRangeEditor;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.AnnotationTrack;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserException;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.event.TimeUpdateHandler;
 import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
-import at.ait.dme.yumaJS.client.annotation.widgets.EditForm;
 import at.ait.dme.yumaJS.client.init.InitParams;
-import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.dom.client.AudioElement;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -109,16 +106,17 @@ public class AudioPlayer extends Annotatable implements Exportable {
 					PLAYER_HEIGHT);
 			progressBar.setStyleName("yuma-audio-progressbar");
 			
+			final AudioPlayer self = this;
 			btnAnnotate.addClickHandler(new ClickHandler() {
 				public void onClick(ClickEvent event) {
+					int x = progressBar.toOffsetX(audio.getAudioElement().getCurrentTime());
 					try {
-						int x = progressBar.toOffsetX(audio.getAudioElement().getCurrentTime());
-						showEditForm(
+						new AudioRangeEditor(self, progressBar,
 								x + progressBar.getAbsoluteLeft() - 5, 
 								progressBar.getAbsoluteTop() + progressBar.getOffsetHeight(),
-								new RangeSelection(progressBar, x, x + 1));
+								getLabels());
 					} catch (InadequateBrowserException e) {
-						// Can never happen
+						// Should never happen
 						throw new RuntimeException(e);
 					}
 				}
@@ -159,20 +157,6 @@ public class AudioPlayer extends Annotatable implements Exportable {
 		}
 	}
 	
-	private void showEditForm(int x, int y, final Selection selection) {
-		final EditForm f = new EditForm(selection, getLabels());
-		
-		f.addSaveClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				Annotation a = Annotation.create(selection.getSelectedFragment(), f.getText());
-				addAnnotation(a, getLabels());
-				fireOnAnnotationCreated(a);
-			}
-		});
-		
-		RootPanel.get().add(f, x, y);
-	}
-	
 	public void play() {
 		audioElement.play();
 	}
@@ -185,13 +169,9 @@ public class AudioPlayer extends Annotatable implements Exportable {
 		return !audioElement.isPaused();
 	}
 
-	protected void addAnnotation(Annotation a, Labels labels) {
-		annotationTrack.addAnnotation(a, labels);
-	}
-
-	protected void removeAnnotation(Annotation a, Labels labels) {
-		// TODO Auto-generated method stub
-		
+	@Override
+	public void addAnnotation(Annotation a) {
+		annotationTrack.addAnnotation(a, getLabels());
 	}
 	
 }

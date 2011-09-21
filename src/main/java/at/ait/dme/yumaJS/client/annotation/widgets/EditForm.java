@@ -1,11 +1,10 @@
 package at.ait.dme.yumaJS.client.annotation.widgets;
 
-import at.ait.dme.yumaJS.client.annotation.editors.Selection;
+import at.ait.dme.yumaJS.client.annotation.editors.selection.Selection;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Composite;
@@ -20,8 +19,6 @@ import com.google.gwt.user.client.ui.TextArea;
  */
 public class EditForm extends Composite {
 
-	private Selection selection;
-	
 	private FlowPanel container;
 	
 	private TextArea textArea;
@@ -31,7 +28,9 @@ public class EditForm extends Composite {
 	private PushButton btnCancel;
 	
 	public EditForm(Selection selection, Labels labels) {
-		this.selection = selection;
+		// Note: selection is for future use - e.g. when properties
+		// of the selection (start/end time) should be displayed in 
+		// the edit form
 		
 		textArea = new TextArea();
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
@@ -50,11 +49,9 @@ public class EditForm extends Composite {
 
 		btnSave.setStyleName("button");
 		btnSave.addStyleName("button-save");
-		btnSave.addClickHandler(new CloseHandler(this));
 
 		btnCancel.setStyleName("button");
 		btnCancel.addStyleName("button-cancel");
-		btnCancel.addClickHandler(new CloseHandler(this));
 		
 		container = new FlowPanel();
 		container.setStyleName("annotation-editform");
@@ -74,20 +71,6 @@ public class EditForm extends Composite {
 	
 	public HandlerRegistration addCancelClickHandler(ClickHandler handler) {
 		return btnCancel.addClickHandler(handler);
-	}
-	
-	private class CloseHandler implements ClickHandler {
-		
-		private EditForm editForm;
-		
-		CloseHandler(EditForm editForm) {
-			this.editForm = editForm;
-		}
-		
-		public void onClick(ClickEvent event) {
-			editForm.removeFromParent();
-			selection.clear();
-		}
 	}
 
 }

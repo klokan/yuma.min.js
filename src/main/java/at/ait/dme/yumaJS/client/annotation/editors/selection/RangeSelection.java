@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.editors;
+package at.ait.dme.yumaJS.client.annotation.editors.selection;
 
 import at.ait.dme.yumaJS.client.annotation.core.Fragment;
 import at.ait.dme.yumaJS.client.annotation.core.Range;
@@ -123,7 +123,12 @@ public class RangeSelection extends Selection {
 	}
 
 	@Override
-	public void clear() {
+	public void setSelectionChangedHandler(SelectionChangedHandler handler) {
+		// We don't currently do anything on range selection changes
+	}
+
+	@Override
+	public void destroy() {
 		selectionCanvas.removeFromParent();
 	}
 	

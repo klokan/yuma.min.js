@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.editors;
+package at.ait.dme.yumaJS.client.annotation.editors.selection;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style;
@@ -6,7 +6,8 @@ import com.google.gwt.dom.client.Style;
 import at.ait.dme.yumaJS.client.annotation.core.Fragment;
 
 /**
- * An abstract base class for fragment selection tools.
+ * An abstract base class for different types of fragment 
+ * selection tools.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
@@ -14,9 +15,11 @@ public abstract class Selection {
 	
 	public abstract Fragment getSelectedFragment();
 	
-	public abstract void clear();
-
-	public static void disableTextSelection() {
+	public abstract void setSelectionChangedHandler(SelectionChangedHandler handler);
+	
+	public abstract void destroy();
+	
+	protected void disableTextSelection() {
 		Style body = Document.get().getBody().getStyle();
 		body.setProperty("MozUserSelect", "none");
 		body.setProperty("WebkitUserSelect", "none");
@@ -24,13 +27,13 @@ public abstract class Selection {
 		_disableTextSelection();
 	}
 	
-	private static native void _disableTextSelection() /*-{
+	private native void _disableTextSelection() /*-{
 		document.onselectstart = function(){return false;}
 		document.onmousedown = function() {return false;}
 		document.body.style.MozUserSelect='none'; 
 	}-*/;
 	
-	public static void enableTextSelection() {
+	protected void enableTextSelection() {
 		Style body = Document.get().getBody().getStyle();
 		body.setProperty("MozUserSelect", "auto");
 		body.setProperty("WebkitUserSelect", "auto");
@@ -38,10 +41,10 @@ public abstract class Selection {
 		_enableTextSelection();
 	}
 	
-	private static native void _enableTextSelection() /*-{
+	private native void _enableTextSelection() /*-{
 		document.onselectstart = function(){return true;}
   		document.onmousedown = function(){return true;}
   		document.body.style.MozUserSelect='all';
 	}-*/;
-	
+
 }

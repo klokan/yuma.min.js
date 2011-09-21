@@ -9,7 +9,7 @@ import org.timepedia.exporter.client.Exportable;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
-import at.ait.dme.yumaJS.client.annotation.editors.ResizableBoxSelection;
+import at.ait.dme.yumaJS.client.annotation.editors.ResizableBoxEditor;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
 import at.ait.dme.yumaJS.client.annotation.widgets.event.DeleteHandler;
 import at.ait.dme.yumaJS.client.init.InitParams;
@@ -17,8 +17,6 @@ import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Style.Overflow;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.AbsolutePanel;
@@ -63,30 +61,25 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 		annotationLayer.setStyleName("deepzoom-canvas");
 		annotationLayer.getElement().getStyle().setOverflow(Overflow.VISIBLE);
 		annotationLayer.setPixelSize(div.getOffsetWidth(), div.getOffsetHeight());
-		RootPanel.get().add(annotationLayer, div.getAbsoluteLeft(), div.getAbsoluteTop());
+		RootPanel.get().insert(annotationLayer, div.getAbsoluteLeft(), div.getAbsoluteTop(), 0);
 		
 		viewer = new SeadragonViewer(deepZoomViewer);
 	}
 	
 	public void newAnnotation() {
 		annotationLayer.setVisible(true);
-		final ResizableBoxSelection selection = new ResizableBoxSelection(annotationLayer, null);
-		selection.addSaveClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				addAnnotation(selection.getAnnotation(), null);
-				selection.remove();
-				annotationLayer.setVisible(false);
-			}
-		});
+		new ResizableBoxEditor(this, annotationLayer, getLabels());
 	}
 	
-	protected void addAnnotation(final Annotation a, final Labels labels) {
+	@Override
+	public void addAnnotation(final Annotation a) {
+		annotationLayer.setVisible(false);
 		ZoomableAnnotationOverlay overlay = 
-			new ZoomableAnnotationOverlay(a, viewer, labels);
+			new ZoomableAnnotationOverlay(a, viewer, getLabels());
 
 		overlay.getDetailsPopup().addDeleteHandler(new DeleteHandler() {
 			public void onDelete(Annotation annotation) {
-				removeAnnotation(a, labels);
+				removeAnnotation(a, getLabels());
 			}
 		});
 		

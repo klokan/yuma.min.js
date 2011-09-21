@@ -1,4 +1,4 @@
-.rubberband-outer {
+.yuma-bbox-selection-outer {
 	padding:0px 2px 2px 0px;
 	border:1px solid #000;
 	opacity:0.9;
@@ -7,7 +7,7 @@
 	z-index:9010;
 }
 
-.rubberband-inner {
+.yuma-bbox-selection-inner {
 	border:1px solid #fff;
 	z-index:9010;
 }
@@ -32,6 +32,7 @@
 
 .annotation-editform {
 	width:230px;
+	margin:4px 0px 0px -4px;
 	padding:2px 5px;
 	z-index:9010;
 }

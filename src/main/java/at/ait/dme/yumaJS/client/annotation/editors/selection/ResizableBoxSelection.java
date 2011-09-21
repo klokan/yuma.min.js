@@ -1,10 +1,8 @@
-package at.ait.dme.yumaJS.client.annotation.editors;
+package at.ait.dme.yumaJS.client.annotation.editors.selection;
 
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
@@ -17,51 +15,66 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.core.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.core.Fragment;
-import at.ait.dme.yumaJS.client.annotation.widgets.EditForm;
-import at.ait.dme.yumaJS.client.init.InitParams;
+import at.ait.dme.yumaJS.client.annotation.editors.selection.Selection;
+import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationLayer;
+import at.ait.dme.yumaJS.client.annotation.impl.seajax.SeajaxAnnotationLayer;
 import at.ait.dme.yumaJS.client.init.Labels;
 
+/**
+ * An sub-class of {@link Selection} that implements a resizable-box selection
+ * tool. Used for {@link ImageAnnotationLayer} and {@link SeajaxAnnotationLayer}.
+ *  
+ * @author Rainer Simon <rainer.simon@ait.ac.at>
+ */
 public class ResizableBoxSelection extends Selection {
 	
+	// Resize handle directions
 	private enum Direction { NORTH, EAST, SOUTH, WEST } 
 	
-	private static final int DEFAULT_SIZE = 60;
-	
+	// Constants
+	private static final int INITIAL_BOX_SIZE = 60;
 	private static final int HANDLE_WIDTH = 11;
+	private static final int INITIAL_START_OFFSET = 30;
 	
-	private static final int DEFAULT_START_OFFSET = 30;
-	
+	// The parent panel
 	private AbsolutePanel parent;
 	
-	private FlowPanel outer, north, east, south, west;
-	
+	// The inner box DIV
 	private AbsolutePanel inner;
 	
-	private int dragStartX, dragStartY;
-	
-	private EditForm editForm;
-	
+	// The handles
+	private FlowPanel outer, north, east, south, west;
+
+	// Global mouse move handler instance
 	private static HandlerRegistration moveHandler;
 	
-	public ResizableBoxSelection(AbsolutePanel parent, InitParams initParams) {
+	// Drag start positions
+	private int dragStartX, dragStartY;
+	
+	// The SelectionChangedHandler (if any)
+	private SelectionChangedHandler selectionChangedHandler = null;
+
+	public ResizableBoxSelection(AbsolutePanel parent, Labels labels) {
 		this.parent = parent;
 		
+		// Outer box DIV
 		outer = new FlowPanel();
-		outer.setPixelSize(DEFAULT_SIZE, DEFAULT_SIZE);
-		outer.setStyleName("rubberband-outer");
+		outer.setPixelSize(INITIAL_BOX_SIZE, INITIAL_BOX_SIZE);
+		outer.setStyleName("yuma-bbox-selection-outer");
 		
+		// Inner box DIV
 		inner = new AbsolutePanel();
 		inner.setWidth("100%");
 		inner.setHeight("100%");
 		inner.getElement().getStyle().setCursor(Cursor.MOVE);
 		inner.getElement().getStyle().setOverflow(Overflow.VISIBLE);
-		inner.setStyleName("rubberband-inner");
-		makeDraggable(inner);
+		inner.setStyleName("yuma-bbox-selection-inner");
 		outer.add(inner);
+		makeDraggable(inner);
 		
+		// Resize drag handles
 		north = new FlowPanel();
 		north.setWidth("100%");
 		north.setHeight(HANDLE_WIDTH + "px");
@@ -73,14 +86,14 @@ public class ResizableBoxSelection extends Selection {
 		east.setWidth(HANDLE_WIDTH + "px");
 		east.setHeight("100%");
 		east.getElement().getStyle().setCursor(Cursor.E_RESIZE);
-		inner.add(east, DEFAULT_SIZE - HANDLE_WIDTH / 2, 0);
+		inner.add(east, INITIAL_BOX_SIZE - HANDLE_WIDTH / 2, 0);
 		makeResizable(east, Direction.EAST);
 		
 		south = new FlowPanel();
 		south.setWidth("100%");
 		south.setHeight(HANDLE_WIDTH + "px");
 		south.getElement().getStyle().setCursor(Cursor.S_RESIZE);
-		inner.add(south, 0, DEFAULT_SIZE - HANDLE_WIDTH / 2);
+		inner.add(south, 0, INITIAL_BOX_SIZE - HANDLE_WIDTH / 2);
 		makeResizable(south, Direction.SOUTH);
 		
 		west = new FlowPanel();
@@ -90,22 +103,12 @@ public class ResizableBoxSelection extends Selection {
 		inner.add(west, - HANDLE_WIDTH / 2, 0);
 		makeResizable(west, Direction.WEST);
 		
-		Labels labels = (initParams == null) ? null : initParams.labels();
-		editForm = new EditForm(this, labels);
-		editForm.addCancelClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				remove();
-			}
-		});
-		
-		parent.add(outer, DEFAULT_START_OFFSET, DEFAULT_START_OFFSET);
-		parent.add(editForm, 0, 0);
-		updateEditForm();
+		parent.add(outer, INITIAL_START_OFFSET, INITIAL_START_OFFSET);
 		
 		RootPanel.get().addDomHandler(new MouseUpHandler() {
 			public void onMouseUp(MouseUpEvent event) {
 				removeHandler();
-				Selection.enableTextSelection();
+				enableTextSelection();
 			}
 		}, MouseUpEvent.getType());
 	}
@@ -120,7 +123,7 @@ public class ResizableBoxSelection extends Selection {
 	private void makeDraggable(Panel panel) {
 		panel.addDomHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
-				Selection.disableTextSelection();
+				disableTextSelection();
 				dragStartX = event.getRelativeX(parent.getElement());
 				dragStartY = event.getRelativeY(parent.getElement());
 				removeHandler();
@@ -161,7 +164,7 @@ public class ResizableBoxSelection extends Selection {
 						}
 						
 						parent.setWidgetPosition(outer, left + dX, top + dY);
-						updateEditForm();
+						fireSelectionChanged();
 					}
 				}, MouseMoveEvent.getType());
 			}
@@ -171,7 +174,7 @@ public class ResizableBoxSelection extends Selection {
 	private void makeResizable(Panel handle, final Direction direction) {
 		handle.addDomHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
-				Selection.disableTextSelection();
+				disableTextSelection();
 				event.stopPropagation();
 				dragStartX = event.getClientX();
 				dragStartY = event.getClientY();
@@ -211,27 +214,18 @@ public class ResizableBoxSelection extends Selection {
 							inner.setWidgetPosition(east, 0, newWidth - HANDLE_WIDTH / 2);
 						}
 						
-						updateEditForm();
+						fireSelectionChanged();
 					}
 				}, MouseMoveEvent.getType());
 			}
 		}, MouseDownEvent.getType());
 	}
 	
-	private void updateEditForm() {
-		int left = outer.getAbsoluteLeft() - parent.getAbsoluteLeft() - 4;
-		int top = outer.getAbsoluteTop() - parent.getAbsoluteTop() + outer.getOffsetHeight();
-		parent.setWidgetPosition(editForm, left, top);
+	private void fireSelectionChanged() {
+		if (selectionChangedHandler != null)
+			selectionChangedHandler.onSelectionChanged(getSelectedFragment());
 	}
 	
-	public void addSaveClickHandler(ClickHandler handler) {
-		editForm.addSaveClickHandler(handler);
-	}
-	
-	public Annotation getAnnotation() {
-		return Annotation.create(getSelectedFragment(), editForm.getText());
-	}
-
 	@Override
 	public Fragment getSelectedFragment() {
 		int left = outer.getAbsoluteLeft() - parent.getAbsoluteLeft();
@@ -239,13 +233,14 @@ public class ResizableBoxSelection extends Selection {
 		return Fragment.create(BoundingBox.create(left, top, 
 				inner.getElement().getClientWidth(), inner.getElement().getClientHeight()));
 	}
+	
+	@Override
+	public void setSelectionChangedHandler(SelectionChangedHandler handler) {
+		this.selectionChangedHandler = handler;
+	}
 
 	@Override
-	public void clear() {
-
-	}
-	
-	public void remove() {
+	public void destroy() {
 		outer.removeFromParent();
 	}
 
