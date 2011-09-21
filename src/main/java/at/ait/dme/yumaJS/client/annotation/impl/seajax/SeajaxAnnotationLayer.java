@@ -80,7 +80,6 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 		});
 	}
 	
-	@Override
 	protected void addAnnotation(final Annotation a, final Labels labels) {
 		ZoomableAnnotationOverlay overlay = 
 			new ZoomableAnnotationOverlay(a, viewer, labels);
@@ -94,7 +93,6 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 		annotations.put(a, overlay);
 	}
 
-	@Override
 	protected void removeAnnotation(Annotation a, Labels labels) {
 		ZoomableAnnotationOverlay overlay = annotations.get(a);
 		if (overlay != null) {

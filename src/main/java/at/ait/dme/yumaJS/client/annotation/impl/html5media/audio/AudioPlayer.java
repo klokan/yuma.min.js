@@ -160,13 +160,12 @@ public class AudioPlayer extends Annotatable implements Exportable {
 	}
 	
 	private void showEditForm(int x, int y, final Selection selection) {
-		final Labels labels = (initParams == null) ? null : initParams.labels();
-		final EditForm f = new EditForm(selection, labels);
+		final EditForm f = new EditForm(selection, getLabels());
 		
 		f.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				Annotation a = Annotation.create(selection.getSelectedFragment(), f.getText());
-				addAnnotation(a, labels);
+				addAnnotation(a, getLabels());
 				fireOnAnnotationCreated(a);
 			}
 		});
@@ -186,12 +185,10 @@ public class AudioPlayer extends Annotatable implements Exportable {
 		return !audioElement.isPaused();
 	}
 
-	@Override
 	protected void addAnnotation(Annotation a, Labels labels) {
 		annotationTrack.addAnnotation(a, labels);
 	}
 
-	@Override
 	protected void removeAnnotation(Annotation a, Labels labels) {
 		// TODO Auto-generated method stub
 		

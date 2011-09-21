@@ -16,7 +16,7 @@ import com.google.gwt.core.client.JavaScriptObject;
  */
 public abstract class Annotatable implements Exportable {
 	
-	protected InitParams initParams;
+	private InitParams initParams;
 	
 	private JavaScriptObject onAnnotationCreated = null;
 	
@@ -24,9 +24,27 @@ public abstract class Annotatable implements Exportable {
 		this.initParams = params;
 	}
 	
-	protected abstract void addAnnotation(Annotation a, Labels labels);
+	/**
+	 * Returns the init parameters for this {@link Annotatable} or
+	 * <code>null</code> if none were provided.
+	 * @return the init params or <code>null</code>
+	 */
+	protected InitParams getInitParams() {
+		return initParams;
+	}
 	
-	protected abstract void removeAnnotation(Annotation a, Labels labels);
+	/**
+	 * Returns the labels provided as part of the init parameters for
+	 * this {@link Annotatable} or <code>null</code> if no init params
+	 * were provided, or the init params did not contain labels.
+	 * @return the labels or <code>null</code>
+	 */
+	protected Labels getLabels() {
+		if (initParams == null)
+			return null;
+		
+		return initParams.labels();
+	}
 	
 	@Export
 	public void addAnnotationCreatedListener(JavaScriptObject callback) {

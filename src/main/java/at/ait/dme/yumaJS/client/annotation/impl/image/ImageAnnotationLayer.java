@@ -59,7 +59,6 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		RootPanel.get().add(annotationLayer, e.getAbsoluteLeft(), e.getAbsoluteTop());
 	}
 
-	@Override
 	protected void addAnnotation(final Annotation a, final Labels labels) {
 		ImageAnnotationOverlay overlay = 
 			new ImageAnnotationOverlay(a, annotationLayer.getElement(), labels);
@@ -83,7 +82,6 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		});
 	}
 
-	@Override
 	protected void removeAnnotation(Annotation a, Labels labels) {
 		ImageAnnotationOverlay overlay = annotations.get(a);
 		if (overlay != null) {
