@@ -24,7 +24,7 @@ import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PushButton;
@@ -54,7 +54,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 		this(audioURL, id, null);
 	}
 	
-	public AudioPlayer(String audioURL, String id, final InitParams initParams) {
+	public AudioPlayer(String audioURL, final String id, final InitParams initParams) {
 		super(initParams);
 		
 		final Element el = DOM.getElementById(id);
@@ -66,7 +66,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 		try {
 			final ExtendedAudio audio = new ExtendedAudio();		
 		
-			FlowPanel playerPanel = new FlowPanel();
+			AbsolutePanel playerPanel = new AbsolutePanel();
 			playerPanel.setStyleName("yuma-audio-player");
 
 			int width = (initParams != null && initParams.width() > -1) ?
@@ -95,14 +95,12 @@ public class AudioPlayer extends Annotatable implements Exportable {
 				}
 			});
 			btnPlayPause.setStyleName("yuma-audio-button");
-			btnPlayPause.setWidth("25px");
-			playerPanel.add(btnPlayPause);
+			playerPanel.add(btnPlayPause, 0, 5);
 	
 			Image imgAnnotate = new Image(iconPath + "/audio-annotate.png");
 			final PushButton btnAnnotate = new PushButton(imgAnnotate);
-			btnAnnotate.setWidth("28px");
 			btnAnnotate.setStyleName("yuma-audio-button");
-			playerPanel.add(btnAnnotate);
+			playerPanel.add(btnAnnotate, 25, 5);
 			
 			final ProgressBar progressBar = new ProgressBar(audio, 
 					width - 65 - CLOCK_WIDTH, 
@@ -126,12 +124,12 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			
 			annotationTrack = new AnnotationTrack(progressBar, initParams);
 			annotationTrack.setStyleName("yuma-audio-annotationtrack");
-			playerPanel.add(annotationTrack);
+			playerPanel.add(annotationTrack, 60, 5);
 					
 			final Label clock = new Label("0:00 | 0:00");
 			clock.setStyleName("yuma-audio-clock");
 			clock.setPixelSize(CLOCK_WIDTH, PLAYER_HEIGHT);
-			playerPanel.add(clock);
+			playerPanel.add(clock, width - CLOCK_WIDTH, 5);
 			
 			audio.addTimeUpdateHandler(new TimeUpdateHandler() {
 				public void onTimeUpdate() {
@@ -151,9 +149,9 @@ public class AudioPlayer extends Annotatable implements Exportable {
 					}
 				}
 			}, MouseOutEvent.getType());
+			playerPanel.add(progressBar, 60, 5);
 			
 			RootPanel.get(id).add(playerPanel);	
-			RootPanel.get(id).add(progressBar, annotationTrack.getAbsoluteLeft(), annotationTrack.getAbsoluteTop());
 		} catch (InadequateBrowserException e) {
 			YUMA.fatalError(e.getMessage());
 		}
