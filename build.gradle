@@ -20,6 +20,7 @@ dependencies {
 	providedCompile 'com.google.gwt:gwt-dev:2.3.0'
 	providedCompile 'com.google.gwt:gwt-user:2.3.0'
 	providedCompile 'org.timepedia.exporter:gwtexporter:2.3.0'
+	providedCompile 'javax.validation:validation-api:1.0.0.GA:sources'
 }
 
 task gwtCompile << {
