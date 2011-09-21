@@ -26,6 +26,10 @@
 	z-index:9009;
 }
 
+.annotation-bbox-inner:hover {
+	border-color:#ffa500;
+}
+
 .annotation-editform {
 	width:230px;
 	padding:2px 5px;
