@@ -128,19 +128,9 @@ public class ResizableBoxSelection extends Selection {
 				moveHandler = RootPanel.get().addDomHandler(new MouseMoveHandler() {
 					public void onMouseMove(MouseMoveEvent event) {
 						event.preventDefault();
-						int x = event.getRelativeX(parent.getElement());	
-						if (x < 0)
-							x = 0;
-						else if (x > parent.getOffsetWidth())
-							x = parent.getOffsetWidth();
-												
+						int x = event.getRelativeX(parent.getElement());							
 						int y = event.getRelativeY(parent.getElement());
-						if (y < 0) 
-							y = 0;
-						else if (y > parent.getOffsetHeight())
-							y = parent.getOffsetHeight();
 							
-						
 						int dX = x - dragStartX;
 						int dY = y - dragStartY;
 						
@@ -151,17 +141,21 @@ public class ResizableBoxSelection extends Selection {
 						int top = outer.getAbsoluteTop() - parent.getAbsoluteTop();
 						
 						if (left + dX < 0) {
+							dragStartX = outer.getOffsetWidth() / 3;
 							left = 0;
 							dX = 0;
 						} else if (left + dX + outer.getOffsetWidth() > parent.getOffsetWidth()) {
+							dragStartX = parent.getOffsetWidth() - outer.getOffsetWidth() / 3;
 							left = parent.getOffsetWidth() - outer.getOffsetWidth();
 							dX = 0;
 						}
 						
 						if (top + dY < 0) {
+							dragStartY = outer.getOffsetHeight() / 3;
 							top = 0;
 							dY = 0;
 						} else if (top + dY + outer.getOffsetHeight() > parent.getOffsetHeight()) {
+							dragStartY = parent.getOffsetHeight() - outer.getOffsetHeight() / 3;
 							top = parent.getOffsetHeight() - outer.getOffsetHeight();
 							dY = 0;
 						}
