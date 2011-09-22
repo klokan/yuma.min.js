@@ -10,3 +10,4 @@
 * Annotation overlays don't reposition after browser window resize - fix! 
 * Seadragon: Reposition/z-index should also work when switching between Seadragon normal/fullscreen mode
 * Host an "online API" somewhere so that people can try yuma.min.js
+* Add mouseover tooltips for buttons
