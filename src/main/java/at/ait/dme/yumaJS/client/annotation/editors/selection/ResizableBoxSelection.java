@@ -176,40 +176,50 @@ public class ResizableBoxSelection extends Selection {
 			public void onMouseDown(MouseDownEvent event) {
 				disableTextSelection();
 				event.stopPropagation();
-				dragStartX = event.getClientX();
-				dragStartY = event.getClientY();
 				removeHandler();
+				
 				moveHandler = RootPanel.get().addDomHandler(new MouseMoveHandler() {
 					public void onMouseMove(MouseMoveEvent event) {
-						int mouseX = event.getRelativeX(parent.getElement());
-						int mouseY = event.getRelativeY(parent.getElement());
+						int x = event.getRelativeX(parent.getElement());
+						if (x < 0) {
+							x = 0;
+						} else if (x > parent.getElement().getClientWidth()) {
+							x = parent.getElement().getClientWidth();
+						}
+						
+						int y = event.getRelativeY(parent.getElement());
+						if (y < 0) {
+							y = 0;
+						} else if (y > parent.getElement().getClientHeight()) {
+							y = parent.getElement().getClientHeight();
+						}
 						
 						if (direction == Direction.NORTH) {
 							int currentHeight = inner.getElement().getClientHeight();
 							int bottom = outer.getAbsoluteTop() - parent.getAbsoluteTop() + currentHeight;
-							int newHeight = bottom - mouseY;
+							int newHeight = bottom - y;
 			
-							outer.getElement().getStyle().setTop(mouseY, Unit.PX);
+							outer.getElement().getStyle().setTop(y, Unit.PX);
 							outer.getElement().getStyle().setHeight(newHeight, Unit.PX);
 							inner.setWidgetPosition(south, 0, newHeight - HANDLE_WIDTH / 2);
 						} else if (direction == Direction.EAST) {
 							int left = outer.getAbsoluteLeft() - parent.getAbsoluteLeft();
-							int newWidth = mouseX - left;
+							int newWidth = x - left;
 							
 							outer.getElement().getStyle().setWidth(newWidth, Unit.PX);
 							inner.setWidgetPosition(east, newWidth - HANDLE_WIDTH / 2, 0);
 						} else if (direction == Direction.SOUTH) {
 							int top = outer.getAbsoluteTop() - parent.getAbsoluteTop();
-							int newHeight = mouseY - top;
+							int newHeight = y - top;
 							
 							outer.getElement().getStyle().setHeight(newHeight, Unit.PX);
 							inner.setWidgetPosition(south, 0, newHeight - HANDLE_WIDTH / 2);
 						} else if (direction == Direction.WEST) {
 							int currentWidth = inner.getElement().getClientWidth();
 							int right = outer.getAbsoluteLeft() - parent.getAbsoluteLeft() + currentWidth;
-							int newWidth = right - mouseX;
+							int newWidth = right - x;
 							
-							outer.getElement().getStyle().setLeft(mouseX, Unit.PX);
+							outer.getElement().getStyle().setLeft(x, Unit.PX);
 							outer.getElement().getStyle().setWidth(newWidth, Unit.PX);
 							inner.setWidgetPosition(east, 0, newWidth - HANDLE_WIDTH / 2);
 						}
