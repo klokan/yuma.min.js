@@ -12,7 +12,6 @@ import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.ResizableBoxEditor;
 import at.ait.dme.yumaJS.client.annotation.widgets.event.DeleteHandler;
 import at.ait.dme.yumaJS.client.init.InitParams;
-import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -34,6 +33,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 @ExportPackage("YUMA")
 public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	
+	private Element image;
+	
 	private AbsolutePanel annotationLayer;
 	
 	private HashMap<Annotation, ImageAnnotationOverlay> annotations = 
@@ -46,17 +47,17 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	public ImageAnnotationLayer(String id, InitParams params) {	
 		super(params);
 		
-		Element e = DOM.getElementById(id);
-		if (e == null)
+		image = DOM.getElementById(id);
+		if (image == null)
 			YUMA.fatalError("Error: no element with id '" + id + "' found on this page");
 		
-		if (!e.getTagName().toLowerCase().equals("img"))
+		if (!image.getTagName().toLowerCase().equals("img"))
 			YUMA.fatalError("Error: you can only create an ImageCanvas on an <img> element");
 
 		annotationLayer = new AbsolutePanel();
 		annotationLayer.setStyleName("image-canvas");		
 		annotationLayer.getElement().getStyle().setOverflow(Overflow.VISIBLE);
-		annotationLayer.setPixelSize(e.getClientWidth(), e.getClientHeight());
+		annotationLayer.setPixelSize(image.getClientWidth(), image.getClientHeight());
 		
 		annotationLayer.addDomHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
@@ -71,11 +72,15 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 				annotationLayer.addStyleName("no-hover");
 			}
 		}, MouseOutEvent.getType());
-
 		
-		RootPanel.get().add(annotationLayer, e.getAbsoluteLeft(), e.getAbsoluteTop());
+		RootPanel.get().add(annotationLayer, image.getAbsoluteLeft(), image.getAbsoluteTop());
 	}
 
+	@Override
+	protected void onWindowResize(int width, int height) {
+		RootPanel.get().setWidgetPosition(annotationLayer, image.getAbsoluteLeft(), image.getAbsoluteTop());
+	}
+	
 	@Override
 	public void addAnnotation(final Annotation a) {
 		ImageAnnotationOverlay overlay = 
@@ -83,7 +88,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		
 		overlay.getDetailsPopup().addDeleteHandler(new DeleteHandler() {
 			public void onDelete(Annotation annotation) {
-				removeAnnotation(a, getLabels());
+				removeAnnotation(a);
 			}
 		});
 		
@@ -91,16 +96,17 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		fireOnAnnotationCreated(a);
 	}
 	
-	public void newAnnotation() {
-		new ResizableBoxEditor(this, annotationLayer, getLabels());
-	}
-
-	protected void removeAnnotation(Annotation a, Labels labels) {
+	@Override
+	public void removeAnnotation(Annotation a) {
 		ImageAnnotationOverlay overlay = annotations.get(a);
 		if (overlay != null) {
 			overlay.destroy();
 			annotations.remove(a);
 		}
+	}
+		
+	public void createNewAnnotation() {
+		new ResizableBoxEditor(this, annotationLayer, getLabels());
 	}
 
 }

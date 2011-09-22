@@ -155,21 +155,27 @@ public class AudioPlayer extends Annotatable implements Exportable {
 		}
 	}
 	
-	public void play() {
+	private void play() {
 		audioElement.play();
 	}
 	
-	public void pause() {
+	private void pause() {
 		audioElement.pause();
-	}
-	
-	public boolean isPlaying() {
-		return !audioElement.isPaused();
 	}
 
 	@Override
+	protected void onWindowResize(int width, int height) {
+		// No action necessary for audio		
+	}
+	
+	@Override
 	public void addAnnotation(Annotation a) {
 		annotationTrack.addAnnotation(a, getLabels());
+	}
+
+	@Override
+	public void removeAnnotation(Annotation annotation) {
+		// TODO Auto-generated method stub
 	}
 	
 }

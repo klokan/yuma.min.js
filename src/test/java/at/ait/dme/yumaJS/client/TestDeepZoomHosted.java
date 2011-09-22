@@ -21,7 +21,7 @@ public class TestDeepZoomHosted implements EntryPoint {
 				if (canvas == null)
 					initCanvas();
 				
-				canvas.newAnnotation();
+				canvas.createNewAnnotation();
 			}
 		});
 		

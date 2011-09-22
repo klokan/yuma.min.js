@@ -13,7 +13,6 @@ import at.ait.dme.yumaJS.client.annotation.editors.ResizableBoxEditor;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
 import at.ait.dme.yumaJS.client.annotation.widgets.event.DeleteHandler;
 import at.ait.dme.yumaJS.client.init.InitParams;
-import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Style.Overflow;
@@ -32,6 +31,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 @ExportPackage("YUMA")
 public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	
+	private Element parentDiv;
+	
 	private AbsolutePanel annotationLayer;
 	
 	private SeadragonViewer viewer;
@@ -46,11 +47,11 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	public SeajaxAnnotationLayer(String id, JavaScriptObject deepZoomViewer, InitParams params) {
 		super(params);
 		
-		Element div = DOM.getElementById(id);
-		if (div == null)
+		parentDiv = DOM.getElementById(id);
+		if (parentDiv == null)
 			YUMA.fatalError("Error: no element with id '" + id + "' found on this page");
 		
-		if (!div.getTagName().toLowerCase().equals("div"))
+		if (!parentDiv.getTagName().toLowerCase().equals("div"))
 			YUMA.fatalError("Error: you can only create a DeepZoomCanvas on a <div> element");
 		
 		if (deepZoomViewer == null) 
@@ -60,15 +61,15 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 		annotationLayer.setVisible(false);
 		annotationLayer.setStyleName("deepzoom-canvas");
 		annotationLayer.getElement().getStyle().setOverflow(Overflow.VISIBLE);
-		annotationLayer.setPixelSize(div.getOffsetWidth(), div.getOffsetHeight());
-		RootPanel.get().insert(annotationLayer, div.getAbsoluteLeft(), div.getAbsoluteTop(), 0);
+		annotationLayer.setPixelSize(parentDiv.getOffsetWidth(), parentDiv.getOffsetHeight());
+		RootPanel.get().insert(annotationLayer, parentDiv.getAbsoluteLeft(), parentDiv.getAbsoluteTop(), 0);
 		
 		viewer = new SeadragonViewer(deepZoomViewer);
 	}
-	
-	public void newAnnotation() {
-		annotationLayer.setVisible(true);
-		new ResizableBoxEditor(this, annotationLayer, getLabels());
+		
+	@Override
+	protected void onWindowResize(int width, int height) {
+		RootPanel.get().setWidgetPosition(annotationLayer, parentDiv.getAbsoluteLeft(), parentDiv.getAbsoluteTop());
 	}
 	
 	@Override
@@ -79,19 +80,26 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 
 		overlay.getDetailsPopup().addDeleteHandler(new DeleteHandler() {
 			public void onDelete(Annotation annotation) {
-				removeAnnotation(a, getLabels());
+				removeAnnotation(a);
 			}
 		});
 		
 		annotations.put(a, overlay);
 	}
 
-	protected void removeAnnotation(Annotation a, Labels labels) {
+	@Override
+	public void removeAnnotation(Annotation a) {
 		ZoomableAnnotationOverlay overlay = annotations.get(a);
 		if (overlay != null) {
 			overlay.destroy();
 			annotations.remove(a);
 		}
 	}
+	
+	public void createNewAnnotation() {
+		annotationLayer.setVisible(true);
+		new ResizableBoxEditor(this, annotationLayer, getLabels());
+	}
+	
 
 }

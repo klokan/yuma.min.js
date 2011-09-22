@@ -7,6 +7,9 @@ import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.user.client.Window;
 
 /**
  * An abstract base class with cross-cutting functionality for
@@ -22,6 +25,12 @@ public abstract class Annotatable implements Exportable {
 	
 	public Annotatable(InitParams params) {
 		this.initParams = params;
+		
+		Window.addResizeHandler(new ResizeHandler() {
+			public void onResize(ResizeEvent event) {
+				onWindowResize(event.getWidth(), event.getHeight());
+			}
+		});
 	}
 	
 	protected InitParams getInitParams() {
@@ -35,8 +44,12 @@ public abstract class Annotatable implements Exportable {
 		return initParams.labels();
 	}
 	
+	protected abstract void onWindowResize(int width, int height);
+	
 	public abstract void addAnnotation(Annotation annotation);
 	
+	public abstract void removeAnnotation(Annotation annotation);
+			
 	@Export
 	public void addAnnotationCreatedListener(JavaScriptObject callback) {
 		this.onAnnotationCreatedCallback = callback;

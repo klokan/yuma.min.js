@@ -18,7 +18,7 @@ public class TestImageHosted implements EntryPoint {
 		PushButton annotate = new PushButton("Add Note");
 		annotate.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				annotationLayer.newAnnotation();
+				annotationLayer.createNewAnnotation();
 			}
 		});
 		
