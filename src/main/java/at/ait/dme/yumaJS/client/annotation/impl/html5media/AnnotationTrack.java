@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.core.Range;
 import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
+import at.ait.dme.yumaJS.client.annotation.widgets.event.DeleteHandler;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
@@ -100,8 +101,20 @@ public class AnnotationTrack extends Composite {
 		currentPopup.setVisible(true);
 	}
 	
-	public void addAnnotation(Annotation a, Labels labels) {
-		annotations.put(a, new DetailsPopup(a, labels));
+	public void addAnnotation(final Annotation a, Labels labels) {
+		DetailsPopup popup = new DetailsPopup(a, labels);
+		popup.addDeleteHandler(new DeleteHandler() {
+			public void onDelete(Annotation annotation) {
+				removeAnnotation(a);
+			}
+		});
+		annotations.put(a, popup);
+		refresh();
+	}
+	
+	public void removeAnnotation(Annotation a) {
+		annotations.get(a).removeFromParent();
+		annotations.remove(a);
 		refresh();
 	}
 	

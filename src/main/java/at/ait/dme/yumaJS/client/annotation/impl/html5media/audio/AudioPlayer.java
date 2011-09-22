@@ -99,11 +99,11 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			Image imgAnnotate = new Image(iconPath + "/audio-annotate.png");
 			final PushButton btnAnnotate = new PushButton(imgAnnotate);
 			btnAnnotate.setStyleName("yuma-audio-button");
+			btnAnnotate.setTitle("Add an Annotation at the current time");
 			playerPanel.add(btnAnnotate, 25, 5);
 			
 			final ProgressBar progressBar = new ProgressBar(audio, 
-					width - 65 - CLOCK_WIDTH, 
-					PLAYER_HEIGHT);
+					width - 65 - CLOCK_WIDTH, PLAYER_HEIGHT);
 			progressBar.setStyleName("yuma-audio-progressbar");
 			
 			final AudioPlayer self = this;
@@ -175,7 +175,7 @@ public class AudioPlayer extends Annotatable implements Exportable {
 
 	@Override
 	public void removeAnnotation(Annotation annotation) {
-		// TODO Auto-generated method stub
+		annotationTrack.removeAnnotation(annotation);
 	}
 	
 }
