@@ -21,6 +21,13 @@
 	z-index:9009;
 }
 
+.no-hover .annotation-bbox-outer {
+	opacity:0.3;
+	filter:alpha(opacity=30);
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+}
+
+
 .annotation-bbox-inner {
 	border:1px solid #fff;
 	z-index:9009;

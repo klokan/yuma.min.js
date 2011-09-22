@@ -5,12 +5,11 @@ import at.ait.dme.yumaJS.client.annotation.core.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
 import at.ait.dme.yumaJS.client.init.Labels;
 
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 
 /**
  * An overlay that represents an annotation on an 
@@ -26,7 +25,7 @@ public class ImageAnnotationOverlay {
 	
 	private DetailsPopup detailsPopup;
 	
-	public ImageAnnotationOverlay(Annotation a, final Element canvas, Labels labels) {
+	public ImageAnnotationOverlay(Annotation a, final AbsolutePanel annotationLayer, Labels labels) {
 		// The bounding box overlay
 		final BoundingBox bbox = a.getFragment().getBoundingBox();
 		bboxOverlay = new BoundingBoxOverlay(bbox);
@@ -38,8 +37,8 @@ public class ImageAnnotationOverlay {
 		bboxOverlay.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				if (!detailsPopup.contains(
-						event.getRelativeX(canvas) + canvas.getAbsoluteLeft(), 
-						event.getRelativeY(canvas) + canvas.getAbsoluteTop()))
+						event.getRelativeX(annotationLayer.getElement()) + annotationLayer.getAbsoluteLeft(), 
+						event.getRelativeY(annotationLayer.getElement()) + annotationLayer.getAbsoluteTop()))
 					
 					detailsPopup.setVisible(false);
 			}
@@ -49,10 +48,8 @@ public class ImageAnnotationOverlay {
 		detailsPopup = new DetailsPopup(a, labels);
 		detailsPopup.setVisible(false);
 		
-		RootPanel.get().add(bboxOverlay, bbox.getX() + canvas.getAbsoluteLeft(), 
-				bbox.getY() + canvas.getAbsoluteTop());
-		RootPanel.get().add(detailsPopup, bbox.getX() + canvas.getAbsoluteLeft(), 
-				bbox.getY() + canvas.getAbsoluteTop() + bbox.getHeight());
+		annotationLayer.add(bboxOverlay, bbox.getX(), bbox.getY());
+		annotationLayer.add(detailsPopup, bbox.getX(), bbox.getY() + bbox.getHeight());
 	}
 	
 	public DetailsPopup getDetailsPopup() {

@@ -15,6 +15,10 @@ import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.AbsolutePanel;
@@ -50,9 +54,24 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 			YUMA.fatalError("Error: you can only create an ImageCanvas on an <img> element");
 
 		annotationLayer = new AbsolutePanel();
-		annotationLayer.setStyleName("image-canvas");
+		annotationLayer.setStyleName("image-canvas");		
 		annotationLayer.getElement().getStyle().setOverflow(Overflow.VISIBLE);
 		annotationLayer.setPixelSize(e.getClientWidth(), e.getClientHeight());
+		
+		annotationLayer.addDomHandler(new MouseOverHandler() {
+			public void onMouseOver(MouseOverEvent event) {
+				annotationLayer.addStyleName("hover");
+				annotationLayer.removeStyleName("no-hover");
+			}
+		}, MouseOverEvent.getType());
+		
+		annotationLayer.addDomHandler(new MouseOutHandler() {
+			public void onMouseOut(MouseOutEvent event) {
+				annotationLayer.removeStyleName("hover");
+				annotationLayer.addStyleName("no-hover");
+			}
+		}, MouseOutEvent.getType());
+
 		
 		RootPanel.get().add(annotationLayer, e.getAbsoluteLeft(), e.getAbsoluteTop());
 	}
@@ -60,7 +79,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	@Override
 	public void addAnnotation(final Annotation a) {
 		ImageAnnotationOverlay overlay = 
-			new ImageAnnotationOverlay(a, annotationLayer.getElement(), getLabels());
+			new ImageAnnotationOverlay(a, annotationLayer, getLabels());
 		
 		overlay.getDetailsPopup().addDeleteHandler(new DeleteHandler() {
 			public void onDelete(Annotation annotation) {
