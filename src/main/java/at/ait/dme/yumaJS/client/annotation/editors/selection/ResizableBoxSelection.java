@@ -171,27 +171,30 @@ public class ResizableBoxSelection extends Selection {
 		}, MouseDownEvent.getType());
 	}
 	
-	private void makeResizable(Panel handle, final Direction direction) {
+	private void makeResizable(Panel handle, final Direction direction) {		
 		handle.addDomHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
 				disableTextSelection();
 				event.stopPropagation();
 				removeHandler();
 				
+				final int borderWidth = outer.getOffsetWidth() - inner.getElement().getClientWidth();
+				final int borderHeight = outer.getOffsetHeight() - inner.getElement().getClientHeight();
+				
 				moveHandler = RootPanel.get().addDomHandler(new MouseMoveHandler() {
 					public void onMouseMove(MouseMoveEvent event) {
 						int x = event.getRelativeX(parent.getElement());
 						if (x < 0) {
 							x = 0;
-						} else if (x > parent.getElement().getClientWidth()) {
-							x = parent.getElement().getClientWidth();
+						} else if (x > parent.getOffsetWidth() - borderWidth) {
+							x = parent.getElement().getClientWidth() - borderWidth;
 						}
 						
 						int y = event.getRelativeY(parent.getElement());
 						if (y < 0) {
 							y = 0;
-						} else if (y > parent.getElement().getClientHeight()) {
-							y = parent.getElement().getClientHeight();
+						} else if (y > parent.getOffsetHeight() - borderHeight) {
+							y = parent.getElement().getClientHeight() - borderHeight;
 						}
 						
 						if (direction == Direction.NORTH) {
