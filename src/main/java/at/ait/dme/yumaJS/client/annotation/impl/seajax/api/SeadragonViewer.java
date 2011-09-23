@@ -52,4 +52,21 @@ public class SeadragonViewer {
 		});
 	}-*/;
 	
+	public void addMouseHandler(SeadragonMouseHandler handler) {
+		// TODO for some reason, it is not possible to attach a working mouseover handler to viewer.elmt 
+		// using the normal GWT way (it does work for mouseout though!) 
+		// The SeajaxMouseHandler is a workaround for this
+		_addMouseHandler(viewer, handler);
+	}
+	
+	private native void _addMouseHandler(JavaScriptObject viewer, SeadragonMouseHandler handler) /*-{
+		viewer.elmt.onmouseover = function() { 
+			handler.@at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonMouseHandler::onMouseOver()(); 
+		};
+		
+		viewer.elmt.onmouseout = function() { 
+			handler.@at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonMouseHandler::onMouseOut()(); 
+		};
+	}-*/;
+	
 }
