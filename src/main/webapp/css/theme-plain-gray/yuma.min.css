@@ -10,6 +10,11 @@
 .yuma-bbox-selection-inner {
 	border:1px solid #fff;
 	z-index:9010;
+	background-image:url('1px-transp.png');
+}
+
+.yuma-bbox-selection-handle {
+	background-image:url('1px-transp.png');
 }
 
 .annotation-bbox-outer {

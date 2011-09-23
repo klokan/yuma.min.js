@@ -81,6 +81,7 @@ public class ResizableBoxSelection extends Selection {
 		north.setWidth("100%");
 		north.setHeight(HANDLE_WIDTH + "px");
 		north.getElement().getStyle().setCursor(Cursor.N_RESIZE);
+		north.setStyleName("yuma-bbox-selection-handle");
 		inner.add(north, 0, - HANDLE_WIDTH / 2);
 		makeResizable(north, Direction.NORTH);
 		
@@ -88,6 +89,7 @@ public class ResizableBoxSelection extends Selection {
 		east.setWidth(HANDLE_WIDTH + "px");
 		east.setHeight("100%");
 		east.getElement().getStyle().setCursor(Cursor.E_RESIZE);
+		east.setStyleName("yuma-bbox-selection-handle");
 		inner.add(east, INITIAL_BOX_SIZE - HANDLE_WIDTH / 2, 0);
 		makeResizable(east, Direction.EAST);
 		
@@ -95,6 +97,7 @@ public class ResizableBoxSelection extends Selection {
 		south.setWidth("100%");
 		south.setHeight(HANDLE_WIDTH + "px");
 		south.getElement().getStyle().setCursor(Cursor.S_RESIZE);
+		south.setStyleName("yuma-bbox-selection-handle");
 		inner.add(south, 0, INITIAL_BOX_SIZE - HANDLE_WIDTH / 2);
 		makeResizable(south, Direction.SOUTH);
 		
@@ -102,6 +105,7 @@ public class ResizableBoxSelection extends Selection {
 		west.setWidth(HANDLE_WIDTH + "px");
 		west.setHeight("100%");
 		west.getElement().getStyle().setCursor(Cursor.W_RESIZE);
+		west.setStyleName("yuma-bbox-selection-handle");
 		inner.add(west, - HANDLE_WIDTH / 2, 0);
 		makeResizable(west, Direction.WEST);
 		

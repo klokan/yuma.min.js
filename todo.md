@@ -2,8 +2,8 @@
 
 * ResizableBoxSelection: register the mouse handler on the window/screen so that it also
   works for mouse movement outside the browser client area
-* Sometimes it seems the ResizableBoxSelection's (east?) handle
-  gets lost -> investigate/fix!
+* Sometimes it seems the ResizableBoxSelection's (east?) handle gets lost -> investigate/fix!
+* Drag/resize selection doesn't work on Internet Explorer due to . Possibly a z-index issue or
 * CSS style for button active/focus
 * Seadragon: Reposition/z-index should also work when switching between 
   Seadragon normal/fullscreen mode
