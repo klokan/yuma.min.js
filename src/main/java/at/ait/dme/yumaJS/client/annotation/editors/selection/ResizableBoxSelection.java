@@ -219,29 +219,37 @@ public class ResizableBoxSelection extends Selection {
 							int bottom = outer.getAbsoluteTop() - parent.getAbsoluteTop() + currentHeight;
 							int newHeight = bottom - y;
 			
-							outer.getElement().getStyle().setTop(y, Unit.PX);
-							outer.getElement().getStyle().setHeight(newHeight, Unit.PX);
-							inner.setWidgetPosition(south, 0, newHeight - HANDLE_WIDTH / 2);
+							if (newHeight > 0) {
+								outer.getElement().getStyle().setTop(y, Unit.PX);
+								outer.getElement().getStyle().setHeight(newHeight, Unit.PX);
+								inner.setWidgetPosition(south, 0, newHeight - HANDLE_WIDTH / 2);
+							}
 						} else if (direction == Direction.EAST) {
 							int left = outer.getAbsoluteLeft() - parent.getAbsoluteLeft();
 							int newWidth = x - left;
 							
-							outer.getElement().getStyle().setWidth(newWidth, Unit.PX);
-							inner.setWidgetPosition(east, newWidth - HANDLE_WIDTH / 2, 0);
+							if (newWidth > 0) {
+								outer.getElement().getStyle().setWidth(newWidth, Unit.PX);
+								inner.setWidgetPosition(east, newWidth - HANDLE_WIDTH / 2, 0);
+							}
 						} else if (direction == Direction.SOUTH) {
 							int top = outer.getAbsoluteTop() - parent.getAbsoluteTop();
 							int newHeight = y - top;
 							
-							outer.getElement().getStyle().setHeight(newHeight, Unit.PX);
-							inner.setWidgetPosition(south, 0, newHeight - HANDLE_WIDTH / 2);
+							if (newHeight > 0) {
+								outer.getElement().getStyle().setHeight(newHeight, Unit.PX);
+								inner.setWidgetPosition(south, 0, newHeight - HANDLE_WIDTH / 2);
+							}
 						} else if (direction == Direction.WEST) {
 							int currentWidth = inner.getElement().getClientWidth();
 							int right = outer.getAbsoluteLeft() - parent.getAbsoluteLeft() + currentWidth;
 							int newWidth = right - x;
 							
-							outer.getElement().getStyle().setLeft(x, Unit.PX);
-							outer.getElement().getStyle().setWidth(newWidth, Unit.PX);
-							inner.setWidgetPosition(east, 0, newWidth - HANDLE_WIDTH / 2);
+							if (newWidth > 0) {
+								outer.getElement().getStyle().setLeft(x, Unit.PX);
+								outer.getElement().getStyle().setWidth(newWidth, Unit.PX);
+								inner.setWidgetPosition(east, 0, newWidth - HANDLE_WIDTH / 2);
+							}
 						}
 						
 						fireSelectionChanged();
