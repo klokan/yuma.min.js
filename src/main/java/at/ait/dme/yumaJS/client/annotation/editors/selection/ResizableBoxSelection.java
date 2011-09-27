@@ -95,7 +95,7 @@ public class ResizableBoxSelection extends Selection {
 		east.setHeight("100%");
 		east.getElement().getStyle().setCursor(Cursor.E_RESIZE);
 		east.setStyleName("yuma-bbox-selection-handle");
-		inner.add(east, INITIAL_BOX_SIZE - HANDLE_WIDTH / 2, 0);
+		inner.add(east, initialValue.getWidth() - HANDLE_WIDTH / 2, 0);
 		makeResizable(east, Direction.EAST);
 		
 		south = new FlowPanel();
@@ -103,7 +103,7 @@ public class ResizableBoxSelection extends Selection {
 		south.setHeight(HANDLE_WIDTH + "px");
 		south.getElement().getStyle().setCursor(Cursor.S_RESIZE);
 		south.setStyleName("yuma-bbox-selection-handle");
-		inner.add(south, 0, INITIAL_BOX_SIZE - HANDLE_WIDTH / 2);
+		inner.add(south, 0, initialValue.getHeight() - HANDLE_WIDTH / 2);
 		makeResizable(south, Direction.SOUTH);
 		
 		west = new FlowPanel();
