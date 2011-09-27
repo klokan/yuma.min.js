@@ -1,5 +1,6 @@
 package at.ait.dme.yumaJS.client.annotation.editors.selection;
 
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
@@ -10,6 +11,7 @@ import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Panel;
@@ -119,6 +121,7 @@ public class ResizableBoxSelection extends Selection {
 			public void onMouseUp(MouseUpEvent event) {
 				removeHandler();
 				enableTextSelection();
+				DOM.releaseCapture(RootPanel.get().getElement());
 			}
 		}, MouseUpEvent.getType());
 	}
@@ -130,14 +133,14 @@ public class ResizableBoxSelection extends Selection {
 		}
 	}
 	
-	private void makeDraggable(Panel panel) {
+	private void makeDraggable(final Panel panel) {
 		panel.addDomHandler(new MouseDownHandler() {
 			public void onMouseDown(MouseDownEvent event) {
 				disableTextSelection();
 				dragStartX = event.getRelativeX(parent.getElement());
 				dragStartY = event.getRelativeY(parent.getElement());
 				removeHandler();
-				
+								
 				final int dragStartXBuffer = (int) (outer.getOffsetWidth() * DRAG_START_BUFFER_FACTOR);
 				final int dragStartYBuffer = (int) (outer.getOffsetHeight() * DRAG_START_BUFFER_FACTOR);
 		
@@ -188,6 +191,8 @@ public class ResizableBoxSelection extends Selection {
 						fireSelectionChanged();
 					}
 				}, MouseMoveEvent.getType());
+				
+				DOM.setCapture(RootPanel.get().getElement());
 			}
 		}, MouseDownEvent.getType());
 	}

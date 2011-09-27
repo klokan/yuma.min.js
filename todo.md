@@ -1,7 +1,5 @@
 # TODOs
 
-* ResizableBoxSelection: register the mouse handler on the window/screen so that it also
-  works for mouse movement outside the browser client area
 * Seajax: when the mouse moves over a DetailPopup (even a hidden one) this currently
   triggers a mouseout event and fades the bboxes -> fix!
 * CSS style for button active/focus
