@@ -252,7 +252,7 @@ public class ResizableBoxSelection extends Selection {
 							if (newWidth > 0) {
 								outer.getElement().getStyle().setLeft(x, Unit.PX);
 								outer.getElement().getStyle().setWidth(newWidth, Unit.PX);
-								inner.setWidgetPosition(east, 0, newWidth - HANDLE_WIDTH / 2);
+								inner.setWidgetPosition(east, newWidth - HANDLE_WIDTH / 2, 0);
 							}
 						}
 						
