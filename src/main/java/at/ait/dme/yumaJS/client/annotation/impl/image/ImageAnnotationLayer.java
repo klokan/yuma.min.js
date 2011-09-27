@@ -87,19 +87,19 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		ImageAnnotationOverlay overlay = 
 			new ImageAnnotationOverlay(a, annotationLayer, getLabels());
 		
-		final ImageAnnotationLayer thisLayer = this;
+		final Annotatable thisAnnotatable = this;
 		
 		DetailsPopup details = overlay.getDetailsPopup();
-		details .addDeleteHandler(new DeleteHandler() {
-			public void onDelete(Annotation annotation) {
-				removeAnnotation(a);
-			}
-		});
-		
 		details.addEditHandler(new EditHandler() {
 			public void onEdit(Annotation annotation) {
 				removeAnnotation(annotation);
-				new ResizableBoxEditor(thisLayer, annotationLayer, getLabels(), annotation);
+				new ResizableBoxEditor(thisAnnotatable, annotationLayer, getLabels(), annotation);
+			}
+		});
+		
+		details .addDeleteHandler(new DeleteHandler() {
+			public void onDelete(Annotation annotation) {
+				removeAnnotation(a);
 			}
 		});
 		
