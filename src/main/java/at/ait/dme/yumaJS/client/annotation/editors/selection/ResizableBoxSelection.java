@@ -58,12 +58,16 @@ public class ResizableBoxSelection extends Selection {
 	// The SelectionChangedHandler (if any)
 	private SelectionChangedHandler selectionChangedHandler = null;
 
-	public ResizableBoxSelection(AbsolutePanel parent, Labels labels) {
+	public ResizableBoxSelection(AbsolutePanel parent, Labels labels, BoundingBox initialValue) {
 		this.parent = parent;
+		
+		if (initialValue == null)
+			initialValue = BoundingBox.create(INITIAL_START_OFFSET, INITIAL_START_OFFSET, 
+				INITIAL_BOX_SIZE, INITIAL_BOX_SIZE);
 		
 		// Outer box DIV
 		outer = new FlowPanel();
-		outer.setPixelSize(INITIAL_BOX_SIZE, INITIAL_BOX_SIZE);
+		outer.setPixelSize(initialValue.getWidth(), initialValue.getHeight());
 		outer.setStyleName("yuma-bbox-selection-outer");
 		
 		// Inner box DIV
@@ -109,7 +113,7 @@ public class ResizableBoxSelection extends Selection {
 		inner.add(west, - HANDLE_WIDTH / 2, 0);
 		makeResizable(west, Direction.WEST);
 		
-		parent.add(outer, INITIAL_START_OFFSET, INITIAL_START_OFFSET);
+		parent.add(outer, initialValue.getX(), initialValue.getY());
 		
 		RootPanel.get().addDomHandler(new MouseUpHandler() {
 			public void onMouseUp(MouseUpEvent event) {

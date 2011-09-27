@@ -20,7 +20,7 @@ public class AudioRangeEditor extends Editor {
 		Selection selection = new RangeSelection(progressBar, offsetX, offsetX + 1); 
 		setSelection(selection);
 		
-		EditForm editForm = new EditForm(selection, labels);
+		EditForm editForm = new EditForm(selection, labels, null);
 		setEditForm(editForm);
 		RootPanel.get().add(editForm, 
 				offsetX + progressBar.getAbsoluteLeft(), 

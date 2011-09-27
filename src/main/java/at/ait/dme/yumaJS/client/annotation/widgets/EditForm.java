@@ -1,5 +1,6 @@
 package at.ait.dme.yumaJS.client.annotation.widgets;
 
+import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Selection;
 import at.ait.dme.yumaJS.client.init.Labels;
 
@@ -27,12 +28,16 @@ public class EditForm extends Composite {
 	
 	private PushButton btnCancel;
 	
-	public EditForm(Selection selection, Labels labels) {
+	public EditForm(Selection selection, Labels labels, Annotation initialValue) {
 		// Note: selection is for future use - e.g. when properties
 		// of the selection (start/end time) should be displayed in 
 		// the edit form
 		
 		textArea = new TextArea();
+		
+		if (initialValue != null)
+			textArea.setText(initialValue.getText());
+		
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 		    public void execute () {
 		        textArea.setFocus(true);

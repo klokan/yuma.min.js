@@ -3,6 +3,7 @@ package at.ait.dme.yumaJS.client.annotation.editors;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
 import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
+import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.core.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.core.Fragment;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.ResizableBoxSelection;
@@ -16,10 +17,14 @@ public class ResizableBoxEditor extends Editor {
 	private AbsolutePanel panel;
 
 	public ResizableBoxEditor(Annotatable annotatable, AbsolutePanel panel, Labels labels) {
+		this(annotatable, panel, labels, null);
+	}
+	
+	public ResizableBoxEditor(Annotatable annotatable, AbsolutePanel panel, Labels labels, Annotation initialValue) {
 		super(annotatable);
 		this.panel = panel;
 		
-		Selection selection = new ResizableBoxSelection(panel, labels);
+		Selection selection = new ResizableBoxSelection(panel, labels, initialValue.getFragment().getBoundingBox());
 		selection.setSelectionChangedHandler(new SelectionChangedHandler() {
 			public void onSelectionChanged(Fragment fragment) {
 				updateEditForm();
@@ -27,7 +32,7 @@ public class ResizableBoxEditor extends Editor {
 		});
 		setSelection(selection);
 		
-		EditForm editForm = new EditForm(selection, labels);
+		EditForm editForm = new EditForm(selection, labels, initialValue);
 		setEditForm(editForm);
 		panel.add(editForm, 0, 0);
 		updateEditForm();

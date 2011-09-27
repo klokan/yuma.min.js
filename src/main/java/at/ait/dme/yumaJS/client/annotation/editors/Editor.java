@@ -8,10 +8,15 @@ import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Selection;
 import at.ait.dme.yumaJS.client.annotation.widgets.EditForm;
 
+/**
+ * The abstract base class for all Editor components.
+ * 
+ * @author Rainer Simon <rainer.simon@ait.ac.at>
+ */
 public abstract class Editor {
 	
 	private Annotatable annotatable;
-	
+		
 	protected Selection selection;
 	
 	protected EditForm editForm;

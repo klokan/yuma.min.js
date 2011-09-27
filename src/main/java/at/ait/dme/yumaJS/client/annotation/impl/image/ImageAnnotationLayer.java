@@ -10,7 +10,9 @@ import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.ResizableBoxEditor;
+import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
 import at.ait.dme.yumaJS.client.annotation.widgets.event.DeleteHandler;
+import at.ait.dme.yumaJS.client.annotation.widgets.event.EditHandler;
 import at.ait.dme.yumaJS.client.init.InitParams;
 
 import com.google.gwt.dom.client.Style.Overflow;
@@ -86,9 +88,19 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		ImageAnnotationOverlay overlay = 
 			new ImageAnnotationOverlay(a, annotationLayer, getLabels());
 		
-		overlay.getDetailsPopup().addDeleteHandler(new DeleteHandler() {
+		final ImageAnnotationLayer thisLayer = this;
+		
+		DetailsPopup details = overlay.getDetailsPopup();
+		details .addDeleteHandler(new DeleteHandler() {
 			public void onDelete(Annotation annotation) {
 				removeAnnotation(a);
+			}
+		});
+		
+		details.addEditHandler(new EditHandler() {
+			public void onEdit(Annotation annotation) {
+				removeAnnotation(annotation);
+				new ResizableBoxEditor(thisLayer, annotationLayer, getLabels(), annotation);
 			}
 		});
 		

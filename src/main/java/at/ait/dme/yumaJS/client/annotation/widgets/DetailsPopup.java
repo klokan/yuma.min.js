@@ -2,6 +2,7 @@ package at.ait.dme.yumaJS.client.annotation.widgets;
 
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.widgets.event.DeleteHandler;
+import at.ait.dme.yumaJS.client.annotation.widgets.event.EditHandler;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.dom.client.Style;
@@ -128,6 +129,14 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 		btnDelete.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				handler.onDelete(annotation);
+			}
+		});
+	}
+	
+	public void addEditHandler(final EditHandler handler) {
+		btnEdit.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				handler.onEdit(annotation);
 			}
 		});
 	}
