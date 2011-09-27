@@ -30,7 +30,11 @@ public class ResizableBoxEditor extends Editor {
 		super(annotatable);
 		this.panel = panel;
 		
-		Selection selection = new ResizableBoxSelection(panel, labels, initialValue.getFragment().getBoundingBox());
+		BoundingBox bbox = null;
+		if (initialValue != null)
+			bbox = initialValue.getFragment().getBoundingBox(); 
+				
+		Selection selection = new ResizableBoxSelection(panel, labels, bbox);
 		selection.setSelectionChangedHandler(new SelectionChangedHandler() {
 			public void onSelectionChanged(Fragment fragment) {
 				updateEditForm();

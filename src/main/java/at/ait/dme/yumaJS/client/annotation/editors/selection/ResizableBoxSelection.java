@@ -1,6 +1,5 @@
 package at.ait.dme.yumaJS.client.annotation.editors.selection;
 
-import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
