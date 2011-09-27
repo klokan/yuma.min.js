@@ -111,6 +111,10 @@ public class RangeSelection extends Selection {
 		context.setGlobalAlpha(0.4);
 		context.fillRect(startX, 0, endX - startX, canvasElement.getHeight());
 	}
+	
+	public int getStartOffsetX() {
+		return startX;
+	}
 
 	@Override
 	public Fragment getSelectedFragment() {

@@ -12,6 +12,12 @@ import at.ait.dme.yumaJS.client.annotation.editors.selection.SelectionChangedHan
 import at.ait.dme.yumaJS.client.annotation.widgets.EditForm;
 import at.ait.dme.yumaJS.client.init.Labels;
 
+/**
+ * An {@link Editor} implementation for images and zoomable images,
+ * using {@link ResizableBoxSelection}.
+ *  
+ * @author Rainer Simon <rainer.simon@ait.ac.at>
+ */
 public class ResizableBoxEditor extends Editor {
 	
 	private AbsolutePanel panel;

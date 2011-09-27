@@ -17,10 +17,8 @@ import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 /**
- * An overlay that represents an annotation on a 
- * {@link RubberbandSeajaxAnnotationLayer} by attaching a 
- * {@link BoundingBoxOverlay} to a Seadragon rectangle
- * overlay and combining it with a movable
+ * An overlay that represents an annotation on a {@link SeajaxAnnotationLayer} by attaching a 
+ * {@link BoundingBoxOverlay} to a Seadragon rectangle overlay and combining it with a movable
  * {@link DetailsPopup}.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
@@ -38,7 +36,6 @@ public class ZoomableAnnotationOverlay {
 	public ZoomableAnnotationOverlay(Annotation a, SeadragonViewer viewer, Labels labels) {
 		this.viewer = viewer;
 		
-		// The bounding box overlay
 		BoundingBox bbox = a.getFragment().getBoundingBox();
 		bboxOverlay = new BoundingBoxOverlay(bbox);
 		bboxDiv = bboxOverlay.getElement();
@@ -57,7 +54,6 @@ public class ZoomableAnnotationOverlay {
 			}
 		});
 		
-		// The details popup
 		detailsPopup = new DetailsPopup(a, labels);
 		detailsPopup.setVisible(false);
 		

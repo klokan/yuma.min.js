@@ -46,12 +46,9 @@ public abstract class Editor {
 		});
 	}
 	
-	protected void saveAnnotation() {
-		annotatable.addAnnotation(getAnnotation());
-	}
-	
-	private Annotation getAnnotation() {
-		return Annotation.create(selection.getSelectedFragment(), editForm.getText());
+	private void saveAnnotation() {
+		annotatable.
+			addAnnotation(Annotation.create(selection.getSelectedFragment(), editForm.getText()));
 	}
 	
 	private void destroy() {

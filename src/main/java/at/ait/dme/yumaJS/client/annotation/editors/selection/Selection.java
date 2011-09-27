@@ -19,6 +19,11 @@ public abstract class Selection {
 	
 	public abstract void destroy();
 	
+	/**
+	 * Utiltity method that disables all selection functionality on the document.
+	 * This avoids the nasty (and involuntary) selection effect that otherwise happens
+	 * when dragging the mouse
+	 */
 	protected void disableTextSelection() {
 		Style body = Document.get().getBody().getStyle();
 		body.setProperty("MozUserSelect", "none");
@@ -33,6 +38,9 @@ public abstract class Selection {
 		document.body.style.MozUserSelect='none'; 
 	}-*/;
 	
+	/**
+	 * Re-enables text selection on the document
+	 */
 	protected void enableTextSelection() {
 		Style body = Document.get().getBody().getStyle();
 		body.setProperty("MozUserSelect", "auto");

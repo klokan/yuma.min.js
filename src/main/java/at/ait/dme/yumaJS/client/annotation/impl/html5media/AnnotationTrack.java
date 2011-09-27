@@ -17,6 +17,7 @@ import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.core.Range;
 import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
 import at.ait.dme.yumaJS.client.annotation.widgets.event.DeleteHandler;
+import at.ait.dme.yumaJS.client.annotation.widgets.event.EditHandler;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
@@ -101,13 +102,21 @@ public class AnnotationTrack extends Composite {
 		currentPopup.setVisible(true);
 	}
 	
-	public void addAnnotation(final Annotation a, Labels labels) {
+	public void addAnnotation(Annotation a, Labels labels) {
 		DetailsPopup popup = new DetailsPopup(a, labels);
-		popup.addDeleteHandler(new DeleteHandler() {
-			public void onDelete(Annotation annotation) {
-				removeAnnotation(a);
+		
+		popup.addEditHandler(new EditHandler() {
+			public void onEdit(Annotation annotation) {
+				// TODO need some restructuring first to implement this properly
 			}
 		});
+		
+		popup.addDeleteHandler(new DeleteHandler() {
+			public void onDelete(Annotation annotation) {
+				removeAnnotation(annotation);
+			}
+		});
+		
 		annotations.put(a, popup);
 		refresh();
 	}

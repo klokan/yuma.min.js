@@ -26,8 +26,7 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
- * An implementation of {@link RubberbandAnnotatable} 
- * for an HTML IMAGE.
+ * An implementation of {@link Annotatable} for an HTML IMAGE.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */

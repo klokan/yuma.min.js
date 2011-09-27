@@ -24,8 +24,8 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
- * An implementation of {@link RubberbandAnnotatable} 
- * for an HTML DIV holding a Seadragon AJAX viewer instance.
+ * An implementation of {@link Annotatable} for an HTML DIV holding a 
+ * Seadragon AJAX viewer instance.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
  */
@@ -113,5 +113,4 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 		new ResizableBoxEditor(this, annotationLayer, getLabels());
 	}
 	
-
 }

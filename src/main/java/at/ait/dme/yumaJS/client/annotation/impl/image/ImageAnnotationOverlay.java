@@ -12,9 +12,8 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 
 /**
- * An overlay that represents an annotation on an 
- * {@link RubberbandImageAnnotationLayer} by combining a 
- * {@link BoundingBoxOverlay} with a fix-location
+ * An overlay that represents an annotation on an {@link ImageAnnotationLayer}
+ * by combining a {@link BoundingBoxOverlay} with a fixed-location
  * {@link DetailsPopup}.
  * 
  * @author Rainer Simon <rainer.simon@ait.ac.at>
@@ -26,14 +25,16 @@ public class ImageAnnotationOverlay {
 	private DetailsPopup detailsPopup;
 	
 	public ImageAnnotationOverlay(Annotation a, final AbsolutePanel annotationLayer, Labels labels) {
-		// The bounding box overlay
 		final BoundingBox bbox = a.getFragment().getBoundingBox();
+		
 		bboxOverlay = new BoundingBoxOverlay(bbox);
+		
 		bboxOverlay.addMouseOverHandler(new MouseOverHandler() {
 			public void onMouseOver(MouseOverEvent event) {
 				detailsPopup.setVisible(true);
 			}
 		});
+		
 		bboxOverlay.addMouseOutHandler(new MouseOutHandler() {
 			public void onMouseOut(MouseOutEvent event) {
 				if (!detailsPopup.contains(
@@ -44,7 +45,6 @@ public class ImageAnnotationOverlay {
 			}
 		});
 		
-		// The details popup
 		detailsPopup = new DetailsPopup(a, labels);
 		detailsPopup.setVisible(false);
 		
