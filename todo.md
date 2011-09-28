@@ -1,5 +1,9 @@
 # TODOs
 
+* Seajax: bboxes are currently encoded in screen coordinates, not image 
+  coordinates -> change!
+* Seajax bbox encoding leads to wrong bbox size when editing after zooming
+  in/out
 * Seajax: when the mouse moves over a DetailPopup (even a hidden one) this currently
   triggers a mouseout event and fades the bboxes -> fix!
 * There's quite a bit of code overlap between ImageAnnotationLayer and SeajaxAnnotationLayer
