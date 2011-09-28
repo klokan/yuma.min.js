@@ -16,14 +16,14 @@ public class AudioRangeEditor extends Editor {
 	public AudioRangeEditor(Annotatable annotatable, ProgressBar progressBar, Labels labels, int offsetX)
 		throws InadequateBrowserException {
 
-		super(annotatable);		
+		super(annotatable, null);		
 		init(annotatable, progressBar, labels, new RangeSelection(progressBar, offsetX, offsetX + 1), null); 
 	}
 	
 	public AudioRangeEditor(Annotatable annotatable, ProgressBar progressBar, Labels labels, Annotation initialValue) 
 		throws InadequateBrowserException {
 
-		super(annotatable);
+		super(annotatable, initialValue);
 		
 		Range r = initialValue.getFragment().getRange();
 		int fromX = progressBar.toOffsetX(r.getFrom());

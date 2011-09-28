@@ -27,7 +27,7 @@ public class ResizableBoxEditor extends Editor {
 	}
 	
 	public ResizableBoxEditor(Annotatable annotatable, AbsolutePanel panel, Labels labels, Annotation initialValue) {
-		super(annotatable);
+		super(annotatable, initialValue);
 		this.panel = panel;
 		
 		BoundingBox bbox = null;

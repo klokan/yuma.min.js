@@ -16,41 +16,42 @@ import at.ait.dme.yumaJS.client.annotation.widgets.EditForm;
 public abstract class Editor {
 	
 	private Annotatable annotatable;
+	
+	private Annotation initialAnnotation;
 		
 	protected Selection selection;
 	
 	protected EditForm editForm;
 	
-	public Editor(Annotatable annotatable) {
+	public Editor(Annotatable annotatable, Annotation initialAnnotation) {
 		this.annotatable = annotatable;
+		this.initialAnnotation = initialAnnotation;
 	}
 	
 	protected void setSelection(Selection selection) {
 		this.selection = selection;
 	}
 	
-	protected void setEditForm(EditForm editForm) {
+	protected void setEditForm(final EditForm editForm) {
 		this.editForm = editForm;
 		
 		this.editForm.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				saveAnnotation();
+				annotatable.addAnnotation(
+					Annotation.create(selection.getSelectedFragment(), editForm.getText()));
 				destroy();
 			}
 		});
 		
 		this.editForm.addCancelClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				if (initialAnnotation != null)
+					annotatable.addAnnotation(initialAnnotation);
 				destroy();
 			}
 		});
 	}
-	
-	private void saveAnnotation() {
-		annotatable.
-			addAnnotation(Annotation.create(selection.getSelectedFragment(), editForm.getText()));
-	}
-	
+		
 	private void destroy() {
 		editForm.removeFromParent();
 		selection.destroy();
