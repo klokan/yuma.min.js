@@ -11,8 +11,13 @@ public class Annotation extends JavaScriptObject {
 	
 	protected Annotation() { }
 	
-	public static native Annotation create(Fragment fragment, String text) /*-{
-		return { fragment: fragment, text: text };
+	public static native Annotation create(String objectURI, String mediatype, Fragment fragment, String text) /*-{
+		return { 
+				 objectURI: objectURI,
+		         mediatype: mediatype,
+		         fragment: fragment, 
+		         text: text 
+		       };
 	}-*/;
 	
 	public final native Fragment getFragment() /*-{

@@ -176,5 +176,10 @@ public class AudioPlayer extends Annotatable implements Exportable {
 	public void removeAnnotation(Annotation annotation) {
 		annotationTrack.removeAnnotation(annotation);
 	}
+
+	@Override
+	public String getMediaType() {
+		return "AUDIO";
+	}
 	
 }

@@ -39,8 +39,10 @@ public abstract class Editor {
 		
 		this.editForm.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				final Annotation a =
-					Annotation.create(selection.getSelectedFragment(), editForm.getText());
+				final Annotation a = Annotation.create(
+						annotatable.getObjectURI(),
+						annotatable.getMediaType(),
+						selection.getSelectedFragment(), editForm.getText());
 				
 				Create.execute(a, new AsyncCallback<String>() {
 					public void onSuccess(String result) {	

@@ -120,7 +120,12 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 			annotations.remove(a);
 		}
 	}
-	
+
+	@Override
+	public String getMediaType() {
+		return "IMAGE";
+	}
+
 	public void createNewAnnotation() {
 		new ResizableBoxEditor(this, annotationLayer, getLabels());
 	}
