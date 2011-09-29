@@ -1,13 +1,18 @@
 package at.ait.dme.yumaJS.client.io;
 
+import com.google.gwt.http.client.URL;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.jsonp.client.JsonpRequestBuilder;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 
-public class Create extends APIMethod {
+public class Create {
 	
-	public static Annotation execute(Annotation a) {
-		// TODO implement
-		// TODO add an exception for server-side create error
-		return a;
+	public static void execute(Annotation a, AsyncCallback<String> callback) {
+		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
+		String json = URL.encode(new JSONObject(a).toString());
+		jsonp.requestString("http://localhost:8080/yuma4j-server/api/annotation/jsonp/create?json=" + json, callback);
 	}
 
 }

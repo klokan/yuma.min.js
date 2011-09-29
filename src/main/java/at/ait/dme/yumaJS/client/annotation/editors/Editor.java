@@ -2,11 +2,13 @@ package at.ait.dme.yumaJS.client.annotation.editors;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Selection;
 import at.ait.dme.yumaJS.client.annotation.widgets.EditForm;
+import at.ait.dme.yumaJS.client.io.Create;
 
 /**
  * The abstract base class for all Editor components.
@@ -37,8 +39,19 @@ public abstract class Editor {
 		
 		this.editForm.addSaveClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				annotatable.addAnnotation(
-					Annotation.create(selection.getSelectedFragment(), editForm.getText()));
+				final Annotation a =
+					Annotation.create(selection.getSelectedFragment(), editForm.getText());
+				
+				Create.execute(a, new AsyncCallback<String>() {
+					public void onSuccess(String result) {	
+						System.out.println(result);
+					}
+					
+					public void onFailure(Throwable caught) {
+						System.out.println(caught);
+					}
+				});
+				annotatable.addAnnotation(a);
 				destroy();
 			}
 		});

@@ -1,5 +1,7 @@
 <module rename-to="yuma.min">	
 	<inherits name="com.google.gwt.user.User"/>	
+	<inherits name="com.google.gwt.json.JSON" />
+	<inherits name="com.google.gwt.http.HTTP" /> 
 	<inherits name="org.timepedia.exporter.Exporter"/>
 	<entry-point class="at.ait.dme.yumaJS.client.TestImageHosted"/>
 </module>
