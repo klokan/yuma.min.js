@@ -29,7 +29,7 @@ __Include the yuma.min.js CSS stylesheet__ file in the \<head\> of your HTML pag
      <head>
        ...
        <link rel="stylesheet" type="text/css" href="css/yuma.min.css" />
-       <script type="text/javascript" src="yuma.min.js.nocache.js"></script>
+       <script type="text/javascript" src="yuma.min.nocache.js"></script>
        ...
      </head>  
      
