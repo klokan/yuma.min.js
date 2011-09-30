@@ -18,6 +18,14 @@ public class SeadragonViewer {
 		this.viewer = viewer;
 	}
 	
+	public String getObjectURI() {
+		return _getObjectURI(viewer);
+	};
+	
+	private native String _getObjectURI(JavaScriptObject viewer) /*-{
+		return viewer.source.xmlUrl;
+	}-*/;
+	
 	public SeadragonPoint pointFromPixel(SeadragonPoint p) {
 		return _pointFromPixel(viewer, p);
 	}

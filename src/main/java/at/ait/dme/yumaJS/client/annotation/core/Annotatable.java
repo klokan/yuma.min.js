@@ -44,18 +44,15 @@ public abstract class Annotatable implements Exportable {
 		return initParams.labels();
 	}
 	
+	public abstract String getObjectURI();
+	
+	public abstract String getMediaType();
+	
 	protected abstract void onWindowResize(int width, int height);
 	
 	public abstract void addAnnotation(Annotation annotation);
 	
 	public abstract void removeAnnotation(Annotation annotation);
-	
-	public abstract String getMediaType();
-	
-	public String getObjectURI() {
-		// TODO implement
-		return "";
-	}
 				
 	@Export
 	public void addAnnotationCreatedListener(JavaScriptObject callback) {

@@ -40,10 +40,14 @@ import com.google.gwt.user.client.ui.ToggleButton;
 @ExportPackage("YUMA")
 public class AudioPlayer extends Annotatable implements Exportable {
 	
+	private static final String MEDIATYPE = "AUDIO";
+
 	private static final int PLAYER_HEIGHT = 20;
 	private static final int PLAYER_DEFAULT_WIDTH = 400;
 	private static final String DEFAULT_ICON_PATH = "css/yuma.min.css";
 	private static final int CLOCK_WIDTH = 70;
+
+	private static String objectURI;
 	
 	private AudioElement audioElement;
 	
@@ -61,6 +65,8 @@ public class AudioPlayer extends Annotatable implements Exportable {
 			Window.alert("Error: no element with id '" + id + "' found on this page");
 			throw new RuntimeException();
 		}
+		
+		objectURI = audioURL;
 		
 		try {
 			final ExtendedAudio audio = new ExtendedAudio();		
@@ -161,6 +167,16 @@ public class AudioPlayer extends Annotatable implements Exportable {
 	private void pause() {
 		audioElement.pause();
 	}
+	
+	@Override
+	public String getMediaType() {
+		return MEDIATYPE;
+	}
+
+	@Override
+	public String getObjectURI() {
+		return objectURI;
+	}
 
 	@Override
 	protected void onWindowResize(int width, int height) {
@@ -175,11 +191,6 @@ public class AudioPlayer extends Annotatable implements Exportable {
 	@Override
 	public void removeAnnotation(Annotation annotation) {
 		annotationTrack.removeAnnotation(annotation);
-	}
-
-	@Override
-	public String getMediaType() {
-		return "AUDIO";
 	}
 	
 }

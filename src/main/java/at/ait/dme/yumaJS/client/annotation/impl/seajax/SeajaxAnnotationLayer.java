@@ -35,6 +35,10 @@ import com.google.gwt.user.client.ui.RootPanel;
 @ExportPackage("YUMA")
 public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	
+	private static final String MEDIATYPE = "IMAGE";
+	
+	private static String objectURI;
+	
 	private HTML parentDiv;
 	
 	private AbsolutePanel annotationLayer;
@@ -81,6 +85,18 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 				parentDiv.addStyleName("no-hover");
 			}
 		});
+		
+		objectURI = viewer.getObjectURI();
+	}
+	
+	@Override
+	public String getObjectURI() {
+		return objectURI;
+	}
+	
+	@Override
+	public String getMediaType() {
+		return MEDIATYPE;
 	}
 		
 	@Override
@@ -119,11 +135,6 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 			overlay.destroy();
 			annotations.remove(a);
 		}
-	}
-
-	@Override
-	public String getMediaType() {
-		return "IMAGE";
 	}
 
 	public void createNewAnnotation() {

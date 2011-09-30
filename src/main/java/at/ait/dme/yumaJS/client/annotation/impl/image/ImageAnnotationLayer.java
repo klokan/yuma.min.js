@@ -23,6 +23,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -33,6 +34,10 @@ import com.google.gwt.user.client.ui.RootPanel;
 @Export
 @ExportPackage("YUMA")
 public class ImageAnnotationLayer extends Annotatable implements Exportable {
+	
+	private static final String MEDIATYPE = "IMAGE";
+	
+	private static String objectURI;
 	
 	private Element image;
 	
@@ -54,6 +59,8 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		
 		if (!image.getTagName().toLowerCase().equals("img"))
 			YUMA.fatalError("Error: you can only create an ImageCanvas on an <img> element");
+		
+		objectURI = Image.wrap(image).getUrl();
 
 		annotationLayer = new AbsolutePanel();
 		annotationLayer.setStyleName("image-canvas");		
@@ -75,6 +82,16 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		}, MouseOutEvent.getType());
 		
 		RootPanel.get().add(annotationLayer, image.getAbsoluteLeft(), image.getAbsoluteTop());
+	}
+	
+	@Override
+	public String getObjectURI() {
+		return objectURI;
+	}
+
+	@Override
+	public String getMediaType() {
+		return MEDIATYPE;
 	}
 
 	@Override
@@ -114,11 +131,6 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 			overlay.destroy();
 			annotations.remove(a);
 		}
-	}
-
-	@Override
-	public String getMediaType() {
-		return "IMAGE";
 	}
 	
 	public void createNewAnnotation() {
