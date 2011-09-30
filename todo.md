@@ -11,4 +11,3 @@
 * CSS style for button active/focus
 * Seadragon: Reposition/z-index should also work when switching between 
   Seadragon normal/fullscreen mode
-* Host an "online API" somewhere so that people can try yuma.min.js

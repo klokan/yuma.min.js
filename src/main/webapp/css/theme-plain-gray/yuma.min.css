@@ -36,6 +36,7 @@
 .annotation-bbox-inner {
 	border:1px solid #fff;
 	z-index:9009;
+	background-image:url('1px-transp.png');
 }
 
 .annotation-bbox-inner:hover {
