@@ -92,10 +92,10 @@ zoomable-image- and audio-annotation in [GWT development mode]
 
 [GWT](http://code.google.com/webtoolkit/) is a development toolkit which allows developers to
 write complex AJAX applications in Java. The GWT cross-compiler translates the client-side part 
-of the Java application to optimized, standalone JavaScript files. (The server-side part remains
-Java and requires a Servlet container like [Apache Tomcat](http://tomcat.apache.org/) to run.)
+of the Java application to optimized JavaScript. (Any server-side parts of the application remain
+Java and require a Servlet container like [Apache Tomcat](http://tomcat.apache.org/) to run.)
 
-The yuma.min.js JavaScript library is a client-side application. It __does not__ make any use of GWT's server-side
+yuma.min.js is a __purely client-side application__. It __does not__ make any use of GWT's server-side
 parts or the [RPC mechanism](http://code.google.com/intl/de-DE/webtoolkit/doc/latest/tutorial/RPC.html).
 To us, the reason for choosing GWT was productivity: the speed advantage we gain from using a strongly-typed,
 consistently object-oriented language with good tool support simply outweighs the initial 'setup penalty'
