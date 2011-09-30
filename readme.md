@@ -53,7 +53,7 @@ start your initialization.
        ...
      </body>
      
-Calling ``annotationLayer.newAnnotation();`` will open the annotation editing form. That's it for the basics. 
+Calling ``annotationLayer.createNewAnnotation();`` will open the annotation editing form. That's it for the basics. 
 
 ## What Else is in There?
 
