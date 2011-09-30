@@ -114,7 +114,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 			}
 		});
 		
-		details .addDeleteHandler(new DeleteHandler() {
+		details.addDeleteHandler(new DeleteHandler() {
 			public void onDelete(Annotation annotation) {
 				removeAnnotation(a);
 			}

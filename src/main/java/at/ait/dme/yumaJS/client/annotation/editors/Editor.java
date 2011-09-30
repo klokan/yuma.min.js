@@ -53,6 +53,11 @@ public abstract class Editor {
 						System.out.println(caught);
 					}
 				});
+				// TODO only add annotation on success - or at least show
+				// a message that storing failed
+				
+				// TODO should we allow 'demo' mode with no server side 
+				// annotation storage as well?
 				annotatable.addAnnotation(a);
 				destroy();
 			}
