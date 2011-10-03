@@ -1,3 +1,13 @@
+@font-face {
+	font-family:"Kaffeesatz";
+	src:url('../fonts/YanoneKaffeesatz-Regular.otf'); 
+}
+
+@font-face {
+	font-family:"Kaffeesatz-Bold";
+	src:url('../fonts/YanoneKaffeesatz-Bold.otf'); 
+}
+
 html, body {
 	padding:5px 40px 0px 20px;
 	margin:0px;
@@ -9,8 +19,8 @@ html, body {
 
 h1 {
 	margin-top:0px;
-	font-family:Trebuchet MS;
-	font-size:50px;
+	font-family:Kaffeesatz-Bold;
+	font-size:70px;
 	font-weight:normal;
 }
 
@@ -18,8 +28,8 @@ h2 {
 	margin-top:0px;
 	padding-top:25px;
 	font-weight:normal;
-	font-family:Trebuchet MS;
-	font-size:20px;
+	font-family:Kaffeesatz;
+	font-size:28px;
 }
 
 a {
