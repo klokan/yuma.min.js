@@ -48,7 +48,6 @@
 	margin:4px 0px 0px -4px;
 	padding:2px 5px;
 	z-index:9010;
-	background-image:url('1px-transp.png');
 }
 
 .annotation-editform textarea {
@@ -102,6 +101,7 @@
 	opacity:0;
 	transition:opacity 0.15s linear;
 	-webkit-transition:opacity 0.15s linear; 
+	background-image:url('1px-transp.png');
 }
 
 .annotation-popup-content {
