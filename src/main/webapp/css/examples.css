@@ -1,0 +1,70 @@
+html, body {
+	padding:5px 40px 0px 20px;
+	margin:0px;
+	background-color:#fff;
+	font-family: Verdana, Lucida Sans Unicode, Sans;
+	font-size:0.90em;
+	color:#000;
+}
+
+h1 {
+	margin-top:0px;
+	font-family:Trebuchet MS;
+	font-size:50px;
+	font-weight:normal;
+}
+
+h2 {
+	margin-top:0px;
+	padding-top:25px;
+	font-weight:normal;
+	font-family:Trebuchet MS;
+	font-size:20px;
+}
+
+a {
+	color:#555;
+}
+
+a:hover {
+	background-color:#eee;
+}
+
+a:visited {
+	color:#555;
+}
+
+p {
+	padding:0px;
+	margin:0px 0px 10px 0px;
+}
+
+div {
+	line-height:170%;
+}
+
+ul {
+	margin-top:0px;
+	padding-top:0px;
+	list-style-type: square;
+}
+
+#image-container {
+	margin:20px 0px;
+}
+
+input.button {
+	margin:5px 5px 0px 0px;
+	padding:2px 4px;
+	border:1px solid black;
+	cursor:pointer;
+}
+
+input.button:active {
+	background-color:#aaa;
+}
+
+.attribution {
+	font-size:12px;
+	color:#777;
+}

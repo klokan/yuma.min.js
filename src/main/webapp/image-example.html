@@ -1,28 +1,110 @@
 <!DOCTYPE html>
 <html>
   <head>
-  	<meta http-equiv="X-UA-Compatible" content="IE=8" >
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Image Annotation - Sample Page</title>
-    <link rel="stylesheet" type="text/css" href="css/theme-plain-gray/yuma.min.css" />
+    <title>yuma.min.js - the JavaScript Media Annotation Framework</title>
+    <link href="css/examples.css" rel="stylesheet" type="text/css" />
+	<link href="css/theme-plain-gray/yuma.min.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="yuma.min/yuma.min.nocache.js"></script>
-    <script type="text/javascript">
-    var annotationLayer;
-    
+	<script>
+	var annotationLayer;
 	window.onYUMAready = function() {
-		annotationLayer = new YUMA.ImageAnnotationLayer('annotateMe');
+		annotationLayer = new YUMA.ImageAnnotationLayer('sample-image');
 	}
 	</script>
   </head>
-  
+
   <body>
-    <div>
-      <p>
-        <img id="annotateMe" src="samples/640px-Hotel_Bristol_dinner.jpg" />
-      </p>
-      <p>
-      	<input type="button" value="Add Note" onclick="annotationLayer.createNewAnnotation()"></input>
-      </p>
+    <h1>yuma.min.js</h1>
+	<div id=content>
+	  <p>Welcome to the home of the <strong>yuma.min.js</strong>, the Open Source media annotation
+	  toolkit that makes content on your Web page annotatable with just a few lines of JavaScript!
+          <strong>yuma.min.js</strong> works with
+            <ul>
+              <li>Images</li>
+              <li>Zoomable images</li>
+              <li>Audio</li>
+            </ul>
+          </p>
+	  
+	  <h2>How Does yuma.min.js Work?</h2>
+	  <p><strong>yuma.min.js</strong> makes it easy to attach annotation functionality to content
+	  on your Web pages. Simply include the <strong>yuma.min.js</strong> JavaScript file and
+	  CSS stylesheet, and you are ready to go. Developer documentation and code samples are available on 
+	  <a href="http://github.com/rsimon/yuma.min.js">our GitHub site</a>. Give it a try! 
+	  <a href="#" onclick="javascript:annotationLayer.createNewAnnotation();return false">Click
+	  here</a> (or on the 'Add Annotation' button) to add an annotation to the image below. Note
+	  that this demo <strong>will not store</strong> your annotations!</p>
+	  
+	  <div id="image-container">
+	    <img id="sample-image" src="samples/640px-Hotel_Bristol_dinner.jpg" />
+	  
+	    <p class="attribution">
+          <input class="button" type="button" value="Add Annotation" onclick="javascript:annotationLayer.createNewAnnotation();"/>
+	      <a href="http://commons.wikimedia.org/wiki/File:Hotel_Bristol_dinner.jp">Banquet at the Hotel Bristol, Warsaw</a>,
+          Wikimedia Commons. Public Domain.
+	    </p>
+	  </div>
+	  
+	  <p></p>
+	  
+	  <h2>Found Issues?</h2>
+	  <p>We are still getting things started and are hard at work bringing <strong>yuma.min.js</strong>
+	  into a stable state. If you encounter errors, unexpected behavior or generally weird stuff - please 
+	  do contact us via <a href="http://groups.google.com/group/yuma-annotation">our Google Group</a> or 
+	  <a href="http://github.com/rsimon/yuma.min.js/issues">post your issue on GitHub</a>!</p>
+	  
+	  <h2>How Do I Store Annotations?</h2>
+	  <p>This demo page will not store annotations. If you want to make annotations on your site permanent,
+          you need to set up an annotation storage server. Our upcoming sister project 
+          <a href="http://github.com/rsimon/yuma4j">yuma4j</a> will include everything you need to make this
+          happen in a Java environment. (We're also working a hosting service which can be used instead of 
+          running your own server.)</p>
+	  
+	  <h2>About</h2>
+	  <p><strong>yuma.min.js</strong> is based on the 
+	  <a href="http://dme.ait.ac.at/annotation">YUMA Universal Media Annotator</a>, a
+	  proof-of-concept for social semantic annotation. YUMA was developed under the leadership of the 
+          <a href="http://www.ait.ac.at">Austrian Institute of Technology</a> as part of
+	  the <a href="http://europeanaconnect.eu">Europeana<i>Connect</i></a> research 
+	  project. <strong>yuma.min.js</strong> picks out YUMA's best parts, packs them into a light user
+          interface, and rolls everything into a toolbox that's flexible, configurable, and easy 
+          to re-use. Ultimately, we want you to be able to build your own, customized annotation
+          tool with <strong>yuma.min.js</strong> with as little effort as possible - from small &amp;
+          simple to rich &amp; complex.</p>
+	  
+	  <p>Some of the YUMA features that are yet to come to <strong>yuma.min.js</strong> and <strong>yuma4j</strong>:
+	  <ul>
+	    <li><strong>Tagging</strong></li>
+	    <li><strong>Semantic Tagging</strong> (tagging based on controlled vocabularies)</li>
+		<li><strong>RSS feeds</strong></li>
+                <li><strong>Sharing</strong> and <strong>embedding</strong> of annotations</li> 
+		<li><strong>Data interoperability</strong> and <strong>Linked Data</strong> publishing based on
+		standard formats (<a href="http://www.openannotation.org/">OAC</a> and W3C Media Fragments)</li>
+		<li>Support for <strong>HTML5 video</strong></li>
+                <li><strong>Customizable search</strong> and <strong>data export</strong> with different sort and
+                filter options (including sort by position to support transcription use cases)</li>
+	  </ul>	
+	  </p>
+
+          <h2>Contact</h2>
+          <p>Questions? Want to know more? Get in touch contact us via
+          <a href="http://groups.google.com/group/yuma-annotation">our Google Group</a> (also via E-Mail) or send
+          a message through <a href="http://github.com/rsimon">GitHub</a>.</p>
+	  
+	  <h2>Acknowledgements</h2>
+	  <p><strong>yuma.min.js</strong> is developed under the leadership of the <a href="http://www.ait.ac.at/">Austrian
+          Institute of Technology</a>. We are much obliged to the
+          <a href="http://europeanaconnect.eu">Europeana<i>Connect</i></a> project for funding the development of the
+          original <a href="http://dme.ait.ac.at/annotation">YUMA Semantic Social Annotation prototypes</a>. 
+          Europeana<i>Connect</i> was co-funded by the European Community Programme eContent<i>plus</i>.
+          We would also like to thank the <a href="http://www.univie.ac.at">University of Vienna</a> and 
+          <a href="http://www.infosci.cornell.edu/">Cornell Information Science, Cornell University</a> for their
+          continued support.</p>	 
+	</div>
+    <div class="attribution">
+      <p>Font Kaffeesatz by Jan Gerner. Licensed under the Creative Commons 
+      <a href="http://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>
+      license.</p>
     </div>
   </body>
 </html>
