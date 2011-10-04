@@ -69,7 +69,7 @@ and built with [Gradle] (http://www.gradle.org/). Use
 
 ``gradle gwtCompile``
 
-to build the project. Your optimized, minified yuma.min.js JavaScript file will be in the 
+to build the project. Your optimized, minified JavaScript will be in the 
 /build/gwt/yuma.min folder. Use
 
 ``gradle jettyRunWar``
