@@ -6,6 +6,7 @@ import at.ait.dme.yumaJS.client.annotation.widgets.event.EditHandler;
 import at.ait.dme.yumaJS.client.init.Labels;
 
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasMouseOutHandlers;
@@ -92,8 +93,10 @@ public class DetailsPopup extends Composite implements HasMouseOutHandlers {
 		container.setVisible(true);
 		Style style = container.getElement().getStyle();
 		if (visible) {
+			style.setVisibility(Visibility.VISIBLE);
 			style.setOpacity(1);
 		} else {
+			style.setVisibility(Visibility.HIDDEN);
 			style.setOpacity(0);
 		}
 	}

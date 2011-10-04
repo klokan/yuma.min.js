@@ -99,9 +99,14 @@
 	padding-top:2px;
 	z-index:9010;
 	opacity:0;
-	transition:opacity 0.15s linear;
-	-webkit-transition:opacity 0.15s linear; 
+	transition:visibility 0.15s linear 0s, opacity 0.15s linear;
+	-webkit-transition:visibility 0.15s linear 0s, opacity 0.15s linear;
 	background-image:url('1px-transp.png');
+}
+
+.annotation-popup:hover {
+	transition-delay:0s;
+	-webkit-transition-delay:0s;
 }
 
 .annotation-popup-content {

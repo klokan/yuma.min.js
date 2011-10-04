@@ -2,8 +2,6 @@
 
 * Annotations created later always cover annotations created earlier -> fix, so that smaller annotations
   are never covered by larger ones!
-* The annotation popups cover annotations, even when they are hidden -> this sometimes prevents correct
-  mouse-over events -> fix!
 * Image: the annotation layer sometimes seems to be shifted upwards a varying number of pixels. Seems
   to happen more often in Firefox than in any other browser, but I had it in Chrome as well once.
 * Seajax: bboxes are currently encoded in screen coordinates, not image 
