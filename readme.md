@@ -58,7 +58,7 @@ Calling ``annotationLayer.createNewAnnotation();`` will open the annotation edit
 ## What Else is in There?
 
 Flexible skinning via CSS, customization & I18N of button texts and labels via object literal 
-init parameters, lifecycle callbacks so can get a handle on annotations when they are created, 
+init parameters, lifecycle callbacks so you can get a handle on annotations when they are created, 
 edited, deleted etc. etc. Essentially, you'll be able to build your own, customized annotation 
 application around yuma.min.js! We'll have a more complete API documentation on the Wiki shortly!
 
@@ -69,8 +69,8 @@ and built with [Gradle] (http://www.gradle.org/). Use
 
 ``gradle gwtCompile``
 
-to build the project. Your optimized, minified yuma.min.js JavaScript file will be at 
-/build/gwt/yuma.min/yuma.min.nocache.js. Use
+to build the project. Your optimized, minified yuma.min.js JavaScript file will be in the 
+/build/gwt/yuma.min folder. Use
 
 ``gradle jettyRunWar``
 
