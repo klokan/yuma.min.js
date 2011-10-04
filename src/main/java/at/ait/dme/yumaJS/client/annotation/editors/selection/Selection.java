@@ -35,7 +35,6 @@ public abstract class Selection {
 	private native void _disableTextSelection() /*-{
 		document.onselectstart = function(){return false;}
 		document.onmousedown = function() {return false;}
-		document.body.style.MozUserSelect='none'; 
 	}-*/;
 	
 	/**
@@ -52,7 +51,6 @@ public abstract class Selection {
 	private native void _enableTextSelection() /*-{
 		document.onselectstart = function(){return true;}
   		document.onmousedown = function(){return true;}
-  		document.body.style.MozUserSelect='all';
 	}-*/;
 
 }
