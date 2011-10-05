@@ -2,6 +2,7 @@ package at.ait.dme.yumaJS.client;
 
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.audio.AudioPlayer;
 import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationLayer;
+import at.ait.dme.yumaJS.client.annotation.impl.openlayers.OpenLayersAnnotationLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.SeajaxAnnotationLayer;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -25,6 +26,7 @@ public class YUMA implements EntryPoint {
 	public void onModuleLoad() {
 		GWT.create(ImageAnnotationLayer.class);
 		GWT.create(SeajaxAnnotationLayer.class);
+		GWT.create(OpenLayersAnnotationLayer.class);
 		GWT.create(AudioPlayer.class);
 		
 		Timer t = new Timer() {

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>OpenLayers Map Annotation - Sample Page</title>
+    <link rel="stylesheet" type="text/css" href="../css/theme-plain-gray/yuma.min.css" />
+    <script type="text/javascript" src="http://dev.openlayers.org/releases/OpenLayers-2.11/lib/OpenLayers.js"></script>
+    <script type="text/javascript" src="../yuma.min/yuma.min.nocache.js"></script>
+    <script type="text/javascript">    
+    var map;
+    
+    window.onload = function() {    	
+    	 map = new OpenLayers.Map('map');
+
+         var ol_wms = new OpenLayers.Layer.WMS( "OpenLayers WMS",
+             "http://vmap0.tiles.osgeo.org/wms/vmap0?", {layers: 'basic'} );
+
+         map.addLayer(ol_wms);
+         map.addControl(new OpenLayers.Control.LayerSwitcher());
+         map.zoomToMaxExtent();
+    }
+	</script>
+  </head>
+  
+  <body>
+    <div id="map" style="width:640px;height:480px;"></div>
+  </body>
+</html>
+
+
+
