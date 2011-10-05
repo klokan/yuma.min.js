@@ -3,10 +3,17 @@ package at.ait.dme.yumaJS.client.annotation.impl.openlayers;
 import org.timepedia.exporter.client.Exportable;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.dom.client.Style.Overflow;
+import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
+import at.ait.dme.yumaJS.client.annotation.editors.ResizableBoxEditor;
+import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Bounds;
+import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxesLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Map;
 import at.ait.dme.yumaJS.client.init.InitParams;
@@ -16,6 +23,8 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	private static final String MEDIATYPE = "MAP";
 
 	private BoxesLayer annotationLayer;
+	
+	private AbsolutePanel editingLayer;
 	
 	public OpenLayersAnnotationLayer(JavaScriptObject map) {
 		this(map, null);
@@ -32,6 +41,13 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		// TODO make annotation layer name configurable via init params
 		annotationLayer = BoxesLayer.create("Annotations");
 		map.addBoxesLayer(annotationLayer);
+		
+		HTML parentDiv = map.getDiv();
+		editingLayer = new AbsolutePanel();
+		editingLayer.setStyleName("openlayers-editing-layer");
+		editingLayer.getElement().getStyle().setOverflow(Overflow.VISIBLE);
+		editingLayer.setPixelSize(parentDiv.getOffsetWidth(), parentDiv.getOffsetHeight());		
+		RootPanel.get().insert(editingLayer, parentDiv.getAbsoluteLeft(), parentDiv.getAbsoluteTop(), 0);
 	}
 
 	@Override
@@ -53,8 +69,8 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 
 	@Override
 	public void addAnnotation(Annotation annotation) {
-		// TODO Auto-generated method stub
-		
+		// TODO dummy only!
+		annotationLayer.addMaker(BoxMarker.create(Bounds.create(0, 30, 16, 48)));
 	}
 
 	@Override
@@ -64,7 +80,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	}
 
 	public void createNewAnnotation() {
-		// TODO implement
+		new ResizableBoxEditor(this, editingLayer, getLabels());
 	}
 	
 }

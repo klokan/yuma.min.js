@@ -9,5 +9,9 @@ public class BoxesLayer extends JavaScriptObject {
 	public static native BoxesLayer create(String name) /*-{
 		return new $wnd.OpenLayers.Layer.Boxes(name);
 	}-*/;
+	
+	public final native void addMaker(BoxMarker marker) /*-{
+		this.addMarker(marker);
+	}-*/;
 
 }
