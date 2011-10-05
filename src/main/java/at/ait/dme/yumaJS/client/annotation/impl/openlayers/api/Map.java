@@ -2,7 +2,7 @@ package at.ait.dme.yumaJS.client.annotation.impl.openlayers.api;
 
 import com.google.gwt.core.client.JavaScriptObject;
 
-public class Map extends JavaScriptObject {
+public class Map {
 	
 	private JavaScriptObject map;
 	
