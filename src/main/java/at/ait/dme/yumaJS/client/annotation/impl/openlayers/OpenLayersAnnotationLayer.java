@@ -11,17 +11,22 @@ import com.google.gwt.user.client.ui.RootPanel;
 import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
+import at.ait.dme.yumaJS.client.annotation.core.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.editors.ResizableBoxEditor;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Bounds;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxesLayer;
+import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.LonLat;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Map;
+import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Pixel;
 import at.ait.dme.yumaJS.client.init.InitParams;
 
 public class OpenLayersAnnotationLayer extends Annotatable implements Exportable {
 
 	private static final String MEDIATYPE = "MAP";
 
+	private Map map;
+	
 	private BoxesLayer annotationLayer;
 	
 	private AbsolutePanel editingLayer;
@@ -36,7 +41,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		if (openLayersMap == null) 
 			YUMA.fatalError("Error: OpenLayers map undefined (not initialized yet?)");
 		
-		Map map = new Map(openLayersMap);
+		map = new Map(openLayersMap);
 		
 		// TODO make annotation layer name configurable via init params
 		annotationLayer = BoxesLayer.create("Annotations");
@@ -63,14 +68,29 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 
 	@Override
 	protected void onWindowResize(int width, int height) {
-		// TODO Auto-generated method stub
-		
+		RootPanel.get().setWidgetPosition(editingLayer, map.getDiv().getAbsoluteLeft(), map.getDiv().getAbsoluteTop());
 	}
 
 	@Override
 	public void addAnnotation(Annotation annotation) {
-		// TODO dummy only!
-		annotationLayer.addMaker(BoxMarker.create(Bounds.create(0, 30, 16, 48)));
+		// TODO this transformation needs to be done inside the
+		// editor - otherwise we'll run into conflicts with
+		// addMethod calls from server-side AJAX load
+		BoundingBox bbox = annotation.getFragment().getBoundingBox();
+		Pixel topLeft = Pixel.create(bbox.getX(), bbox.getY());
+		Pixel bottomRight = Pixel.create(topLeft.getX() + bbox.getWidth(),
+				topLeft.getY() + bbox.getHeight());
+		
+		LonLat llTopLeft = map.getLonLatFromPixel(topLeft);
+		LonLat llBottomRight = map.getLonLatFromPixel(bottomRight);
+		
+		Bounds bounds = Bounds.create(
+				llTopLeft.getLon(),
+				llBottomRight.getLat(),
+				llBottomRight.getLon(),
+				llTopLeft.getLat());
+		
+		annotationLayer.addMaker(BoxMarker.create(bounds));
 	}
 
 	@Override

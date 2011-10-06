@@ -6,7 +6,7 @@ public class Bounds extends JavaScriptObject {
 	
 	protected Bounds() { }
 	
-	public static native Bounds create(int left, int bottom, int right, int top) /*-{
+	public static native Bounds create(double left, double bottom, double right, double top) /*-{
 		return new $wnd.OpenLayers.Bounds(left, bottom, right, top);
 	}-*/;
 	

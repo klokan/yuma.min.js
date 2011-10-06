@@ -33,15 +33,15 @@ public class Map {
 	}
 	
 	private native LonLat _getLonLatFromPixel(JavaScriptObject map, Pixel px) /*-{
-		return map.getLonLatFromPixel(px):
+		return map.getLonLatFromPixel(px);
 	}-*/;
 
-	public LonLat getPixelFromLonLat(LonLat lonlat) {
+	public Pixel getPixelFromLonLat(LonLat lonlat) {
 		return _getPixelFromLonLat(map, lonlat);
 	}
 	
-	private native LonLat _getPixelFromLonLat(JavaScriptObject map, LonLat lonlat) /*-{
-		return map.getPixelFromLonLat(lonlat):
+	private native Pixel _getPixelFromLonLat(JavaScriptObject map, LonLat lonlat) /*-{
+		return map.getPixelFromLonLat(lonlat);
 	}-*/;
 
 	
