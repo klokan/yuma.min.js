@@ -28,4 +28,21 @@ public class Map {
 		return map.div;
 	}-*/;
 	
+	public LonLat getLonLatFromPixel(Pixel px) {
+		return _getLonLatFromPixel(map, px);
+	}
+	
+	private native LonLat _getLonLatFromPixel(JavaScriptObject map, Pixel px) /*-{
+		return map.getLonLatFromPixel(px):
+	}-*/;
+
+	public LonLat getPixelFromLonLat(LonLat lonlat) {
+		return _getPixelFromLonLat(map, lonlat);
+	}
+	
+	private native LonLat _getPixelFromLonLat(JavaScriptObject map, LonLat lonlat) /*-{
+		return map.getPixelFromLonLat(lonlat):
+	}-*/;
+
+	
 }
