@@ -20,6 +20,10 @@ public class Annotation extends JavaScriptObject {
 		       };
 	}-*/;
 	
+	public final native String getID() /*-{
+		return this.id;
+	}-*/;
+	
 	public final native String getFragment() /*-{
 		return this.fragment;
 	}-*/;
