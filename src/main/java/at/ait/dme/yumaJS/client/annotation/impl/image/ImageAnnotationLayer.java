@@ -98,20 +98,38 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	
 	@Override
 	public String toFragment(BoundingBox bbox, Range range) {
-		// TODO Auto-generated method stub
-		return null;
+		return "xywh=pixel:" 
+			+ bbox.getX()+ "," 
+			+ bbox.getY() + "," 
+			+ bbox.getWidth() + ","
+			+ bbox.getHeight();
 	}
 
 	@Override
 	public Range toRange(String fragment) {
-		// TODO Auto-generated method stub
+		// Images don't support range fragments
 		return null;
 	}
 
 	@Override
 	public BoundingBox toBounds(String fragment) {
-		// TODO Auto-generated method stub
-		return null;
+		if (fragment.startsWith("xywh=pixel:")) {
+			fragment = fragment.substring(11);
+		} else if (fragment.startsWith("xywh=")) {
+			fragment = fragment.substring(5);
+		} else {
+			return null;
+		}
+
+		String[] xywh = fragment.split(",");
+		if (xywh.length != 4)
+			return null;
+		
+		return BoundingBox.create(
+				Integer.parseInt(xywh[0]),
+				Integer.parseInt(xywh[1]),
+				Integer.parseInt(xywh[2]),
+				Integer.parseInt(xywh[3]));
 	}
 
 	@Override

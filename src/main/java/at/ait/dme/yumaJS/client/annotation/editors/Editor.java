@@ -45,7 +45,7 @@ public abstract class Editor {
 						annotatable.toFragment(selection.getSelectedBounds(), selection.getSelectedRange()),
 						editForm.getText());
 				
-				Create.execute(a, new AsyncCallback<String>() {
+				Create.executeJSONP(a, new AsyncCallback<String>() {
 					public void onSuccess(String result) {	
 						System.out.println(result);
 					}
