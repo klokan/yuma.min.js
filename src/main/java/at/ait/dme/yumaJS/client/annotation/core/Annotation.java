@@ -11,7 +11,7 @@ public class Annotation extends JavaScriptObject {
 	
 	protected Annotation() { }
 	
-	public static native Annotation create(String objectURI, String mediatype, Fragment fragment, String text) /*-{
+	public static native Annotation create(String objectURI, String mediatype, String fragment, String text) /*-{
 		return { 
 				 objectURI: objectURI,
 		         mediatype: mediatype,
@@ -20,7 +20,7 @@ public class Annotation extends JavaScriptObject {
 		       };
 	}-*/;
 	
-	public final native Fragment getFragment() /*-{
+	public final native String getFragment() /*-{
 		return this.fragment;
 	}-*/;
 	

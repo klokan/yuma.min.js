@@ -25,7 +25,7 @@ public class AudioRangeEditor extends Editor {
 
 		super(annotatable, initialValue);
 		
-		Range r = initialValue.getFragment().getRange();
+		Range r = annotatable.toRange(initialValue.getFragment());
 		int fromX = progressBar.toOffsetX(r.getFrom());
 		int toX = progressBar.toOffsetX(r.getTo());
 		init(annotatable, progressBar, labels, new RangeSelection(progressBar, fromX, toX), initialValue);

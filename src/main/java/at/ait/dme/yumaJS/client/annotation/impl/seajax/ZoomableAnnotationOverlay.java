@@ -6,6 +6,7 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.RootPanel;
 
+import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.impl.image.BoundingBoxOverlay;
@@ -33,10 +34,10 @@ public class ZoomableAnnotationOverlay {
 	
 	private DetailsPopup detailsPopup;
 	
-	public ZoomableAnnotationOverlay(Annotation a, SeadragonViewer viewer, Labels labels) {
+	public ZoomableAnnotationOverlay(Annotation annotation, Annotatable annotatable, SeadragonViewer viewer, Labels labels) {
 		this.viewer = viewer;
 		
-		BoundingBox bbox = a.getFragment().getBoundingBox();
+		BoundingBox bbox = annotatable.toBounds(annotation.getFragment());
 		bboxOverlay = new BoundingBoxOverlay(bbox);
 		bboxDiv = bboxOverlay.getElement();
 		DOM.sinkEvents(bboxDiv, Event.ONMOUSEOVER | Event.ONMOUSEOUT);
@@ -54,7 +55,7 @@ public class ZoomableAnnotationOverlay {
 			}
 		});
 		
-		detailsPopup = new DetailsPopup(a, labels);
+		detailsPopup = new DetailsPopup(annotation, labels);
 		detailsPopup.setVisible(false);
 		
 		SeadragonPoint anchor =

@@ -3,8 +3,6 @@ package at.ait.dme.yumaJS.client.annotation.editors.selection;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style;
 
-import at.ait.dme.yumaJS.client.annotation.core.Fragment;
-
 /**
  * An abstract base class for different types of fragment 
  * selection tools.
@@ -13,7 +11,9 @@ import at.ait.dme.yumaJS.client.annotation.core.Fragment;
  */
 public abstract class Selection {
 	
-	public abstract Fragment getSelectedFragment();
+	public abstract BoundingBox getSelectedBounds();
+	
+	public abstract Range getSelectedRange();
 	
 	public abstract void setSelectionChangedHandler(SelectionChangedHandler handler);
 	

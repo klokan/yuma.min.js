@@ -1,6 +1,5 @@
 package at.ait.dme.yumaJS.client.annotation.editors.selection;
 
-import at.ait.dme.yumaJS.client.annotation.core.Fragment;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserException;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
 
@@ -114,16 +113,22 @@ public class RangeSelection extends Selection {
 	public int getStartOffsetX() {
 		return startX;
 	}
+	
+	@Override
+	public BoundingBox getSelectedBounds() {
+		// This selection does not contain bounds
+		return null;
+	}
 
 	@Override
-	public Fragment getSelectedFragment() {
+	public Range getSelectedRange() {
 		double startTime = progressBar.toTime(startX);
 		double endTime = progressBar.toTime(endX);
 		
 		if (startTime < endTime) {
-			return Fragment.create(Range.create(startTime, endTime));
+			return Range.create(startTime, endTime);
 		} else {
-			return Fragment.create(Range.create(endTime, startTime));			
+			return Range.create(endTime, startTime);			
 		}
 	}
 

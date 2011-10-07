@@ -42,7 +42,8 @@ public abstract class Editor {
 				final Annotation a = Annotation.create(
 						annotatable.getObjectURI(),
 						annotatable.getMediaType(),
-						selection.getSelectedFragment(), editForm.getText());
+						annotatable.toFragment(selection.getSelectedBounds(), selection.getSelectedRange()),
+						editForm.getText());
 				
 				Create.execute(a, new AsyncCallback<String>() {
 					public void onSuccess(String result) {	

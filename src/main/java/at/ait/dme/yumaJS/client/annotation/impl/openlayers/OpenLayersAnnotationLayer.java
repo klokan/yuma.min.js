@@ -13,6 +13,7 @@ import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.ResizableBoxEditor;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.Bounds;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxMarker;
 import at.ait.dme.yumaJS.client.annotation.impl.openlayers.api.BoxesLayer;
@@ -65,6 +66,24 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	public String getMediaType() {
 		return MEDIATYPE;
 	}
+	
+	@Override
+	public String toFragment(BoundingBox bbox, Range range) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Range toRange(String fragment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BoundingBox toBounds(String fragment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	protected void onWindowResize(int width, int height) {
@@ -76,7 +95,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 		// TODO this transformation needs to be done inside the
 		// editor - otherwise we'll run into conflicts with
 		// addMethod calls from server-side AJAX load
-		BoundingBox bbox = annotation.getFragment().getBoundingBox();
+		BoundingBox bbox = toBounds(annotation.getFragment());
 		Pixel topLeft = Pixel.create(bbox.getX(), bbox.getY());
 		Pixel bottomRight = Pixel.create(topLeft.getX() + bbox.getWidth(),
 				topLeft.getY() + bbox.getHeight());

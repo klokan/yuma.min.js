@@ -4,8 +4,8 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 
 import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
-import at.ait.dme.yumaJS.client.annotation.core.Fragment;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.ResizableBoxSelection;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Selection;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.SelectionChangedHandler;
@@ -32,12 +32,16 @@ public class ResizableBoxEditor extends Editor {
 		
 		BoundingBox bbox = null;
 		if (initialValue != null)
-			bbox = initialValue.getFragment().getBoundingBox(); 
+			bbox = annotatable.toBounds(initialValue.getFragment()); 
 				
 		Selection selection = new ResizableBoxSelection(panel, labels, bbox);
 		selection.setSelectionChangedHandler(new SelectionChangedHandler() {
-			public void onSelectionChanged(Fragment fragment) {
+			public void onBoundsChanged(BoundingBox bbox) {
 				updateEditForm();
+			}
+
+			public void onRangeChanged(Range range) {
+				// This editor does not have ranges
 			}
 		});
 		setSelection(selection);
@@ -49,7 +53,7 @@ public class ResizableBoxEditor extends Editor {
 	}
 	
 	private void updateEditForm() {
-		BoundingBox bbox = selection.getSelectedFragment().getBoundingBox();
+		BoundingBox bbox = selection.getSelectedBounds();
 		panel.setWidgetPosition(editForm, bbox.getX(), bbox.getY() + bbox.getHeight());
 	}
 	

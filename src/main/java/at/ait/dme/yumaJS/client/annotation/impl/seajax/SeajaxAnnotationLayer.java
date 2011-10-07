@@ -10,6 +10,8 @@ import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.ResizableBoxEditor;
+import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonMouseHandler;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonViewer;
 import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
@@ -98,6 +100,24 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	public String getMediaType() {
 		return MEDIATYPE;
 	}
+	
+	@Override
+	public String toFragment(BoundingBox bbox, Range range) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Range toRange(String fragment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BoundingBox toBounds(String fragment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 	@Override
 	protected void onWindowResize(int width, int height) {
@@ -107,7 +127,7 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	@Override
 	public void addAnnotation(Annotation a) {
 		ZoomableAnnotationOverlay overlay = 
-			new ZoomableAnnotationOverlay(a, viewer, getLabels());
+			new ZoomableAnnotationOverlay(a, this, viewer, getLabels());
 
 		final Annotatable thisAnnotatable = this;
 		

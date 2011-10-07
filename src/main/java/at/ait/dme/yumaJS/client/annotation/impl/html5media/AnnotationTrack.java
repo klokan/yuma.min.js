@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
+import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
 import at.ait.dme.yumaJS.client.annotation.widgets.event.DeleteHandler;
@@ -55,12 +56,22 @@ public class AnnotationTrack extends Composite {
 				if (a == null) {
 					clearCurrentPopup();
 				} else {
-					showAnnotationAt(a.getFragment().getRange().getFrom());
+					showAnnotationAt(toRange(a.getFragment()).getFrom());
 				}
 			}
 		});
 		
 		initWidget(annotationTrack);
+	}
+	
+	public String toFragment(BoundingBox bbox, Range range) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Range toRange(String fragment) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	public void showAnnotationAt(double time) {
@@ -131,7 +142,7 @@ public class AnnotationTrack extends Composite {
 		// TODO make this more efficient!
 		// TODO make this handle 'smallest first' overlap scenarios
 		for (Annotation a : annotations.keySet()) {
-			Range r = a.getFragment().getRange();
+			Range r = toRange(a.getFragment());
 			if (time >= r.getFrom() && time <= r.getTo()) {
 				return a;
 			}
@@ -149,7 +160,7 @@ public class AnnotationTrack extends Composite {
 		context.setFillStyle("#ffa500");
 		
 		for (Annotation a : annotations.keySet()) {
-			Range r = a.getFragment().getRange();
+			Range r = toRange(a.getFragment());
 			int start = progressBar.toOffsetX(r.getFrom());
 			int end = progressBar.toOffsetX(r.getTo());
 			context.setGlobalAlpha(0.8);

@@ -1,5 +1,6 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image;
 
+import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;
@@ -24,8 +25,10 @@ public class ImageAnnotationOverlay {
 	
 	private DetailsPopup detailsPopup;
 	
-	public ImageAnnotationOverlay(Annotation a, final AbsolutePanel annotationLayer, Labels labels) {
-		final BoundingBox bbox = a.getFragment().getBoundingBox();
+	public ImageAnnotationOverlay(Annotation annotation, Annotatable annotatable,
+			final AbsolutePanel annotationLayer, Labels labels) {
+		
+		final BoundingBox bbox = annotatable.toBounds(annotation.getFragment());
 		
 		bboxOverlay = new BoundingBoxOverlay(bbox);
 		
@@ -45,7 +48,7 @@ public class ImageAnnotationOverlay {
 			}
 		});
 		
-		detailsPopup = new DetailsPopup(a, labels);
+		detailsPopup = new DetailsPopup(annotation, labels);
 		detailsPopup.setVisible(false);
 		
 		annotationLayer.add(bboxOverlay, bbox.getX(), bbox.getY());

@@ -3,6 +3,8 @@ package at.ait.dme.yumaJS.client.annotation.core;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 
+import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
 
@@ -47,6 +49,12 @@ public abstract class Annotatable implements Exportable {
 	public abstract String getObjectURI();
 	
 	public abstract String getMediaType();
+	
+	public abstract String toFragment(BoundingBox bbox, Range range);
+	
+	public abstract Range toRange(String fragment);
+	
+	public abstract BoundingBox toBounds(String fragment);
 	
 	protected abstract void onWindowResize(int width, int height);
 	

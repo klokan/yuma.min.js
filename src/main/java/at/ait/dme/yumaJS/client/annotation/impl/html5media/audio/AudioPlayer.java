@@ -8,6 +8,8 @@ import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.core.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.AudioRangeEditor;
+import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.AnnotationTrack;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserException;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
@@ -176,6 +178,22 @@ public class AudioPlayer extends Annotatable implements Exportable {
 	@Override
 	public String getObjectURI() {
 		return objectURI;
+	}
+	
+	@Override
+	public String toFragment(BoundingBox bbox, Range range) {
+		return annotationTrack.toFragment(bbox, range);
+	}
+
+	@Override
+	public Range toRange(String fragment) {
+		return annotationTrack.toRange(fragment);
+	}
+
+	@Override
+	public BoundingBox toBounds(String fragment) {
+		// Audio player does not support bounding boxes
+		return null;
 	}
 
 	@Override

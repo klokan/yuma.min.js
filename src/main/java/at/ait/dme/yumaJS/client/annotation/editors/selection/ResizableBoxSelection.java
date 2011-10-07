@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import at.ait.dme.yumaJS.client.annotation.core.Fragment;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Selection;
 import at.ait.dme.yumaJS.client.annotation.impl.image.ImageAnnotationLayer;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.SeajaxAnnotationLayer;
@@ -268,15 +267,21 @@ public class ResizableBoxSelection extends Selection {
 	
 	private void fireSelectionChanged() {
 		if (selectionChangedHandler != null)
-			selectionChangedHandler.onSelectionChanged(getSelectedFragment());
+			selectionChangedHandler.onBoundsChanged(getSelectedBounds());
 	}
 	
 	@Override
-	public Fragment getSelectedFragment() {
+	public BoundingBox getSelectedBounds() {
 		int left = outer.getAbsoluteLeft() - parent.getAbsoluteLeft();
 		int top = outer.getAbsoluteTop() - parent.getAbsoluteTop();
-		return Fragment.create(BoundingBox.create(left, top, 
-				inner.getElement().getClientWidth(), inner.getElement().getClientHeight()));
+		return BoundingBox.create(left, top, 
+				inner.getElement().getClientWidth(), inner.getElement().getClientHeight());
+	}
+	
+	@Override
+	public Range getSelectedRange() {
+		// This selection does not contain a range
+		return null;
 	}
 	
 	@Override

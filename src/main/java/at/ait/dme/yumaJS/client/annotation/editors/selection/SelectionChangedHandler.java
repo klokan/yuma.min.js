@@ -1,7 +1,5 @@
 package at.ait.dme.yumaJS.client.annotation.editors.selection;
 
-import at.ait.dme.yumaJS.client.annotation.core.Fragment;
-
 /**
  * A handler interface for reacting to selection change events.
  * 
@@ -9,6 +7,8 @@ import at.ait.dme.yumaJS.client.annotation.core.Fragment;
  */
 public interface SelectionChangedHandler {
 
-	public void onSelectionChanged(Fragment fragment);
+	public void onBoundsChanged(BoundingBox bbox);
+	
+	public void onRangeChanged(Range range);
 	
 }
