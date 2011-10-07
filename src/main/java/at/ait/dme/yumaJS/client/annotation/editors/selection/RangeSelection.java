@@ -1,7 +1,6 @@
 package at.ait.dme.yumaJS.client.annotation.editors.selection;
 
 import at.ait.dme.yumaJS.client.annotation.core.Fragment;
-import at.ait.dme.yumaJS.client.annotation.core.Range;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserException;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
 

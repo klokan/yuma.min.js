@@ -1,6 +1,6 @@
 package at.ait.dme.yumaJS.client.annotation.impl.image;
 
-import at.ait.dme.yumaJS.client.annotation.core.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 
 import com.google.gwt.event.dom.client.HasMouseOutHandlers;
 import com.google.gwt.event.dom.client.HasMouseOverHandlers;

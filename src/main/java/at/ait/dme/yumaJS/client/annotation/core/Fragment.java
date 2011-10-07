@@ -1,5 +1,8 @@
 package at.ait.dme.yumaJS.client.annotation.core;
 
+import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
+import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
+
 import com.google.gwt.core.client.JavaScriptObject;
 
 /**
