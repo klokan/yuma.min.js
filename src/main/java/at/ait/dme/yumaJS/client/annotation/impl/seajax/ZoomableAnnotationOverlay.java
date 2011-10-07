@@ -6,8 +6,8 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
-import at.ait.dme.yumaJS.client.annotation.core.Annotation;
+import at.ait.dme.yumaJS.client.annotation.Annotatable;
+import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.impl.image.BoundingBoxOverlay;
 import at.ait.dme.yumaJS.client.annotation.impl.seajax.api.SeadragonAnimationHandler;

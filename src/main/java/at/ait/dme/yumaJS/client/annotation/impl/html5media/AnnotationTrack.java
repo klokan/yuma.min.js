@@ -13,7 +13,7 @@ import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import at.ait.dme.yumaJS.client.annotation.core.Annotation;
+import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.annotation.widgets.DetailsPopup;

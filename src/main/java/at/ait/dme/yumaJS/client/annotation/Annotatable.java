@@ -1,4 +1,4 @@
-package at.ait.dme.yumaJS.client.annotation.core;
+package at.ait.dme.yumaJS.client.annotation;
 
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;

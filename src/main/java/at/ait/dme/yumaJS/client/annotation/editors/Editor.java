@@ -4,8 +4,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
-import at.ait.dme.yumaJS.client.annotation.core.Annotation;
+import at.ait.dme.yumaJS.client.annotation.Annotatable;
+import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Selection;
 import at.ait.dme.yumaJS.client.annotation.widgets.EditForm;
 import at.ait.dme.yumaJS.client.io.Create;

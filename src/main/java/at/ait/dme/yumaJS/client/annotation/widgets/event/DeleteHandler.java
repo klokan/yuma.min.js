@@ -1,6 +1,6 @@
 package at.ait.dme.yumaJS.client.annotation.widgets.event;
 
-import at.ait.dme.yumaJS.client.annotation.core.Annotation;
+import at.ait.dme.yumaJS.client.annotation.Annotation;
 
 /**
  * Handler interface for listening to 'Delete Annotation' click events

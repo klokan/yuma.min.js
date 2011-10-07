@@ -1,6 +1,6 @@
 package at.ait.dme.yumaJS.client.annotation.widgets;
 
-import at.ait.dme.yumaJS.client.annotation.core.Annotation;
+import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Selection;
 import at.ait.dme.yumaJS.client.init.Labels;
 

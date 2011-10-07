@@ -5,7 +5,7 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import at.ait.dme.yumaJS.client.annotation.core.Annotation;
+import at.ait.dme.yumaJS.client.annotation.Annotation;
 
 public class Create {
 	

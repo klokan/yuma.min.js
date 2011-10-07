@@ -1,6 +1,6 @@
 package at.ait.dme.yumaJS.client.init;
 
-import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
+import at.ait.dme.yumaJS.client.annotation.Annotatable;
 
 import com.google.gwt.core.client.JavaScriptObject;
 

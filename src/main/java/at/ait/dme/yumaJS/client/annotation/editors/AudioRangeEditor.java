@@ -2,8 +2,8 @@ package at.ait.dme.yumaJS.client.annotation.editors;
 
 import com.google.gwt.user.client.ui.RootPanel;
 
-import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
-import at.ait.dme.yumaJS.client.annotation.core.Annotation;
+import at.ait.dme.yumaJS.client.annotation.Annotatable;
+import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.RangeSelection;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserException;

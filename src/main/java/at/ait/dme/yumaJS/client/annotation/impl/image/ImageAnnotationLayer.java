@@ -7,8 +7,8 @@ import org.timepedia.exporter.client.ExportPackage;
 import org.timepedia.exporter.client.Exportable;
 
 import at.ait.dme.yumaJS.client.YUMA;
-import at.ait.dme.yumaJS.client.annotation.core.Annotatable;
-import at.ait.dme.yumaJS.client.annotation.core.Annotation;
+import at.ait.dme.yumaJS.client.annotation.Annotatable;
+import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.ResizableBoxEditor;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;

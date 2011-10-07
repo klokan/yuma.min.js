@@ -1,6 +1,6 @@
 package at.ait.dme.yumaJS.client.io;
 
-import at.ait.dme.yumaJS.client.annotation.core.Annotation;
+import at.ait.dme.yumaJS.client.annotation.Annotation;
 
 public class Update {
 	
