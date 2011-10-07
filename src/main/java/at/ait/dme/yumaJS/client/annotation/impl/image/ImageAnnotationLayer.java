@@ -84,6 +84,8 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		}, MouseOutEvent.getType());
 		
 		RootPanel.get().add(annotationLayer, image.getAbsoluteLeft(), image.getAbsoluteTop());
+		
+		fetchAnnotations();
 	}
 	
 	@Override

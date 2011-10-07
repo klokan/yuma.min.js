@@ -1,5 +1,8 @@
 package at.ait.dme.yumaJS.client.annotation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 
@@ -7,11 +10,15 @@ import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
 import at.ait.dme.yumaJS.client.init.Labels;
+import at.ait.dme.yumaJS.client.io.ListAll;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
  * An abstract base class with cross-cutting functionality for
@@ -44,6 +51,26 @@ public abstract class Annotatable implements Exportable {
 			return null;
 		
 		return initParams.labels();
+	}
+	
+	protected void fetchAnnotations() {
+		ListAll.executeJSONP(getObjectURI(), new AsyncCallback<String>() {
+			public void onSuccess(String result) {
+				JSONArray json = JSONParser.parseStrict(result).isArray();
+				if (json!= null) {
+					List<Annotation> annotations = new ArrayList<Annotation>();
+					for (int i=0; i<json.size(); i++) {
+						annotations.add((Annotation) json.get(i).isObject().getJavaScriptObject());
+					}
+					System.out.println(annotations);
+				}
+			}
+			
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	
 	public abstract String getObjectURI();
