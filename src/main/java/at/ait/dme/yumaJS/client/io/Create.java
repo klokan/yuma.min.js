@@ -9,10 +9,12 @@ import at.ait.dme.yumaJS.client.annotation.Annotation;
 
 public class Create {
 	
-	public static void executeJSONP(Annotation a, AsyncCallback<String> callback) {
+	private static final String JSONP_PATH = "api/annotation/jsonp/create?json=";
+	
+	public static void executeJSONP(String serverURL, Annotation a, AsyncCallback<String> callback) {
 		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
 		String json = URL.encodeQueryString(new JSONObject(a).toString());
-		jsonp.requestString("http://localhost:8080/yuma4j-server/api/annotation/jsonp/create?json=" + json, callback);
+		jsonp.requestString(serverURL + JSONP_PATH + json, callback);
 	}
 
 }

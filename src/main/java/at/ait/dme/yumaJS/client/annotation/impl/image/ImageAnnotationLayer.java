@@ -85,7 +85,9 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		
 		RootPanel.get().add(annotationLayer, image.getAbsoluteLeft(), image.getAbsoluteTop());
 		
-		fetchAnnotations();
+		if (getServerURL() != null) {
+			fetchAnnotations(getServerURL());
+		}
 	}
 	
 	@Override
@@ -150,7 +152,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 		details.addEditHandler(new EditHandler() {
 			public void onEdit(Annotation annotation) {
 				removeAnnotation(annotation);
-				new ResizableBoxEditor(thisAnnotatable, annotationLayer, getLabels(), annotation);
+				new ResizableBoxEditor(thisAnnotatable, annotationLayer, annotation);
 			}
 		});
 		
@@ -174,7 +176,7 @@ public class ImageAnnotationLayer extends Annotatable implements Exportable {
 	}
 	
 	public void createNewAnnotation() {
-		new ResizableBoxEditor(this, annotationLayer, getLabels());
+		new ResizableBoxEditor(this, annotationLayer);
 	}
 
 }

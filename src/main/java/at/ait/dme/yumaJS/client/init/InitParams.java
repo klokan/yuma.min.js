@@ -14,6 +14,10 @@ public class InitParams extends JavaScriptObject {
 
 	protected InitParams() { }
 	
+	public final native String serverURL() /*-{
+		return this.serverURL; 
+	}-*/;
+	
 	public final native Labels labels() /*-{
 		return this.labels;
 	}-*/;

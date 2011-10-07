@@ -4,6 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.Annotatable;
 import at.ait.dme.yumaJS.client.annotation.Annotation;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Selection;
@@ -45,21 +46,21 @@ public abstract class Editor {
 						annotatable.toFragment(selection.getSelectedBounds(), selection.getSelectedRange()),
 						editForm.getText());
 				
-				Create.executeJSONP(a, new AsyncCallback<String>() {
-					public void onSuccess(String result) {	
-						System.out.println(result);
-					}
-					
-					public void onFailure(Throwable caught) {
-						System.out.println(caught);
-					}
-				});
-				// TODO only add annotation on success - or at least show
-				// a message that storing failed
+				if (annotatable.getServerURL() == null) {
+					// Local-mode: just add the annotation without storing
+					annotatable.addAnnotation(a);
+				} else {
+					Create.executeJSONP(annotatable.getServerURL(), a, new AsyncCallback<String>() {
+						public void onSuccess(String result) {	
+							annotatable.addAnnotation(a);
+						}
+						
+						public void onFailure(Throwable t) {
+							YUMA.nonFatalError(t.getMessage());
+						}
+					});
+				}
 				
-				// TODO should we allow 'demo' mode with no server side 
-				// annotation storage as well?
-				annotatable.addAnnotation(a);
 				destroy();
 			}
 		});

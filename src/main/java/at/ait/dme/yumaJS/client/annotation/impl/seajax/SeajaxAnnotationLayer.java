@@ -135,7 +135,7 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 		popup.addEditHandler(new EditHandler() {
 			public void onEdit(Annotation annotation) {
 				removeAnnotation(annotation);
-				new ResizableBoxEditor(thisAnnotatable, annotationLayer, getLabels(), annotation);
+				new ResizableBoxEditor(thisAnnotatable, annotationLayer, annotation);
 			}
 		});
 		
@@ -158,7 +158,7 @@ public class SeajaxAnnotationLayer extends Annotatable implements Exportable {
 	}
 
 	public void createNewAnnotation() {
-		new ResizableBoxEditor(this, annotationLayer, getLabels());
+		new ResizableBoxEditor(this, annotationLayer);
 	}
 	
 }

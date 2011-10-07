@@ -3,6 +3,7 @@ package at.ait.dme.yumaJS.client.annotation;
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 
+import at.ait.dme.yumaJS.client.YUMA;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.BoundingBox;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Range;
 import at.ait.dme.yumaJS.client.init.InitParams;
@@ -38,20 +39,33 @@ public abstract class Annotatable implements Exportable {
 		});
 	}
 	
-	protected InitParams getInitParams() {
+	public InitParams getInitParams() {
 		return initParams;
 	}
 	
-	protected Labels getLabels() {
+	public Labels getLabels() {
 		if (initParams == null)
 			return null;
-		
 		return initParams.labels();
 	}
 	
-	protected void fetchAnnotations() {
-		System.out.println("sending JSONP request");
-		ListAll.executeJSONP(getObjectURI(), new AsyncCallback<JavaScriptObject>() {
+	public String getServerURL() {
+		if (initParams == null)
+			return null;
+		
+		String serverURL = initParams.serverURL();
+		if (serverURL == null)
+			return null;
+		
+		if (serverURL.endsWith("/")) {
+			return serverURL;
+		} else {
+			return serverURL + "/";
+		}
+	}
+	
+	protected void fetchAnnotations(String serverURL) {
+		ListAll.executeJSONP(serverURL, getObjectURI(), new AsyncCallback<JavaScriptObject>() {
 			public void onSuccess(JavaScriptObject result) {
 				@SuppressWarnings("unchecked")
 				JsArray<JavaScriptObject> annotations = (JsArray<JavaScriptObject>) result;
@@ -60,9 +74,8 @@ public abstract class Annotatable implements Exportable {
 				}
 			}
 			
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				System.out.println("FAIL: " + caught);
+			public void onFailure(Throwable t) {
+				YUMA.nonFatalError(t.getMessage());
 			}
 		});
 	}

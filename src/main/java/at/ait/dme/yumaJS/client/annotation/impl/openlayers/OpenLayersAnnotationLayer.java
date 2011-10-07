@@ -119,7 +119,7 @@ public class OpenLayersAnnotationLayer extends Annotatable implements Exportable
 	}
 
 	public void createNewAnnotation() {
-		new ResizableBoxEditor(this, editingLayer, getLabels());
+		new ResizableBoxEditor(this, editingLayer);
 	}
 	
 }

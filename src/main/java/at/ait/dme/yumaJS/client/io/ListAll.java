@@ -6,9 +6,11 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class ListAll {
 	
-	public static void executeJSONP(String objectURI, AsyncCallback<JavaScriptObject> callback) {
+	private static final String JSONP_PATH = "api/annotation/jsonp/list?objectURI=";
+	
+	public static void executeJSONP(String serverURL, String objectURI, AsyncCallback<JavaScriptObject> callback) {
 		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
-		jsonp.requestObject("http://localhost:8080/yuma4j-server/api/annotation/jsonp/list?objectURI=" + objectURI, callback);
+		jsonp.requestObject(serverURL + JSONP_PATH + objectURI, callback);
 	}
 
 }

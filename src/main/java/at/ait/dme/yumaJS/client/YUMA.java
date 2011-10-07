@@ -66,5 +66,10 @@ public class YUMA implements EntryPoint {
 		throw new RuntimeException();
 	}
 	
+	public static void nonFatalError(String msg) {
+		// TODO present 'non-fatal' error messages nicer and with different styling
+		fatalError(msg);
+	}
+	
 }
 

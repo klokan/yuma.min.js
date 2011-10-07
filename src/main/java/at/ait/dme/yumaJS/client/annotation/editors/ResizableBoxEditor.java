@@ -10,7 +10,6 @@ import at.ait.dme.yumaJS.client.annotation.editors.selection.ResizableBoxSelecti
 import at.ait.dme.yumaJS.client.annotation.editors.selection.Selection;
 import at.ait.dme.yumaJS.client.annotation.editors.selection.SelectionChangedHandler;
 import at.ait.dme.yumaJS.client.annotation.widgets.EditForm;
-import at.ait.dme.yumaJS.client.init.Labels;
 
 /**
  * An {@link Editor} implementation for images and zoomable images,
@@ -22,11 +21,11 @@ public class ResizableBoxEditor extends Editor {
 	
 	private AbsolutePanel panel;
 
-	public ResizableBoxEditor(Annotatable annotatable, AbsolutePanel panel, Labels labels) {
-		this(annotatable, panel, labels, null);
+	public ResizableBoxEditor(Annotatable annotatable, AbsolutePanel panel) {
+		this(annotatable, panel, null);
 	}
 	
-	public ResizableBoxEditor(Annotatable annotatable, AbsolutePanel panel, Labels labels, Annotation initialValue) {
+	public ResizableBoxEditor(Annotatable annotatable, AbsolutePanel panel, Annotation initialValue) {
 		super(annotatable, initialValue);
 		this.panel = panel;
 		
@@ -34,7 +33,7 @@ public class ResizableBoxEditor extends Editor {
 		if (initialValue != null)
 			bbox = annotatable.toBounds(initialValue.getFragment()); 
 				
-		Selection selection = new ResizableBoxSelection(panel, labels, bbox);
+		Selection selection = new ResizableBoxSelection(panel, annotatable.getLabels(), bbox);
 		selection.setSelectionChangedHandler(new SelectionChangedHandler() {
 			public void onBoundsChanged(BoundingBox bbox) {
 				updateEditForm();
@@ -46,7 +45,7 @@ public class ResizableBoxEditor extends Editor {
 		});
 		setSelection(selection);
 		
-		EditForm editForm = new EditForm(selection, labels, initialValue);
+		EditForm editForm = new EditForm(selection, annotatable.getLabels(), initialValue);
 		setEditForm(editForm);
 		panel.add(editForm, 0, 0);
 		updateEditForm();

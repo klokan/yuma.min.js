@@ -9,18 +9,17 @@ import at.ait.dme.yumaJS.client.annotation.editors.selection.RangeSelection;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.InadequateBrowserException;
 import at.ait.dme.yumaJS.client.annotation.impl.html5media.ProgressBar;
 import at.ait.dme.yumaJS.client.annotation.widgets.EditForm;
-import at.ait.dme.yumaJS.client.init.Labels;
 
 public class AudioRangeEditor extends Editor {
 	
-	public AudioRangeEditor(Annotatable annotatable, ProgressBar progressBar, Labels labels, int offsetX)
+	public AudioRangeEditor(Annotatable annotatable, ProgressBar progressBar, int offsetX)
 		throws InadequateBrowserException {
 
 		super(annotatable, null);		
-		init(annotatable, progressBar, labels, new RangeSelection(progressBar, offsetX, offsetX + 1), null); 
+		init(annotatable, progressBar, new RangeSelection(progressBar, offsetX, offsetX + 1), null); 
 	}
 	
-	public AudioRangeEditor(Annotatable annotatable, ProgressBar progressBar, Labels labels, Annotation initialValue) 
+	public AudioRangeEditor(Annotatable annotatable, ProgressBar progressBar, Annotation initialValue) 
 		throws InadequateBrowserException {
 
 		super(annotatable, initialValue);
@@ -28,15 +27,15 @@ public class AudioRangeEditor extends Editor {
 		Range r = annotatable.toRange(initialValue.getFragment());
 		int fromX = progressBar.toOffsetX(r.getFrom());
 		int toX = progressBar.toOffsetX(r.getTo());
-		init(annotatable, progressBar, labels, new RangeSelection(progressBar, fromX, toX), initialValue);
+		init(annotatable, progressBar, new RangeSelection(progressBar, fromX, toX), initialValue);
 	}
 		
-	private void init(Annotatable annotatable, ProgressBar progressBar, Labels labels, 
+	private void init(Annotatable annotatable, ProgressBar progressBar, 
 		RangeSelection selection, Annotation annotation) {
 				
 		setSelection(selection);
 		
-		EditForm editForm = new EditForm(selection, labels, annotation);
+		EditForm editForm = new EditForm(selection, annotatable.getLabels(), annotation);
 		setEditForm(editForm);
 		
 		RootPanel.get().add(editForm, selection.getStartOffsetX()+ progressBar.getAbsoluteLeft(), 
