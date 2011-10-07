@@ -1,8 +1,5 @@
 package at.ait.dme.yumaJS.client.annotation;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.timepedia.exporter.client.Export;
 import org.timepedia.exporter.client.Exportable;
 
@@ -13,10 +10,9 @@ import at.ait.dme.yumaJS.client.init.Labels;
 import at.ait.dme.yumaJS.client.io.ListAll;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
-import com.google.gwt.json.client.JSONArray;
-import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -54,21 +50,19 @@ public abstract class Annotatable implements Exportable {
 	}
 	
 	protected void fetchAnnotations() {
-		ListAll.executeJSONP(getObjectURI(), new AsyncCallback<String>() {
-			public void onSuccess(String result) {
-				JSONArray json = JSONParser.parseStrict(result).isArray();
-				if (json!= null) {
-					List<Annotation> annotations = new ArrayList<Annotation>();
-					for (int i=0; i<json.size(); i++) {
-						annotations.add((Annotation) json.get(i).isObject().getJavaScriptObject());
-					}
-					System.out.println(annotations);
+		System.out.println("sending JSONP request");
+		ListAll.executeJSONP(getObjectURI(), new AsyncCallback<JavaScriptObject>() {
+			public void onSuccess(JavaScriptObject result) {
+				@SuppressWarnings("unchecked")
+				JsArray<JavaScriptObject> annotations = (JsArray<JavaScriptObject>) result;
+				for (int i=0; i<annotations.length(); i++) {
+					addAnnotation(((Annotation) annotations.get(i)));
 				}
 			}
 			
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
-				
+				System.out.println("FAIL: " + caught);
 			}
 		});
 	}
